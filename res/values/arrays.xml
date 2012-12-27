@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="ordertype">
+        <item >全部</item>
+        <item >临时</item>
+        <item >长期</item>
+    </string-array>
+    <string-array name="showtype">
+        <item >都显示</item>
+        <item >已执行</item>
+        <item >医嘱本</item>
+    </string-array>
+    <string-array name="spinner_zi">
+        <item>无</item>
+        <item>自带药</item>
+        <item>手工计价</item>
+        <item>不计价</item>
+        <item>不摆药</item>
+        <item>出院带药</item>
+    </string-array>
+    <string-array name="array1">
+        <item>内一科</item>
+        <item>内二科</item>
+        <item>内三科</item>
+        <item>小儿科</item>
+        <item>普通外科</item>
+        <item>骨科</item>
+        <item>妇产科</item>
+        <item>综合病房科</item>
+        <item>重症监护科</item>
+    </string-array>
+    <string-array name="array2">
+        <item>中药</item>
+        <item>西药</item>
+    </string-array>
+</resources>

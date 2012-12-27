@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2010 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!-- 主界面的最顶端，显示标题-->
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" 
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            >
+
+          <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="移动查房系统查看处方明细"
+                android:textColor="@color/white"
+                android:textSize="30dp"
+                android:textStyle="bold" />
+           
+          
+        </RelativeLayout>
+
+        <!-- 主界面的中间，显示病人信息 -->
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal" 
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            >
+
+            <TextView
+                android:id="@+id/patient_information_no1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/white"
+                android:textSize="18dp"
+                android:text="第一行" />
+
+            <TextView
+                android:id="@+id/prescription_information_item1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/patient_information_no1"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/white"
+                android:textSize="18dp" 
+                android:text="第二行"/>
+
+            <TextView
+                android:id="@+id/prescription_information_item2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/prescription_information_item1"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/white"
+                android:textSize="18dp" 
+                android:text="第三行"/>
+             <TextView
+                android:id="@+id/prescription_information_item3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/prescription_information_item2"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/blue"
+                android:textSize="18dp" 
+                android:text="第四行"/>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp" >
+
+            <ListView
+                        android:id="@+id/prescription_detail_listview"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="4dp"
+                        android:cacheColorHint="#00000000"
+                        android:dividerHeight="2dp"
+                        android:focusable="true" >
+                    </ListView>
+        </LinearLayout>
+    </LinearLayout>

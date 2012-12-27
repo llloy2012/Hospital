@@ -1,0 +1,66 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.android.hospital.ui.activity"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="15"
+        android:targetSdkVersion="15" />
+
+    <application
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/HospitalTheme"
+        android:name="com.android.hospital.HospitalApp"
+         >
+        <activity
+            android:name=".LoginActivity"
+            android:label="@string/title_item_list" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        
+        <activity android:name=".AddDcAdviceActivity" android:theme="@style/HospitalTheme"/>
+        <activity android:name=".MainActivity" android:theme="@style/HospitalTheme"/>
+        <activity android:name=".InspectiondetailActivity" android:theme="@style/HospitalTheme"/>
+        <activity android:name=".PrescriptiondetailActivity" android:theme="@style/HospitalTheme"/>
+        <activity android:name=".AddCheckActivity" android:theme="@style/HospitalTheme"/>
+        <activity android:name=".AddInspectionActivity" android:theme="@style/HospitalTheme"/>
+        <activity android:name=".AddPrescriptionActivity" android:theme="@style/HospitalTheme"/>
+        <service android:enabled="true" android:name="com.android.hospital.service.MyService" />
+        <!-- #####################JUnit测试需要的权限标签 #####################-->
+		<uses-library android:name="android.test.runner" />
+    </application>
+
+    
+    <!-- 访问精确位置的权限 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!-- 读取电话状态的权限 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!-- 调用摄像头权限 -->
+    <uses-permission android:name="android.permission.CAMERA" />
+     <!--往sdcard中写入数据的权限 -->
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
+	 <!--在sdcard中创建/删除文件的权限 -->
+	<uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"></uses-permission>
+    <!-- 硬件震动 -->
+	<uses-permission android:name="android.permission.VIBRATE" />
+	<!-- 使用网络 -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- 查询网络状态 -->
+	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+	<uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+	<!-- 获取地理位置 -->
+	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
+	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+	<!-- 短信和电话权限 -->
+    <uses-permission android:name="android.permission.SEND_SMS"/>
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <!-- #####################JUnit测试需要的权限标签 #####################-->
+	<instrumentation android:name="android.test.InstrumentationTestRunner" android:targetPackage="com.whl.taskmanager"/>
+</manifest>
