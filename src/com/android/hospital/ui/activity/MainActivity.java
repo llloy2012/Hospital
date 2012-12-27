@@ -2,11 +2,14 @@ package com.android.hospital.ui.activity;
 
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import com.android.hospital.adapter.CheckAdapter;
 import com.android.hospital.adapter.DcAdviceAdapter;
 import com.android.hospital.adapter.InspectionAdapter;
 import com.android.hospital.adapter.PrescriptionAdapter;
+import com.android.hospital.asyntask.BaseAsyncTask;
 import com.android.hospital.asyntask.CheckTask;
 import com.android.hospital.asyntask.DcAdviceTask;
 import com.android.hospital.asyntask.DepartmentTask;
@@ -31,6 +34,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -51,6 +55,7 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 	private Spinner mSpinner;
 	private TextView titleTev;
 	private ActionBar actionBar;
+	private List asyncTasks=null;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -212,7 +217,7 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 			String[] whereArr=new String[]{"patient_id","visit_id"};
 			String[] paramArray2=new String[]{value.patient_id,value.visit_id};
 			String sql=ServerDao.getQuery(tableName, paramArray1, whereArr, paramArray2);
-			new DcAdviceTask(fragment, sql).execute();
+			putAsyncTask(new DcAdviceTask(fragment, sql).execute());
 		}
 		
 	}
@@ -238,7 +243,7 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 			String customWhere="where a.exam_no = b.exam_no and a.exam_no = c.exam_no and a.patient_id = '"+value.patient_id+"' "
 					           +"and a.visit_id = '"+value.visit_id+"'";
 			String sql=ServerDao.getQueryCustom(tableName, paramArray1, customWhere);
-			new CheckTask(fragment, sql).execute();
+			putAsyncTask(new CheckTask(fragment, sql).execute());
 		}
 		
 	}
@@ -270,7 +275,7 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 					+"order by LAB_TEST_ITEMS.TEST_NO,LAB_TEST_ITEMS.ITEM_NO  ";
 
 			String sql=ServerDao.getQueryCustom(tableName, paramArray1, customWhere);
-			new InspectionTask(fragment, sql).execute();
+			putAsyncTask(new InspectionTask(fragment, sql).execute());
 		}
 		
 	}
@@ -298,8 +303,44 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 			String customWhere="WHERE DOCT_DRUG_PRESC_MASTER.Dispensary = dept_dict.dept_code  and (PRESC_STATUS not in (2, 3))  AND (DOCT_DRUG_PRESC_MASTER.PATIENT_ID = '"+value.patient_id+"') "
 					           +"AND (DOCT_DRUG_PRESC_MASTER.COSTS >= 0)  order by PRESC_DATE";
 			String sql=ServerDao.getQueryCustom(tableName, paramArray1, customWhere);
-			new PrescriptionTask(fragment,sql).execute();
+			putAsyncTask(new PrescriptionTask(fragment,sql).execute());
 		}
+	}
+	
+	/**
+	 * 
+	* @Title: putAsyncTask 
+	* @Description: TODO(异步任务集合) 
+	* @param @param paramAsyncTask
+	* @param @return    设定文件 
+	* @return AsyncTask    返回类型 
+	* @throws
+	 */
+	protected AsyncTask putAsyncTask(AsyncTask paramAsyncTask){
+		asyncTasks.add(paramAsyncTask);
+		return paramAsyncTask;
+	}
+	
+	
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		for (int i = 0; i < asyncTasks.size(); i++) {
+			AsyncTask localAsyncTask=(AsyncTask) asyncTasks.get(i);
+			if (!(localAsyncTask == null) || (localAsyncTask.isCancelled())) {
+				localAsyncTask.cancel(true);
+			}
+		}
+		//另外一种方式
+		/*Iterator localIterator=this.asyncTasks.iterator();
+		if (!localIterator.hasNext()) {
+			return;
+		}
+		AsyncTask localAsyncTask = (AsyncTask)localIterator.next();
+		if ((localAsyncTask == null) || (localAsyncTask.isCancelled()))
+	        continue;
+	    localAsyncTask.cancel(true);*/
 	}
 	
 	/*private void addCustomView() {

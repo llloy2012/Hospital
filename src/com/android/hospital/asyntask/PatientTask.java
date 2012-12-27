@@ -33,6 +33,7 @@ public class PatientTask extends BaseAsyncTask{
 	private String sql;
 	private ArrayList<PatientEntity> arrayList;
 	private AsyncTaskCallback<PatientEntity> mTaskCallback;
+	private LeftListFragment fm;
 	
 	public PatientTask(Activity activity,String sql){
 		this.mActivity=activity;
@@ -56,10 +57,10 @@ public class PatientTask extends BaseAsyncTask{
             throw new IllegalStateException("Activity must implement fragment's callbacks.");
         }
 		mTaskCallback=(AsyncTaskCallback<PatientEntity>) mActivity;
-		
+		fm=(LeftListFragment) mActivity.getFragmentManager().findFragmentByTag("leftfm");
 		if (arrayList.size()!=0) {
 			DebugUtil.debug("listsiize"+arrayList.size());			
-			LeftListFragment fm=(LeftListFragment) mActivity.getFragmentManager().findFragmentByTag("leftfm");
+			;
 			final PatientAdapter adapter=new PatientAdapter(mActivity, arrayList);
 			fm.setListAdapter(adapter);
 			//fm.getListView().setItemChecked(0, true);//默认选中
@@ -75,6 +76,8 @@ public class PatientTask extends BaseAsyncTask{
 					mTaskCallback.getSingle(patientEntity);
 				}
 			});
+		}else {
+			fm.setEmptyText("暂无信息");
 		}
 	}
 	
