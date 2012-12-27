@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.android.hospital.HospitalApp;
+import com.android.hospital.adapter.PrescriptionLeftItemAdapter;
 import com.android.hospital.entity.DataEntity;
 import com.android.hospital.entity.DrugEntity;
 import com.android.hospital.ui.activity.R;
 import com.android.hospital.util.DebugUtil;
+import com.android.hospital.util.Util;
 import com.android.hospital.webservice.WebServiceHelper;
 
 import android.R.integer;
@@ -23,9 +25,11 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * 
@@ -43,9 +47,13 @@ public class AddPrescriptionFragment extends BaseFragment implements OnClickList
 	private Button mAgentPlusBut,mAgentMinusBut,mEachPlusBut,mEachMinusBut;//加减
 	private EditText mHowEdit,mNextvalEdit;//用法，处方名
 	private ListView mListView;
+	private LinearLayout mHideLayout;
 	private HospitalApp app;
 	private ArrayList<DrugEntity> mWestDrugList;//西药
 	private SeachPrescriptionFragment fm;//搜索界面
+	private PrescriptionLeftItemAdapter mAdapter;
+	private int drugFlag=0;//0为中药，1为西药
+	private ArrayList<DrugEntity> insertList;//需要插入的集合 
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -65,6 +73,15 @@ public class AddPrescriptionFragment extends BaseFragment implements OnClickList
 	}
 
 	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onActivityCreated(savedInstanceState);
+		mAdapter=new PrescriptionLeftItemAdapter(getActivity(), null);
+		mListView.setAdapter(mAdapter);
+		
+	}
+	
+	@Override
 	public void init() {
 		// TODO Auto-generated method stub
 		mClassSp=(Spinner) view.findViewById(R.id.add_prescription_spinner_1);
@@ -82,6 +99,7 @@ public class AddPrescriptionFragment extends BaseFragment implements OnClickList
 		mHowEdit=(EditText) view.findViewById(R.id.add_prescription_edit_how);
 		mNextvalEdit=(EditText) view.findViewById(R.id.add_prescription_edit_nextval);
 		mListView=(ListView) view.findViewById(R.id.add_prescription_listview);
+		mHideLayout=(LinearLayout) view.findViewById(R.id.prescription_hidelayout);
 		
 		mTempJudgeTev.setText(app.getPatientEntity().diagnosis);
 		mAgentPlusBut.setOnClickListener(this);
@@ -94,6 +112,15 @@ public class AddPrescriptionFragment extends BaseFragment implements OnClickList
 	@Override
 	public boolean validate() {
 		// TODO Auto-generated method stub
+		if (mClassSp.getSelectedItemPosition()==0) {
+			if (mNextvalEdit.getText().toString().equals("")) {
+				Toast.makeText(getActivity(), "处方名不能为空！", Toast.LENGTH_SHORT).show();
+				return false;
+			}
+			if (numNull()) {
+				return true;
+			}
+		}
 		return false;
 	}
 
@@ -106,9 +133,46 @@ public class AddPrescriptionFragment extends BaseFragment implements OnClickList
 	@Override
 	public void insert() {
 		// TODO Auto-generated method stub
-		
+		prescriptionInsertSql();
 	}
 
+	public void setListView(DrugEntity entity){
+		if (mAdapter.getCount()==1) {
+			drugFlag=mClassSp.getSelectedItemPosition();//
+		}
+		if (mAdapter.getCount()>1) {
+			if (drugFlag!=mClassSp.getSelectedItemId()) {
+				Toast.makeText(getActivity(), "中药和西药不能开在一张单子上!!", Toast.LENGTH_SHORT).show();
+				return;
+			}			
+		}
+		if (!mDrugHouseTev.getText().equals("")) {
+			if (!entity.storage_name.equals(mDrugHouseTev.getText().toString())) {
+				Toast.makeText(getActivity(), "药房不同不能开在一张单子上!!", Toast.LENGTH_SHORT).show();
+				return;
+			}
+		}
+		mDrugHouseTev.setText(entity.storage_name);
+		mAdapter.addItem(entity, mClassSp.getSelectedItemPosition());
+		
+	}
+	
+	/**
+	 * 
+	* @Title: clear 
+	* @Description: TODO(清空按钮) 
+	* @param     设定文件 
+	* @return void    返回类型 
+	* @throws
+	 */
+	public void clear(){
+		account();//测试
+		mAdapter.clear();
+		mClassSp.setSelection(0);
+		mDrugHouseTev.setText("");
+		drugFlag=0;		
+	}
+	
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
@@ -161,12 +225,14 @@ public class AddPrescriptionFragment extends BaseFragment implements OnClickList
 		switch (position) {
 		case 0:
 			fm.show(null);
+			mHideLayout.setVisibility(View.VISIBLE);
 			break;
 		case 1:
 			DebugUtil.debug("positon-case--1");
 			if (mWestDrugList!=null) {
 				fm.showWestDrug(mWestDrugList);
 			}
+			mHideLayout.setVisibility(View.GONE);
 			break;
 		default:
 			break;
@@ -211,6 +277,7 @@ public class AddPrescriptionFragment extends BaseFragment implements OnClickList
 		@Override
 		protected void onPostExecute(List<String> result) {
 			// TODO Auto-generated method stub
+			mNextvalTev.setText(app.getNextval());//处方号
 			new WestDrugTaskStep2().execute(result);
 		}
 	}	
@@ -240,4 +307,326 @@ public class AddPrescriptionFragment extends BaseFragment implements OnClickList
 		}
 	}
 	
+	/**
+	 * 
+	* @Title: prescriptionInsertSql 
+	* @Description: TODO(处方插入方法) 
+	* @param     设定文件 
+	* @return void    返回类型 
+	* @throws
+	 */
+	private void prescriptionInsertSql(){
+		String start_date_time=Util.toSimpleDate();
+		String presc_type="1";
+		String dispensary="3103";
+		String decoction="";
+		String presc_no=mNextvalTev.getText().toString();
+		String repetition=mAgentNumTev.getText().toString();
+		String count_per_repetition=mEachNumTev.getText().toString();
+		String usage=mHowEdit.getText().toString();
+		String binding_presc_title=mNextvalEdit.getText().toString();
+		String discharge_taking_indicator="";
+		if (mTaskDrugBox.isChecked()) {
+			discharge_taking_indicator="1";
+		}
+		if (mClassSp.getSelectedItemPosition()==0) {//如果为中药
+			if (binding_presc_title.equals("")) {
+				return;
+			}
+			dispensary="3102";
+			presc_type="0";
+			if (mIsOrNotBox.isChecked()) {
+				decoction="1";
+			}
+		}else {
+			repetition="";
+			count_per_repetition="";
+			usage="";
+			binding_presc_title="";
+		}		
+		String costs=account();//计算价格方法
+		
+		StringBuffer prescriptionBuffer=new StringBuffer();
+		prescriptionBuffer.append("insert into  doct_drug_presc_master"+
+				"(patient_id,"+ //  病人id
+				"visit_id,"+  //   住院次数
+				"name,"+       //  姓名
+				"name_phonetic,"+//姓名拼音码 
+				"presc_date,"+  // 处方日期（系统时间）
+				"identity,"+    // 身份（农民，工人等）
+				"charge_type,"+ // 费别
+				"ordered_by,"+  // 开单科室（病人所在的科室代码）
+				"prescribed_by,"+ //执行人代码  （开单医生，登录医生的名字）-------
+				"presc_attr, "+ // 处方属性（填空）--------------
+				"dispensary,"+  // 发药药局（药局代码）
+				"presc_source,"+ //处方来源（门诊，住院）住院为1-------
+				"unit_in_contract,"+ //合同单位（填空）
+				"presc_no,"+    //处方号
+				"presc_type,"+  //处方类型 0西药 1中药 
+				"repetition,"+  // 剂数 （对于中药而言，数量变化）一般为1，西药为1
+				"costs, "+      // 计价金额？？？？计算（总花费）
+				"payments, "+   // 应收金额？？？？计算（同上）
+				"entered_by,"+ // 确认人代码（开单医生，登录医生的名字）-------
+				"presc_status,"+// 处方状态 （为0，拿了药的为1，此处为0）
+				"dispensing_provider,"+ // 确认人名称 （空）--------
+				"count_per_repetition,"+// 每剂份数（中药）（可以为空）
+				"usage,"+       //用法（中药）
+				"binding_presc_title,"+ //处方名（中药）
+				"discharge_taking_indicator,"+ //出院带药标志（1为出院带药，没有为空）
+				"doctor_user,"+ //医生代码 （该病人的主治医生代码）
+				"decoction,"+   //是否代煎（中药）（没有为空，代煎为1）
+				"newly_print,"+ //是否重打（没有为空）
+				"diagnosis_name)"+ //诊断名称"
+			"values(");
+		prescriptionBuffer.append("'"+app.getPatientEntity().patient_id).append("',");
+		prescriptionBuffer.append("'"+app.getPatientEntity().visit_id).append("',");
+		prescriptionBuffer.append("'"+app.getPatientEntity().name).append("',");
+		prescriptionBuffer.append("'"+app.getPatientEntity().name_phonetic).append("',");
+		prescriptionBuffer.append("TO_DATE('"+start_date_time).append("','yyyy-MM-dd hh24:mi:ss'),");
+		prescriptionBuffer.append("'"+app.getPatientEntity().identity).append("',");
+		prescriptionBuffer.append("'"+app.getPatientEntity().charge_type).append("',");
+		prescriptionBuffer.append("'"+app.getPatientEntity().dept_code).append("',");
+		prescriptionBuffer.append("'"+app.getDoctor()).append("',");
+		prescriptionBuffer.append("'"+"").append("',");
+		prescriptionBuffer.append("'"+dispensary).append("',");
+		prescriptionBuffer.append("'"+"1").append("',");
+		prescriptionBuffer.append("'"+"").append("',");
+		prescriptionBuffer.append("'"+presc_no).append("',");
+		prescriptionBuffer.append("'"+presc_type).append("',");
+		prescriptionBuffer.append("'"+repetition).append("',");
+		prescriptionBuffer.append("'"+costs).append("',");
+		prescriptionBuffer.append("'"+costs).append("',");
+		prescriptionBuffer.append("'"+app.getDoctor()).append("',");
+		prescriptionBuffer.append("'"+"0").append("',");
+		prescriptionBuffer.append("'"+"").append("',");
+		prescriptionBuffer.append("'"+count_per_repetition).append("',");
+		prescriptionBuffer.append("'"+binding_presc_title).append("',");
+		prescriptionBuffer.append("'"+discharge_taking_indicator).append("',");
+		prescriptionBuffer.append("'"+"doctor_user").append("',");//主治医生代码
+		prescriptionBuffer.append("'"+"").append("',");
+		prescriptionBuffer.append("'"+app.getPatientEntity().diagnosis).append("')");
+		WebServiceHelper.insertWebServiceData(prescriptionBuffer.toString());
+		
+		for (int i = 0; i < insertList.size(); i++) {
+			int item_no=i+1;
+			DrugEntity itemEntity=insertList.get(i);
+			StringBuffer buffer=new StringBuffer();
+			buffer.append("insert into doct_drug_presc_detail" + "(presc_date,"
+					+ // 处方日期（系统时间）
+					"presc_no," + // 处方号
+					"item_no," + // 项目序号（自动编号，从1开始）
+					"order_no," + // 医嘱序号 （空）最好西药时能填入
+					"order_sub_no," + // 医嘱子序号（空）
+					"drug_code," + // 药品编码
+					"drug_spec," + // 药品规格
+					"drug_name," + // 药品名称
+					"firm_id," + // 生产厂商
+					"package_spec," + // 包装规格
+					"package_units," + // 包装单位（总量的单位）
+					"quantity," + // 数量（即总量）
+					"costs," + // 费用，价格（单个项目的费用）
+					"payments," + // 已付费用（单个项目的费用，同上）
+					"administration," + // 途径
+					"dosage," + // 剂量（即总量*包装规格）
+					"dosage_units," + // 剂量单位（单次剂量的单位）
+					"amount_per_package," + // 每包装数量（空）
+					"frequency," + // 执行频次
+					"dosage_each," + // 单次剂量
+					"freq_detail," + // 医生说明
+					"is_basic) " + // 是否为基药（不是为空，基药填1）
+					"values(");
+			buffer.append("TO_DATE('"+start_date_time).append("','yyyy-MM-dd hh24:mi:ss'),");
+			prescriptionBuffer.append("'"+presc_no).append("',");
+			prescriptionBuffer.append("'"+item_no).append("',");
+			prescriptionBuffer.append("'"+"").append("',");
+			prescriptionBuffer.append("'"+"").append("',");
+			prescriptionBuffer.append("'"+itemEntity.drug_code).append("',");
+			prescriptionBuffer.append("'"+itemEntity.drug_spec).append("',");
+			prescriptionBuffer.append("'"+itemEntity.drug_name).append("',");
+			prescriptionBuffer.append("'"+itemEntity.firm_id).append("',");
+			prescriptionBuffer.append("'"+itemEntity.package_spec).append("',");
+			prescriptionBuffer.append("'"+itemEntity.package_units).append("',");
+			prescriptionBuffer.append("'"+itemEntity.quantity).append("',");
+			prescriptionBuffer.append("'"+itemEntity.single_price).append("',");
+			prescriptionBuffer.append("'"+itemEntity.single_price).append("',");
+			prescriptionBuffer.append("'"+itemEntity.administration).append("',");
+			prescriptionBuffer.append("'"+itemEntity.dosage).append("',");
+			prescriptionBuffer.append("'"+itemEntity.dose_units).append("',");
+			prescriptionBuffer.append("'"+itemEntity.frequency).append("',");
+			prescriptionBuffer.append("'"+itemEntity.dosage_each).append("',");
+			prescriptionBuffer.append("'"+itemEntity.freq_detail).append("',");
+			prescriptionBuffer.append("'"+itemEntity.is_basic.trim()).append("',");
+			WebServiceHelper.insertWebServiceData(buffer.toString());
+		}
+	}
+	
+	/**
+	 * 
+	* @Title: account 
+	* @Description: TODO(计算价格) 
+	* @param     设定文件 
+	* @return void    返回类型 
+	* @throws
+	 */
+	public String account(){
+		insertList=new ArrayList<DrugEntity>();
+		double total_price=0;//总价格
+		int size=mAdapter.getCount();
+		if (size!=0) {
+			for (int i = 0; i < size; i++) {
+				DrugEntity itemEntity=(DrugEntity) mAdapter.getItem(i);
+				View itemView=mListView.findViewWithTag(i);
+				EditText eachEditText=(EditText) itemView.findViewById(R.id.add_prescription_left_item_edit_4);
+				EditText totalEditText=(EditText) itemView.findViewById(R.id.add_prescription_left_item_edit_8);
+				Spinner spinner1=(Spinner) itemView.findViewById(R.id.add_prescription_left_item_spinner_6);
+				Spinner spinner2=(Spinner) itemView.findViewById(R.id.add_prescription_left_item_spinner_7);
+				if (totalEditText.getText().toString().equals("")||eachEditText.getText().toString().equals("")) {
+					return "";
+				}
+				itemEntity.dosage_each=eachEditText.getText().toString();//剂量,是否有一个eachEditText漏了，后面测试检查
+				itemEntity.quantity=totalEditText.getText().toString();//总量
+				itemEntity.administration=spinner1.getSelectedItem().toString();//途径
+				itemEntity.frequency=spinner2.getSelectedItem().toString();//频次
+				StringBuffer buffer=new StringBuffer();
+				buffer.append(itemEntity.dosage_each).append("/").append(itemEntity.package_units);//总量/单位
+				itemEntity.freq_detail=buffer.toString();
+				if (itemEntity.quantity.equals("")||itemEntity.quantity.equals("0")) {
+					itemEntity.quantity="1";
+				}
+				double num=Double.parseDouble(itemEntity.quantity);//计算是总量*价格
+				String purchase_price=itemEntity.purchase_price;
+				if (null==purchase_price||purchase_price.equals("")) {
+					purchase_price="1";
+				}
+				double num1=Double.parseDouble(purchase_price);
+				double num2=num*num1;
+				itemEntity.single_price=String.valueOf(num2);
+				total_price+=num2;
+				itemEntity.total_price=String.valueOf(total_price);
+				DebugUtil.debug("所的num值-->"+num+","+num1+","+num2+","+total_price);
+				accout2(itemEntity);//继续计算
+			}
+			return String.valueOf(total_price);
+		}
+		return "";
+	}
+
+	/**
+	 * 
+	* @Title: accout2 
+	* @Description: TODO(获取一些需用到的数据) 
+	* @param @param itemEntity    设定文件 
+	* @return void    返回类型 
+	* @throws
+	 */
+	private void accout2(DrugEntity itemEntity) {
+		// TODO Auto-generated method stub
+		String ssString2 = "select DRUG_CODE,DRUG_SPEC,FIRM_ID,UNITS,AMOUNT_PER_PACKAGE,MIN_SPEC"
+				+ " from drug_price_list "
+				+ "where drug_code= '"
+				+ itemEntity.drug_code
+				+ "'"
+				+ " and  DRUG_SPEC||FIRM_ID='"
+				+ itemEntity.drug_spec + "'" + " and stop_date is null";
+		ArrayList<DataEntity> dataList=WebServiceHelper.getWebServiceData(ssString2);
+		for (int i = 0; i < dataList.size(); i++) {
+			itemEntity.firm_id=dataList.get(i).get("firm_id");
+			itemEntity.package_spec=dataList.get(i).get("drug_spec");
+			itemEntity.amount_per_package=dataList.get(i).get("amount_per_package");
+			itemEntity.min_spec=dataList.get(i).get("min_spec");
+			itemEntity.dosage=accout3(itemEntity);
+		}
+		insertList.add(itemEntity);
+	}
+	/**
+	 * 
+	* @Title: accout3 
+	* @Description: TODO(继续计算) 
+	* @param     设定文件 
+	* @return void    返回类型 
+	* @throws
+	 */
+	private String accout3(DrugEntity itemEntity){
+		boolean arrFlag=false;
+		StringBuffer numBuffer=new StringBuffer();
+		StringBuffer numBuffer2=new StringBuffer();
+		//DebugUtil.debug("param1-->"+param1);
+		String[] numArr=itemEntity.min_spec.split("\\.");
+		DebugUtil.debug("数组长度--->"+numArr.length);
+		if (numArr.length>1) {
+			numBuffer.append(numArr[0]).append(".").append(getNum(numArr[1]));
+		}else {
+			numBuffer.append(getNum(itemEntity.min_spec));
+		}  
+		DebugUtil.debug("分割后的值"+numBuffer.toString());
+		double i=Double.parseDouble(numBuffer.toString());
+		double j=Double.parseDouble(itemEntity.amount_per_package);
+		if (itemEntity.quantity.equals("")) {
+			itemEntity.quantity="1";
+		}
+		double k=Double.parseDouble(itemEntity.quantity);
+		double m=i*j*k;
+		DebugUtil.debug("m的值-->"+m);
+		return String.valueOf(m);
+	}
+	/**'
+	 * 
+	* @Title: getNum 
+	* @Description: TODO() 
+	* @param @param s
+	* @param @return    设定文件 
+	* @return String    返回类型 
+	* @throws
+	 */
+	public String getNum(String s){
+		ArrayList<String> nums = new ArrayList<String>();
+		String num = "";
+		boolean lastIsNum = false;
+		for(int i = 0;i<s.length();i++){
+			 if(s.charAt(i)<='9' && s.charAt(i)>='0'){
+				   lastIsNum = true;
+				   num += s.substring(i,i+1);
+			 }else {
+				 if (lastIsNum)
+					 nums.add(num);
+				 num="";
+				 lastIsNum=false;
+			}
+		}
+		int[] rs = new int[nums.size()];
+		StringBuffer buffer=new StringBuffer();
+		for(int i = 0;i<rs.length;i++){
+			 rs[i] = Integer.parseInt((nums.get(i)));
+			 buffer.append(rs[i]);
+			 
+			 DebugUtil.debug("得到的数字-->"+rs[i]);
+		}
+		DebugUtil.debug("得到的buffer-->"+buffer.toString());
+		return buffer.toString();
+	}
+	
+	/**
+	 * 
+	* @Title: numNull 
+	* @Description: TODO(剂量或者总量是否为空) 
+	* @param @return    设定文件 
+	* @return boolean    返回类型 
+	* @throws
+	 */
+	private boolean numNull(){
+		int size=mAdapter.getCount();
+		if (size!=0) {
+			for (int i = 0; i < size; i++) {
+				View itemView=mListView.findViewWithTag(i);
+				EditText eachEditText=(EditText) itemView.findViewById(R.id.add_prescription_left_item_edit_4);
+				EditText totalEditText=(EditText) itemView.findViewById(R.id.add_prescription_left_item_edit_8);
+				if (eachEditText.getText().toString().equals("")||totalEditText.getText().toString().equals("")) {
+					Toast.makeText(getActivity(), "单次剂量或总量不能为空！", Toast.LENGTH_SHORT).show();
+					return false;
+				}
+			}
+			return true;
+		}
+		return false;
+	}
 }

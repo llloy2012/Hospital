@@ -1,6 +1,7 @@
 package com.android.hospital.ui.fragment;
 
 import com.android.hospital.adapter.PrescriptionAdapter;
+import com.android.hospital.constant.AppConstant;
 import com.android.hospital.entity.PrescriptionEntity;
 import com.android.hospital.ui.activity.AddCheckActivity;
 import com.android.hospital.ui.activity.AddPrescriptionActivity;
@@ -15,6 +16,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.Toast;
 /**
  * 
 * @ClassName: PrescriptionFragment 
@@ -45,9 +47,14 @@ public class PrescriptionFragment extends ListFragment{
 		Intent intent;
 		switch (item.getItemId()) {
 		case Menu.FIRST:
-			intent=new Intent();
-			intent.setClass(getActivity(), AddPrescriptionActivity.class);
-			startActivity(intent);
+			if (AppConstant.isPatientChoose) {
+				intent=new Intent();
+				intent.setClass(getActivity(), AddPrescriptionActivity.class);
+				startActivity(intent);
+			}else {
+				Toast.makeText(getActivity(), "请先选择病人!", Toast.LENGTH_SHORT).show();//可根据左边病人listview是否有被选中判断
+			}	
+			
 			break;
 
 		default:

@@ -1,13 +1,16 @@
 package com.android.hospital.adapter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.WeakHashMap;
 
 import com.android.hospital.HospitalApp;
 import com.android.hospital.entity.DrugEntity;
 import com.android.hospital.entity.InspectionItemEntity;
 import com.android.hospital.ui.activity.R;
+import com.android.hospital.util.DebugUtil;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -66,7 +69,7 @@ public class PrescriptionLeftItemAdapter extends BaseAdapter{
 		notifyDataSetChanged();
 	}
 	
-	public void addItem(DrugEntity entity,boolean defaultFlag){
+	public void addItem(DrugEntity entity,int defaultFlag){
 		if (mList==null) {
 			mList=new ArrayList<DrugEntity>();			
 		}
@@ -87,7 +90,7 @@ public class PrescriptionLeftItemAdapter extends BaseAdapter{
 			String item=mFreqList.get(i).get("freq_desc");
 			freqSpList.add(item);
 		}
-		ArrayAdapter<String> freqAdapter=new ArrayAdapter(mContext, android.R.layout.simple_spinner_item, freqSpList);
+		freqAdapter=new ArrayAdapter(mContext, android.R.layout.simple_spinner_item, freqSpList);
 		freqAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		
 		List<String> waySpList=new ArrayList<String>();
@@ -95,49 +98,41 @@ public class PrescriptionLeftItemAdapter extends BaseAdapter{
 			String item=mWayList.get(i).get("administration_name");
 			waySpList.add(item);
 		}
-		ArrayAdapter<String> wayAdapter=new ArrayAdapter(mContext, android.R.layout.simple_spinner_item, waySpList);
+		wayAdapter=new ArrayAdapter(mContext, android.R.layout.simple_spinner_item, waySpList);
 		wayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 	}
 		
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		// TODO Auto-generated method stub
-		ViewHolder viewHolder=null;
 		if (convertView==null) {
 			convertView=mInflater.inflate(R.layout.fragment_add_prescription_left_item, null);
-			viewHolder=new ViewHolder();
-			viewHolder.tev1=(TextView) convertView.findViewById(R.id.add_prescription_left_item_tev_1);
-			viewHolder.tev2=(TextView) convertView.findViewById(R.id.add_prescription_left_item_tev_2);
-			viewHolder.tev3=(TextView) convertView.findViewById(R.id.add_prescription_left_item_tev_3);
-			viewHolder.edit4=(EditText) convertView.findViewById(R.id.add_prescription_left_item_edit_4);
-			viewHolder.tev5=(TextView) convertView.findViewById(R.id.add_prescription_left_item_tev_5);
-			viewHolder.spinner6=(Spinner) convertView.findViewById(R.id.add_prescription_left_item_spinner_6);
-			viewHolder.spinner7=(Spinner) convertView.findViewById(R.id.add_prescription_left_item_spinner_7);
-			viewHolder.edit8=(EditText) convertView.findViewById(R.id.add_prescription_left_item_edit_8);
-			viewHolder.tev9=(TextView) convertView.findViewById(R.id.add_prescription_left_item_tev_9);
-			viewHolder.tev10=(TextView) convertView.findViewById(R.id.add_prescription_left_item_tev_10);
-			viewHolder.tev11=(TextView) convertView.findViewById(R.id.add_prescription_left_item_tev_11);			
-			convertView.setTag(viewHolder);
-		}else {
-			viewHolder=(ViewHolder) convertView.getTag();
 		}
+		convertView.setTag(position);
+		TextView tev1=(TextView) convertView.findViewById(R.id.add_prescription_left_item_tev_1);
+		TextView tev2=(TextView) convertView.findViewById(R.id.add_prescription_left_item_tev_2);
+		TextView tev3=(TextView) convertView.findViewById(R.id.add_prescription_left_item_tev_3);
+		EditText edit4=(EditText) convertView.findViewById(R.id.add_prescription_left_item_edit_4);
+		TextView tev5=(TextView) convertView.findViewById(R.id.add_prescription_left_item_tev_5);
+		Spinner spinner6=(Spinner) convertView.findViewById(R.id.add_prescription_left_item_spinner_6);
+		Spinner spinner7=(Spinner) convertView.findViewById(R.id.add_prescription_left_item_spinner_7);
+		EditText edit8=(EditText) convertView.findViewById(R.id.add_prescription_left_item_edit_8);
+		TextView tev9=(TextView) convertView.findViewById(R.id.add_prescription_left_item_tev_9);
+		TextView tev10=(TextView) convertView.findViewById(R.id.add_prescription_left_item_tev_10);
+		TextView tev11=(TextView) convertView.findViewById(R.id.add_prescription_left_item_tev_11);		
+		
 		DrugEntity item=mList.get(position);
 		int id=position+1;
-		viewHolder.tev1.setText(String.valueOf(id));
-		viewHolder.tev2.setText(item.drug_name);//药名
-		viewHolder.tev3.setText(item.drug_spec);//规格
-		viewHolder.tev5.setText(item.dose_units);//单位
-		viewHolder.tev9.setText(item.package_units);
-		viewHolder.tev10.setText(item.purchase_price);
-		viewHolder.tev11.setText(item.purchase_price);
-		viewHolder.spinner6.setAdapter(wayAdapter);
-		viewHolder.spinner7.setAdapter(freqAdapter);
+		tev1.setText(String.valueOf(id));
+		tev2.setText(item.drug_name);//药名
+		tev3.setText(item.drug_spec);//规格
+		tev5.setText(item.dose_units);//单位
+		tev9.setText(item.package_units);
+		tev10.setText(item.purchase_price);
+		tev11.setText(item.purchase_price);
+		spinner6.setAdapter(wayAdapter);
+		spinner7.setAdapter(freqAdapter);
+		
 		return convertView;
-	}
-	
-	private class ViewHolder{
-		public TextView tev1,tev2,tev3,tev5,tev9,tev10,tev11;
-		public EditText edit4,edit8;
-		public Spinner spinner6,spinner7;
 	}
 }

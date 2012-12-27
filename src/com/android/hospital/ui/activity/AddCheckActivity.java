@@ -41,7 +41,6 @@ public class AddCheckActivity extends Activity implements OnClickListener{
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_add_common);
-		
 		initView();
 		FragmentTransaction ft=getFragmentManager().beginTransaction();
 		if (leftFm==null) {

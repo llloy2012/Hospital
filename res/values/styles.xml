@@ -32,5 +32,9 @@
         <item name="android:actionBarStyle">@android:style/Widget.DeviceDefault.ActionBar</item>
         <item name="android:buttonBarStyle">@android:style/DeviceDefault.ButtonBar</item>
     </style>
-
+    <style name="textsmall">
+        <item name="android:textSize">14dp</item>
+        <item name="android:padding">1dp</item>
+        <item name="android:textColor">@color/cornflowerblue</item>
+    </style> 
 </resources>

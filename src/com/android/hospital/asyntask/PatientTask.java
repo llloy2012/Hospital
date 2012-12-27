@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.android.hospital.HospitalApp;
 import com.android.hospital.adapter.PatientAdapter;
+import com.android.hospital.constant.AppConstant;
 import com.android.hospital.db.ServerDao;
 import com.android.hospital.entity.DataEntity;
 import com.android.hospital.entity.PatientEntity;
@@ -67,6 +68,7 @@ public class PatientTask extends BaseAsyncTask{
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view,
 						int position, long id) {
+					AppConstant.isPatientChoose=true;//是否有病人被选中
 					HospitalApp app=(HospitalApp) mActivity.getApplication();//设置选中病人为全局变量
 					PatientEntity patientEntity=(PatientEntity) adapter.getItem(position);
 					app.setPatientEntity(patientEntity);

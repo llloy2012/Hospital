@@ -8,15 +8,19 @@ import com.android.hospital.entity.DrugEntity;
 import com.android.hospital.ui.activity.R;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 
-public class SeachPrescriptionFragment extends SearchFragment{
+public class SeachPrescriptionFragment extends SearchFragment implements OnItemClickListener{
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
 		show(null);//жавЉ
+		getListView().setOnItemClickListener(this);
 	}
 	
 	/**
@@ -44,5 +48,14 @@ public class SeachPrescriptionFragment extends SearchFragment{
 				getActivity(), R.layout.fragment_add_prescription_list_item,
 				arrayList);
 		getListView().setAdapter(preAdapter);
+	}
+
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int position,
+			long id) {
+		// TODO Auto-generated method stub
+		DrugEntity drugEntity=(DrugEntity) parent.getAdapter().getItem(position);
+		AddPrescriptionFragment fm=(AddPrescriptionFragment) getActivity().getFragmentManager().findFragmentByTag("addfm");
+		fm.setListView(drugEntity);
 	}
 }

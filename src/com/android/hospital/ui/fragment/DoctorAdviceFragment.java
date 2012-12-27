@@ -6,6 +6,7 @@ import com.android.hospital.adapter.CheckAdapter;
 import com.android.hospital.adapter.DcAdviceAdapter;
 import com.android.hospital.asyntask.DcAdviceTask;
 import com.android.hospital.asyntask.add.MaxNumberTask;
+import com.android.hospital.constant.AppConstant;
 import com.android.hospital.db.ServerDao;
 import com.android.hospital.entity.DcAdviceEntity;
 import com.android.hospital.ui.activity.AddDcAdviceActivity;
@@ -83,7 +84,7 @@ public class DoctorAdviceFragment extends ListFragment {
 			intent=new Intent();
 			DoctorAdviceFragment fragment=(DoctorAdviceFragment) getActivity().getFragmentManager().findFragmentByTag("dcadvice");
 			DcAdviceAdapter adapter=(DcAdviceAdapter) fragment.getListAdapter();		
-			if (adapter!=null&&adapter.getCount()!=0) {
+			if (AppConstant.isPatientChoose) {
 				DcAdviceEntity entity=(DcAdviceEntity) adapter.getItem(adapter.getCount()-1);
 				intent.putExtra("subentity", entity);
 				intent.setClass(getActivity(), AddDcAdviceActivity.class);

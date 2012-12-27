@@ -9,6 +9,7 @@ import com.android.hospital.ui.fragment.LeftListFragment;
 import com.android.hospital.ui.fragment.SeachPrescriptionFragment;
 import com.android.hospital.ui.fragment.SearchFragment;
 import com.android.hospital.util.DebugUtil;
+import com.android.hospital.widgets.MyProssDialog;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -18,6 +19,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -34,7 +36,7 @@ public class AddPrescriptionActivity extends Activity implements OnClickListener
 
 	private AddPrescriptionFragment leftFm;
 	private SearchFragment searchFm;
-	private Button mCancleBut,mOkBut;
+	private Button mCancleBut,mOkBut,mClearBut;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -58,9 +60,11 @@ public class AddPrescriptionActivity extends Activity implements OnClickListener
 	private void initView(){
 		mCancleBut=(Button) findViewById(R.id.common_but_cancle);
 		mOkBut=(Button) findViewById(R.id.common_but_ok);
+		mClearBut=(Button) findViewById(R.id.common_but_clear);
 		
 		mCancleBut.setOnClickListener(this);
 		mOkBut.setOnClickListener(this);
+		mClearBut.setOnClickListener(this);
 	}
 
 	@Override
@@ -80,6 +84,9 @@ public class AddPrescriptionActivity extends Activity implements OnClickListener
                 public void onClick(DialogInterface dialog, int whichButton) {
 
                     /* User clicked OK so do some stuff */
+                	if (leftFm.validate()) {
+                		new InsertPrescriptionTask().execute();
+					}    	
                 }
             })
             .setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -90,7 +97,9 @@ public class AddPrescriptionActivity extends Activity implements OnClickListener
             })
             .create().show();
 			break;
-
+		case R.id.common_but_clear:
+			leftFm.clear();
+			break;
 		default:
 			break;
 		}
@@ -103,4 +112,34 @@ public class AddPrescriptionActivity extends Activity implements OnClickListener
 		super.onResume();
 	}
 	
+	/**
+	 * 
+	* @ClassName: InsertPrescriptionTask 
+	* @Description: TODO(处方插入任务 ) 
+	* @author wanghailong 81813780@qq.com 
+	* @date 2012-12-27 下午4:36:47 
+	*
+	 */
+	private class InsertPrescriptionTask extends AsyncTask<Void, Void, String>{
+
+        private MyProssDialog mDialog;
+		
+		@Override
+		protected void onPreExecute() {
+	        mDialog=new MyProssDialog(AddPrescriptionActivity.this, "提交", "正在提交请求，请稍候...");
+		}
+		
+		@Override
+		protected String doInBackground(Void... params) {
+			// TODO Auto-generated method stub
+			leftFm.insert();
+			return null;
+		}
+		@Override
+		protected void onPostExecute(String result) {
+			// TODO Auto-generated method stub
+			mDialog.cancel();
+			AddPrescriptionActivity.this.finish();
+		}
+	}
 }

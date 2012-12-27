@@ -36,7 +36,7 @@
             android:layout_height="match_parent"
             android:layout_marginRight="@dimen/preference_screen_side_margin_negative"
             android:layout_marginLeft="@dimen/preference_screen_side_margin"
-            android:layout_weight="5">
+            android:layout_weight="6">
 
             <FrameLayout android:id="@+id/list_footer"
                     android:layout_width="match_parent"
@@ -49,7 +49,7 @@
                 android:id="@+id/common_right_fragment"
                 android:layout_width="0px"
                 android:layout_height="match_parent"
-                android:layout_weight="5"
+                android:layout_weight="4"
                 android:orientation="vertical"
                 android:visibility="visible" 
                 android:background="?android:attr/detailsElementBackground"

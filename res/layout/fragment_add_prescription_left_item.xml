@@ -22,14 +22,14 @@
     android:background="?android:attr/activatedBackgroundIndicator"
     android:gravity="center_vertical"
     android:paddingRight="?android:attr/scrollbarSize"
-    android:padding="5dp"
+    android:padding="2dp"
     >
   
 
 
         <TextView
             android:id="@+id/add_prescription_left_item_tev_1"
-            style="@style/textdefault"
+            style="@style/textsmall"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:ellipsize="marquee"
@@ -37,35 +37,36 @@
             android:text="测试1"
             android:textColor="@color/cornflowerblue" 
             android:layout_weight="1"
+            android:visibility="gone"
             />
         
        <View
         android:id="@+id/listview_divider"
         android:layout_width="2dip"
         android:layout_height="match_parent"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
         android:background="@drawable/main_list_divder" />
        
 
 
         <TextView
             android:id="@+id/add_prescription_left_item_tev_2"
-            style="@style/textdefault"
+            style="@style/textsmall"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:ellipsize="marquee"
             android:fadingEdge="horizontal"
             android:text="测试1"
-            android:layout_weight="3"
+            android:layout_weight="2.5"
              />
 
         <View
-            android:id="@+id/listview_divider"
+        android:id="@+id/listview_divider"
         android:layout_width="2dip"
         android:layout_height="match_parent"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
         android:background="@drawable/main_list_divder" />
        
         <TextView android:id="@+id/add_prescription_left_item_tev_3"
@@ -74,33 +75,35 @@
             android:ellipsize="marquee"
             android:fadingEdge="horizontal" 
             android:text="测试1"
-            style="@style/textdefault"
-            android:layout_weight="3"
+            style="@style/textsmall"
+            android:layout_weight="2.5"
             />
         <View
-            android:id="@+id/listview_divider"
+        android:id="@+id/listview_divider"
         android:layout_width="2dip"
         android:layout_height="match_parent"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
         android:background="@drawable/main_list_divder" />
        
 
         <EditText 
                 android:id="@+id/add_prescription_left_item_edit_4"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceListItemSmall"
+                style="@style/textsmall"
                 android:minHeight="?android:attr/listPreferredItemHeightSmall"
-                android:hint="单次剂量"
+                android:hint="剂量"
                 android:inputType="numberDecimal"
+                android:layout_weight="1"
             />
 
        <View
+        android:id="@+id/listview_divider"
         android:layout_width="2dip"
         android:layout_height="match_parent"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
         android:background="@drawable/main_list_divder" />
        
         <TextView android:id="@+id/add_prescription_left_item_tev_5"
@@ -109,74 +112,81 @@
             android:ellipsize="marquee"
             android:fadingEdge="horizontal" 
             android:text="测试1"
-            style="@style/textdefault"
+            style="@style/textsmall"
             android:layout_weight="0.5"
             />
 
         <View
+        android:id="@+id/listview_divider"
         android:layout_width="2dip"
         android:layout_height="match_parent"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
         android:background="@drawable/main_list_divder" />
        
 
         <Spinner 
                 android:id="@+id/add_prescription_left_item_spinner_6"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceListItemSmall"
                 android:minHeight="?android:attr/listPreferredItemHeightSmall"
                 android:entries="@array/spinner_zi"
+                android:layout_weight="2"
             />
 
-        <View
+       <View
+        android:id="@+id/listview_divider"
         android:layout_width="2dip"
         android:layout_height="match_parent"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
         android:background="@drawable/main_list_divder" />
        
 
         <Spinner 
                 android:id="@+id/add_prescription_left_item_spinner_7"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceListItemSmall"
                 android:minHeight="?android:attr/listPreferredItemHeightSmall"
                 android:entries="@array/spinner_zi"
+                android:layout_weight="2"
             />
 
         <View
+        android:id="@+id/listview_divider"
         android:layout_width="2dip"
         android:layout_height="match_parent"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
         android:background="@drawable/main_list_divder" />
        
 
         <EditText 
                 android:id="@+id/add_prescription_left_item_edit_8"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceListItemSmall"
+                style="@style/textsmall"
                 android:minHeight="?android:attr/listPreferredItemHeightSmall"
                 android:hint="总量"
                 android:inputType="numberDecimal"
+                android:layout_weight="1"
             />
 
-       <View
+      <View
+        android:id="@+id/listview_divider"
         android:layout_width="2dip"
         android:layout_height="match_parent"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
         android:background="@drawable/main_list_divder" />
        
 
         <TextView
             android:id="@+id/add_prescription_left_item_tev_9"
-            style="@style/textdefault"
-            android:layout_width="0dp"
+            style="@style/textsmall"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="marquee"
             android:fadingEdge="horizontal"
@@ -184,17 +194,17 @@
             android:layout_weight="0.5"
             />
 
-        <View
+       <View
+        android:id="@+id/listview_divider"
         android:layout_width="2dip"
         android:layout_height="match_parent"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
         android:background="@drawable/main_list_divder" />
-       
 
         <TextView
             android:id="@+id/add_prescription_left_item_tev_10"
-            style="@style/textdefault"
+            style="@style/textsmall"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:ellipsize="marquee"
@@ -204,16 +214,17 @@
              />
 
         <View
+        android:id="@+id/listview_divider"
         android:layout_width="2dip"
         android:layout_height="match_parent"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
         android:background="@drawable/main_list_divder" />
        
 
         <TextView
             android:id="@+id/add_prescription_left_item_tev_11"
-            style="@style/textdefault"
+            style="@style/textsmall"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:ellipsize="marquee"

@@ -25,6 +25,22 @@ public class DrugEntity {
 	public String drug_indicator;//医嘱类别
 	public String purchase_price;//卖出价格
 	
+	
+	//处方新增所需的额外属性
+	public String dosage_each;
+	public String total_dose_per;//总量
+	public String freq_detail;//
+	public String quantity;//
+	public String administration;
+	public String frequency;
+	public String single_price;//单个价格
+	public String total_price;//总的价格
+	public String firm_id;
+	public String package_spec;
+	public String amount_per_package;
+	public String dosage;
+	public String min_spec;
+	
 	public DrugEntity(){
 		
 	}
