@@ -33,6 +33,7 @@ public class PrescriptionFragment extends ListFragment{
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
 		setHasOptionsMenu(true);
+		getListView().setFastScrollEnabled(true);
 	}
 	
 	@Override
@@ -54,7 +55,6 @@ public class PrescriptionFragment extends ListFragment{
 			}else {
 				Toast.makeText(getActivity(), "请先选择病人!", Toast.LENGTH_SHORT).show();//可根据左边病人listview是否有被选中判断
 			}	
-			
 			break;
 
 		default:

@@ -34,6 +34,7 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 /**
  * 
 * @ClassName: AddDcAdviceFragment 
@@ -101,6 +102,10 @@ public class AddCheckFragment extends BaseFragment implements OnItemSelectedList
 	@Override
 	public boolean validate() {
 		// TODO Auto-generated method stub
+		if (adapter.getCount()!=0) {
+			return true;
+		}
+		Toast.makeText(getActivity(), "ÇëÑ¡ÔñÏîÄ¿!", Toast.LENGTH_SHORT).show();
 		return false;
 	}
 

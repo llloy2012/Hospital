@@ -39,6 +39,7 @@ public class InspectionFragment extends ListFragment{
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
 		setHasOptionsMenu(true);
+		getListView().setFastScrollEnabled(true);
 	}
 	
 	@Override

@@ -45,6 +45,7 @@ public class DcAdviceEntity implements Serializable{
 	public String visit_id;
 	public String billing_attr;
 	public String doctor_user;
+	public String drug_spec;//Ò©Æ·¹æ¸ñ
 	
 	
 	public DcAdviceEntity(){

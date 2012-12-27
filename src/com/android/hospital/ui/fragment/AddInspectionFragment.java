@@ -27,6 +27,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * 
@@ -120,6 +121,10 @@ public class AddInspectionFragment extends BaseFragment implements OnItemSelecte
 	@Override
 	public boolean validate() {
 		// TODO Auto-generated method stub
+		if (mAdapter.getCount()!=0) {
+			return true;
+		}
+		Toast.makeText(getActivity(), "ÇëÑ¡ÔñÏîÄ¿!", Toast.LENGTH_SHORT).show();
 		return false;
 	}
 

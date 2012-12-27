@@ -34,6 +34,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -51,11 +52,18 @@ import android.widget.Toast;
 *
  */
 public class MainActivity extends Activity implements AsyncTaskCallback<PatientEntity>{
+	private static final int RESULT_ADD_DCADVICE = 11;
+    private static final int RESULT_ADD_CHECK = 12;
+    private static final int RESULT_ADD_INSPECTION = 13;
+    private static final int RESULT_ADD_PRESCRIPTION = 14;
+	
 	private LeftListFragment leftFm;
 	private Spinner mSpinner;
 	private TextView titleTev;
 	private ActionBar actionBar;
 	private List asyncTasks=null;
+	private PatientEntity patientEntity;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -178,6 +186,7 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 	public void getSingle(PatientEntity value) {
 		// TODO Auto-generated method stub
 		DebugUtil.debug("测试getSingle"+value.name);
+		this.patientEntity=value;
 		setTitleTev(value);
 		putDcAdviceTask(value);
 		putCheckTask(value);
@@ -331,7 +340,7 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 			if (!(localAsyncTask == null) || (localAsyncTask.isCancelled())) {
 				localAsyncTask.cancel(true);
 			}
-		}
+		}		
 		//另外一种方式
 		/*Iterator localIterator=this.asyncTasks.iterator();
 		if (!localIterator.hasNext()) {
@@ -342,6 +351,29 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 	        continue;
 	    localAsyncTask.cancel(true);*/
 	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
+		switch (resultCode) {
+		case RESULT_ADD_DCADVICE:
+			putDcAdviceTask(patientEntity);
+			break;
+		case RESULT_ADD_CHECK:
+			putCheckTask(patientEntity);
+			break;
+		case RESULT_ADD_INSPECTION:
+			putInspectionTask(patientEntity);
+			break;
+		case RESULT_ADD_PRESCRIPTION:
+			putPrescriptionTask(patientEntity);
+			break;
+		default:
+			break;
+		}
+		
+	}
+	
 	
 	/*private void addCustomView() {
 	// TODO Auto-generated method stub
