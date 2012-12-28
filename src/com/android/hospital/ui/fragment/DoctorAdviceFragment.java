@@ -2,6 +2,7 @@ package com.android.hospital.ui.fragment;
 
 import java.util.ArrayList;
 
+import com.android.hospital.HospitalApp;
 import com.android.hospital.adapter.CheckAdapter;
 import com.android.hospital.adapter.DcAdviceAdapter;
 import com.android.hospital.asyntask.DcAdviceTask;
@@ -10,6 +11,7 @@ import com.android.hospital.constant.AppConstant;
 import com.android.hospital.db.ServerDao;
 import com.android.hospital.entity.DcAdviceEntity;
 import com.android.hospital.ui.activity.AddDcAdviceActivity;
+import com.android.hospital.ui.activity.MainActivity;
 import com.android.hospital.ui.activity.R;
 import com.android.hospital.util.DebugUtil;
 
@@ -105,7 +107,7 @@ public class DoctorAdviceFragment extends ListFragment {
 				DcAdviceEntity entity=(DcAdviceEntity) adapter.getItem(adapter.getCount()-1);
 				intent.putExtra("subentity", entity);
 				intent.setClass(getActivity(), AddDcAdviceActivity.class);
-				startActivity(intent);
+				startActivityForResult(intent, 11);
 			}else {
 				Toast.makeText(getActivity(), "请先选择病人!", Toast.LENGTH_SHORT).show();//可根据左边病人listview是否有被选中判断
 			}			
@@ -130,5 +132,15 @@ public class DoctorAdviceFragment extends ListFragment {
 			break;
 		}
 		return false;
+	}		
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
+		super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode==11) {
+			MainActivity mainActivity=(MainActivity) getActivity();
+			HospitalApp app=(HospitalApp) mainActivity.getApplication();
+			mainActivity.putDcAdviceTask(app.getPatientEntity());
+		}
 	}
 }

@@ -76,8 +76,6 @@ public class PatientTask extends BaseAsyncTask{
 					mTaskCallback.getSingle(patientEntity);
 				}
 			});
-		}else {
-			fm.setEmptyText("‘›Œﬁ–≈œ¢");
 		}
 	}
 	

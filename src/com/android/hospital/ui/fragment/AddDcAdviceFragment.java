@@ -393,6 +393,7 @@ public class AddDcAdviceFragment extends Fragment implements OnClickListener,OnI
 	* @throws
 	 */
 	private void setSubOrders(DcAdviceEntity entity){
+		entity.start_date_time=subEntity.start_date_time;
 		entity.administration=subEntity.administration;
 		entity.frequency=subEntity.frequency;
 		entity.freq_counter=subEntity.freq_counter;
@@ -438,7 +439,6 @@ public class AddDcAdviceFragment extends Fragment implements OnClickListener,OnI
 			administration=mWaySpinner.getItemAtPosition(mWaySpinner.getSelectedItemPosition()).toString();
 			new TimeTask().execute(administration,frequency);
 			break;
-
 		default:
 			break;
 		}

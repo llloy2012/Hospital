@@ -327,7 +327,7 @@ public class AddInspectionFragment extends BaseFragment implements OnItemSelecte
 			
 			max_no++;
 			StringBuffer orderBuffer=new StringBuffer();
-			orderBuffer.append("insert into orders" + " (patient_id,"
+			orderBuffer.append("insert into orders " + " (patient_id,"
 					        + "  visit_id," + "  order_no," + "  order_sub_no,"
 					        + "  start_date_time," + "  repeat_indicator,"
 					        + "  order_class," + "  order_text," + "  order_code,"

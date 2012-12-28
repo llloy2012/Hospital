@@ -31,12 +31,15 @@ import android.app.ActionBar.LayoutParams;
 import android.app.ActionBar.OnNavigationListener;
 import android.app.ActionBar.Tab;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
@@ -51,12 +54,7 @@ import android.widget.Toast;
 * @date 2012-12-14 上午11:36:57 
 *
  */
-public class MainActivity extends Activity implements AsyncTaskCallback<PatientEntity>{
-	private static final int RESULT_ADD_DCADVICE = 11;
-    private static final int RESULT_ADD_CHECK = 12;
-    private static final int RESULT_ADD_INSPECTION = 13;
-    private static final int RESULT_ADD_PRESCRIPTION = 14;
-	
+public class MainActivity extends Activity implements AsyncTaskCallback<PatientEntity>{	
 	private LeftListFragment leftFm;
 	private Spinner mSpinner;
 	private TextView titleTev;
@@ -212,6 +210,7 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 	* @throws
 	 */
 	public void putDcAdviceTask(PatientEntity value){
+		DebugUtil.debug("测试put");
 		DoctorAdviceFragment fragment=(DoctorAdviceFragment) getFragmentManager().findFragmentByTag("dcadvice");
 		if (fragment!=null) {
 			DcAdviceAdapter adapter=(DcAdviceAdapter) fragment.getListAdapter();
@@ -341,7 +340,8 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 			if (!(localAsyncTask == null) || (localAsyncTask.isCancelled())) {
 				localAsyncTask.cancel(true);
 			}
-		}		
+		}
+		
 		//另外一种方式
 		/*Iterator localIterator=this.asyncTasks.iterator();
 		if (!localIterator.hasNext()) {
@@ -354,27 +354,33 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 	}
 	
 	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		// TODO Auto-generated method stub
-		switch (resultCode) {
-		case RESULT_ADD_DCADVICE:
-			putDcAdviceTask(patientEntity);
-			break;
-		case RESULT_ADD_CHECK:
-			putCheckTask(patientEntity);
-			break;
-		case RESULT_ADD_INSPECTION:
-			putInspectionTask(patientEntity);
-			break;
-		case RESULT_ADD_PRESCRIPTION:
-			putPrescriptionTask(patientEntity);
-			break;
-		default:
-			break;
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			logout();
+			return true;
+		} else {
+			return super.onKeyDown(keyCode, event);
 		}
-		
 	}
 	
+	// 注销系统
+	private void logout() {
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			// .setIcon(R.);
+			builder.setMessage("真的要退出系统吗？").setCancelable(false)
+					.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int id) {
+							finish();
+						}
+					})
+					.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int id) {
+							dialog.cancel();
+						}
+					});
+			AlertDialog alert = builder.create();
+			alert.show();
+		}
 	
 	/*private void addCustomView() {
 	// TODO Auto-generated method stub

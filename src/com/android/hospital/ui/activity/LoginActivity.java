@@ -3,6 +3,7 @@ package com.android.hospital.ui.activity;
 
 
 import com.android.hospital.HospitalApp;
+import com.android.hospital.asyntask.UpdateDBTask;
 import com.android.hospital.asyntask.add.DrugOrNonDrugTask;
 import com.android.hospital.service.MyService;
 import com.android.hospital.util.DebugUtil;
@@ -52,11 +53,14 @@ public class LoginActivity extends Activity implements OnClickListener{
 		sp=getSharedPreferences("UserInfo", 0);
 		initView();
 		isAutoLogin();
-		Intent intent=new Intent();
+		/*Intent intent=new Intent();
 		intent.setClass(this, MyService.class);
-		startService(intent);
+		startService(intent);*/
+		
+		new UpdateDBTask(this).execute();//更新任务
 	}
 
+	
     /**
      * 
     * @Title: initView 

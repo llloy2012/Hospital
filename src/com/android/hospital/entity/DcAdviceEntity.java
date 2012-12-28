@@ -78,6 +78,7 @@ public class DcAdviceEntity implements Serializable{
 			entity.stop_date_time=dataList.get(i).get("stop_date_time").trim();
 			entity.freq_detail=dataList.get(i).get("freq_detail").trim();
 			entity.doctor=dataList.get(i).get("doctor").trim();
+			entity.frequency=dataList.get(i).get("frequency").trim();
 			list.add(entity);
 		}
 		return list;

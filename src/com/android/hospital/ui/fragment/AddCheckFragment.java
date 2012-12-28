@@ -288,7 +288,7 @@ public class AddCheckFragment extends BaseFragment implements OnItemSelectedList
 		checkBuffer.append("'"+mSubClassSp.getItemAtPosition(mSubClassSp.getSelectedItemPosition())).append("',");
 		checkBuffer.append("'"+mSymptomEdit.getText().toString()).append("',");
 		checkBuffer.append("'"+mSignsEdit.getText().toString()).append("',");
-		checkBuffer.append("'"+mDeptList.get(mDeptSp.getSelectedItemPosition())).append("',");
+		checkBuffer.append("'"+mDeptList.get(mDeptSp.getSelectedItemPosition()).get("performed_by")).append("',");//ฟฦสาด๚ย๋
 		checkBuffer.append("'"+"2").append("',");
 		checkBuffer.append("'"+"").append("',");
 		checkBuffer.append("TO_DATE('"+req_date_time).append("','yyyy-MM-dd hh24:mi:ss'),");
