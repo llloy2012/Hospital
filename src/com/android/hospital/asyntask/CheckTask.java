@@ -42,8 +42,6 @@ public class CheckTask extends BaseAsyncTask{
 		if (arrayList.size()!=0) {
 			CheckAdapter adapter=new CheckAdapter(mFragment.getActivity(), arrayList);
 			mFragment.setListAdapter(adapter);
-		}else {
-			mFragment.setEmptyText("没有数据");
 		}
 	}
 }

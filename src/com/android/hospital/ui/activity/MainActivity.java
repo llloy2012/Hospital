@@ -61,7 +61,7 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 	private Spinner mSpinner;
 	private TextView titleTev;
 	private ActionBar actionBar;
-	private List asyncTasks=null;
+	private List<AsyncTask> asyncTasks=null;
 	private PatientEntity patientEntity;
 	
 	@Override
@@ -81,6 +81,7 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 		}
 		ft.commit();
 		
+		asyncTasks=new ArrayList<AsyncTask>();
 		mSpinner=(Spinner) findViewById(R.id.main_left_department_spinner);
 		titleTev=(TextView) findViewById(R.id.main_patient_info_tev);
 		setSpinner();
