@@ -319,7 +319,7 @@ public class AddPrescriptionFragment extends BaseFragment implements OnClickList
 	 */
 	private void prescriptionInsertSql(){
 		String start_date_time=Util.toSimpleDate();
-		String presc_type="1";
+		String presc_type="0";
 		String dispensary="3103";
 		String decoction="";
 		String presc_no=mNextvalTev.getText().toString();
@@ -336,12 +336,12 @@ public class AddPrescriptionFragment extends BaseFragment implements OnClickList
 				return;
 			}
 			dispensary="3102";
-			presc_type="0";
+			presc_type="1";
 			if (mIsOrNotBox.isChecked()) {
 				decoction="1";
 			}
 		}else {
-			repetition="";
+			repetition="1";
 			count_per_repetition="";
 			usage="";
 			binding_presc_title="";
