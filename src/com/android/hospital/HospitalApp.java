@@ -14,6 +14,7 @@ import android.app.Application;
  * 
 * @ClassName:  
 * @Description: TODO(静态变量) 
+* 测试上传
 * @author wanghailong 81813780@qq.com 
 * @date 2012-12-18 上午8:57:34 
 *
