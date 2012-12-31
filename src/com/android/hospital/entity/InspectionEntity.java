@@ -83,22 +83,22 @@ public class InspectionEntity implements Serializable{
 		int k=0;
 		for (int j = 0; j < list.size(); j++) {
 			if (k!=0){
-				String  test_n1=list.get(j).test_no;  
-				String  test_n0=list.get(j-1).test_no; 
-				if (test_n0.equals(test_n1)){					
-					list.get(k-1).item_name=list.get(k-1).item_name + '('+list.get(j).item_no+')'+list.get(j).item_name;
-					list.set(k-1, list.get(k-1));
-				}else{
-					list.get(j).item_name ='('+list.get(j).item_no+')'+list.get(j).item_name;
-					list_end.add(list.get(j));
-					k++;
-				}
+					String  test_n1=list.get(j).test_no;  
+					String  test_n0=list.get(j-1).test_no; 
+					if (test_n0.equals(test_n1)){					
+						list.get(k-1).item_name=list.get(k-1).item_name + '('+list.get(j).item_no+')'+list.get(j).item_name;
+						list.set(k-1, list.get(k-1));
+					}else{
+							list_end.add(list.get(k-1));
+							list.get(k).item_name ='('+list.get(j).item_no+')'+list.get(j).item_name;
+							k++;
+					}
 			}else{
-				list.get(j).item_name ='('+list.get(j).item_no+')'+list.get(j).item_name;
-				list_end.add(list.get(j));
-				k++;
+					list.get(j).item_name ='('+list.get(j).item_no+')'+list.get(j).item_name;
+					k++;
 			}
 		}
+		list_end.add(list.get(k-1));	
 		return list_end;
 	}
 }

@@ -333,8 +333,8 @@ public class AddCheckFragment extends BaseFragment implements OnItemSelectedList
 			orderBuffer.append("'"+app.getDoctor()).append("',");
 			orderBuffer.append("'"+app.getLoginName()).append("',");
 			orderBuffer.append("TO_DATE('"+req_date_time).append("','yyyy-MM-dd hh24:mi:ss'),");
-			orderBuffer.append("'"+"").append("',");
-			orderBuffer.append("'"+"").append("',");
+			orderBuffer.append("'"+"3").append("',");
+			orderBuffer.append("'"+"3").append("',");
 			orderBuffer.append("'"+app.getNextval()).append("')");
 			WebServiceHelper.insertWebServiceData(orderBuffer.toString());
 		}
