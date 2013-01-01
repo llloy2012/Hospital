@@ -269,7 +269,7 @@ public class AddCheckFragment extends BaseFragment implements OnItemSelectedList
 		checkBuffer.append("insert into exam_appoints "
 						+ "(exam_no,patient_id,name,name_phonetic,"
 						+ "sex,date_of_birth,birth_place,identity,charge_type,mailing_address,"
-						+ "zip_code,phone_number,exam_class,exam_sub_class,clin_symp,phys_sign,"
+						+ "zip_code,phone_number,exam_class,exam_sub_class,clin_symp,phys_sign,clin_diag"
 						+ "performed_by,patient_source,facility,req_date_time,req_dept,req_physician,"
 						+ "visit_id,doctor_user) " + "values " + "(");
 		checkBuffer.append("'"+app.getNextval()).append("',");
@@ -288,7 +288,8 @@ public class AddCheckFragment extends BaseFragment implements OnItemSelectedList
 		checkBuffer.append("'"+mSubClassSp.getItemAtPosition(mSubClassSp.getSelectedItemPosition())).append("',");
 		checkBuffer.append("'"+mSymptomEdit.getText().toString()).append("',");
 		checkBuffer.append("'"+mSignsEdit.getText().toString()).append("',");
-		checkBuffer.append("'"+mDeptList.get(mDeptSp.getSelectedItemPosition()).get("performed_by")).append("',");//科室代码
+		checkBuffer.append("'"+app.getPatientEntity().diagnosis).append("',");
+		checkBuffer.append("'"+mDeptList.get(mDeptSp.getSelectedItemPosition()).get("dept_code")).append("',");//科室代码
 		checkBuffer.append("'"+"2").append("',");
 		checkBuffer.append("'"+"").append("',");
 		checkBuffer.append("TO_DATE('"+req_date_time).append("','yyyy-MM-dd hh24:mi:ss'),");
@@ -333,8 +334,8 @@ public class AddCheckFragment extends BaseFragment implements OnItemSelectedList
 			orderBuffer.append("'"+app.getDoctor()).append("',");
 			orderBuffer.append("'"+app.getLoginName()).append("',");
 			orderBuffer.append("TO_DATE('"+req_date_time).append("','yyyy-MM-dd hh24:mi:ss'),");
-			orderBuffer.append("'"+"").append("',");
-			orderBuffer.append("'"+"").append("',");
+			orderBuffer.append("'"+"3").append("',");
+			orderBuffer.append("'"+"3").append("',");
 			orderBuffer.append("'"+app.getNextval()).append("')");
 			WebServiceHelper.insertWebServiceData(orderBuffer.toString());
 		}
