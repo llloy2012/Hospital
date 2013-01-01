@@ -8,6 +8,7 @@ import java.util.Map;
 import com.android.hospital.HospitalApp;
 import com.android.hospital.entity.DataEntity;
 import com.android.hospital.entity.DrugEntity;
+import com.android.hospital.entity.GroupOrderEntity;
 import com.android.hospital.entity.InspectionItemEntity;
 import com.android.hospital.entity.NonDrugEntity;
 import com.android.hospital.ui.activity.LoginActivity;
@@ -276,4 +277,8 @@ public class UpdateDBTask extends BaseAsyncTask{
 	private void endInspectionItemTask(){
 		app.setInspectionItemList(inspectionItemList);
 	}
+	
+	
+	
+	
 }

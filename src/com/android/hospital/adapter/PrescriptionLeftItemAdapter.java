@@ -104,10 +104,10 @@ public class PrescriptionLeftItemAdapter extends BaseAdapter{
 		
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub	
 		if (convertView==null) {
-			convertView=mInflater.inflate(R.layout.fragment_add_prescription_left_item, null);
-		}
+			convertView=mInflater.inflate(R.layout.fragment_add_prescription_left_item, null);	
+		}	
 		convertView.setTag(position);
 		TextView tev1=(TextView) convertView.findViewById(R.id.add_prescription_left_item_tev_1);
 		TextView tev2=(TextView) convertView.findViewById(R.id.add_prescription_left_item_tev_2);
@@ -132,10 +132,22 @@ public class PrescriptionLeftItemAdapter extends BaseAdapter{
 		tev11.setText(item.purchase_price);
 		if (spinner6.getAdapter()==null) {
 			spinner6.setAdapter(wayAdapter);
+		}else if(spinner6.getSelectedItemPosition()!=0){
+			spinner6.setSelection(spinner6.getSelectedItemPosition());
+			DebugUtil.debug("positon-spinner->"+position);
+		}else {
+			spinner6.setSelection(0);
 		}
 		if (spinner7.getAdapter()==null) {
 			spinner7.setAdapter(freqAdapter);
-		}				
+		}
+		if (!edit4.getText().toString().equals("")) {
+			edit4.setText(edit4.getText().toString());
+			DebugUtil.debug("position---edittext-->"+edit4.getText().toString());
+		}else {
+			edit4.setText("");
+		}
+		
 		return convertView;
 	}
 }

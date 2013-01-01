@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.android.hospital.entity.DrugEntity;
+import com.android.hospital.entity.GroupOrderEntity;
 import com.android.hospital.entity.InspectionItemEntity;
 import com.android.hospital.entity.NonDrugEntity;
 import com.android.hospital.entity.PatientEntity;
@@ -35,6 +36,7 @@ public class HospitalApp extends Application{
 	private String doctor="";//医生名
 	private ArrayList<InspectionItemEntity> inspectionItemList;//检验项目集合
 	private String nextval="";//触发器
+	private ArrayList<GroupOrderEntity> groupOrderList;//套餐医嘱集合
 	
 	@Override
 	public void onCreate() {
@@ -167,6 +169,14 @@ public class HospitalApp extends Application{
 
 	public void setNextval(String nextval) {
 		this.nextval = nextval;
+	}
+
+	public ArrayList<GroupOrderEntity> getGroupOrderList() {
+		return groupOrderList;
+	}
+
+	public void setGroupOrderList(ArrayList<GroupOrderEntity> groupOrderList) {
+		this.groupOrderList = groupOrderList;
 	}
 
 	

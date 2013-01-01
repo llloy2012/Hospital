@@ -2,9 +2,13 @@ package com.android.hospital.ui.activity;
 
 
 
+import java.util.ArrayList;
+
 import com.android.hospital.HospitalApp;
 import com.android.hospital.asyntask.UpdateDBTask;
 import com.android.hospital.asyntask.add.DrugOrNonDrugTask;
+import com.android.hospital.entity.DataEntity;
+import com.android.hospital.entity.GroupOrderEntity;
 import com.android.hospital.service.MyService;
 import com.android.hospital.util.DebugUtil;
 import com.android.hospital.webservice.WebServiceHelper;
@@ -44,6 +48,8 @@ public class LoginActivity extends Activity implements OnClickListener{
 	private EditText mUserEditText,mPwdEditText;
 	private CheckBox mCheckBox;
 	private Button mOkBut,mCancleBut;
+	private ArrayList<GroupOrderEntity> groupOrderList;//套餐医嘱集合
+	private HospitalApp app;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +57,7 @@ public class LoginActivity extends Activity implements OnClickListener{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 		
+		app=(HospitalApp) getApplication();
 		
 		sp=getSharedPreferences("UserInfo", 0);
 		initView();
@@ -161,7 +168,6 @@ public class LoginActivity extends Activity implements OnClickListener{
 	private class LoginTask extends AsyncTask<Void, Void, String>{
 		
 		private MyProssDialog mDialog;
-		private HospitalApp app;
 		
 		@Override
 		protected void onPreExecute() {
@@ -174,8 +180,8 @@ public class LoginActivity extends Activity implements OnClickListener{
 			String username=mUserEditText.getText().toString().trim().toUpperCase();
 			String pwd=mPwdEditText.getText().toString().trim().toUpperCase();
 			String result=WebServiceHelper.getUserName(username, pwd);
-			app=(HospitalApp) getApplication();
 			app.setLoginName(username);
+			startGroupOrderTask();
 			return result;
 		}
 		@Override
@@ -187,6 +193,7 @@ public class LoginActivity extends Activity implements OnClickListener{
 			}else {
 				String[] strArr=result.split("<;>");
 				app.setDoctor(strArr[0]);//设置医生名字
+				endGroupOrderTask();
 				login();
 				Intent intent=new Intent();
 				intent.setClass(LoginActivity.this, MainActivity.class);
@@ -220,5 +227,31 @@ public class LoginActivity extends Activity implements OnClickListener{
 				CheckVersionActivity.class);
 		startActivity(intentCheckVersion);
 		return true;
+	}
+	
+	/**
+	 * 
+	* @Title: startGroupOrderTask 
+	* @Description: TODO(套餐医嘱任务) 
+	* @param     设定文件 
+	* @return void    返回类型 
+	* @throws
+	 */
+	private void startGroupOrderTask(){
+		String sql = "select group_order_master.group_order_id ,group_order_master.title from group_order_master,group_order_selection" +
+				     " where group_order_master.group_order_id=group_order_selection.group_order_id" +
+				     " and group_order_selection.user_name='"+app.getLoginName()+"'";
+		ArrayList<DataEntity> dataList=WebServiceHelper.getWebServiceData(sql);
+		groupOrderList=new ArrayList<GroupOrderEntity>();
+		for (int i = 0; i < dataList.size(); i++) {
+			GroupOrderEntity entity=new GroupOrderEntity();
+			entity.group_order_id=dataList.get(i).get("group_order_id");
+			entity.title=dataList.get(i).get("title");
+			groupOrderList.add(entity);
+		}
+	}
+	
+	private void endGroupOrderTask(){
+		app.setGroupOrderList(groupOrderList);
 	}
 }

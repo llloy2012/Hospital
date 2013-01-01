@@ -11,6 +11,7 @@ import com.android.hospital.constant.AppConstant;
 import com.android.hospital.db.ServerDao;
 import com.android.hospital.entity.DcAdviceEntity;
 import com.android.hospital.ui.activity.AddDcAdviceActivity;
+import com.android.hospital.ui.activity.GroupDcAdviceActivity;
 import com.android.hospital.ui.activity.MainActivity;
 import com.android.hospital.ui.activity.R;
 import com.android.hospital.util.DebugUtil;
@@ -48,12 +49,13 @@ import android.widget.Toast;
  */
 public class DoctorAdviceFragment extends ListFragment {
 
-	
+	private HospitalApp app;
+	private int position=0;//点击模板id
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		
+		app=(HospitalApp) getActivity().getApplication();
 		//ArrayList<DcAdviceEntity> arrayList=new DcAdviceEntity("").list;
 //		DcAdviceAdapter adapter=new DcAdviceAdapter(getActivity(),arrayList);
 //		setListAdapter(adapter);
@@ -117,23 +119,30 @@ public class DoctorAdviceFragment extends ListFragment {
 				Toast.makeText(getActivity(), "请先选择病人!", Toast.LENGTH_SHORT).show();//可根据左边病人listview是否有被选中判断
 			}			
 			break;
-		case Menu.FIRST+1:
+		case Menu.FIRST+1:			
 			new AlertDialog.Builder(getActivity())
         .setIconAttribute(android.R.attr.alertDialogIcon)
         .setTitle("医嘱模板")
-        .setSingleChoiceItems(R.array.select_dialog_items2, 0, new DialogInterface.OnClickListener() {
+        .setSingleChoiceItems(getArrayItem(), 0, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
 
                 /* User clicked on a radio button do some stuff */
+            	position=whichButton;
             }
         })
         .setPositiveButton("确定", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
 
                 /* User clicked Yes so do some stuff */
+            	DebugUtil.debug("positon--->"+position);
+            	String id=app.getGroupOrderList().get(position).group_order_id;
+            	Intent intent=new Intent();
+            	intent.putExtra("id", id);
+            	intent.setClass(getActivity(), GroupDcAdviceActivity.class);
+            	startActivity(intent);
             }
         })
-        .setNegativeButton("", new DialogInterface.OnClickListener() {
+        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
 
                 /* User clicked No so do some stuff */
@@ -173,5 +182,21 @@ public class DoctorAdviceFragment extends ListFragment {
 			HospitalApp app=(HospitalApp) mainActivity.getApplication();
 			mainActivity.putDcAdviceTask(app.getPatientEntity());
 		}
+	}
+	/**
+	 * 
+	* @Title: getArrayItem 
+	* @Description: TODO(得到模板数组) 
+	* @param     设定文件 
+	* @return void    返回类型 
+	* @throws
+	 */
+	public String[] getArrayItem(){
+		int size=app.getGroupOrderList().size();
+		String[] arr=new String[size];
+		for (int i = 0; i < size; i++) {
+			arr[i]=app.getGroupOrderList().get(i).title;
+		}
+		return arr;
 	}
 }
