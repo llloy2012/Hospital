@@ -1,5 +1,6 @@
 package com.android.hospital.entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -10,8 +11,12 @@ import java.util.ArrayList;
 * @date 2012-12-18 下午7:37:51 
 *
  */
-public class CheckEntity {
+public class CheckEntity implements Serializable{
 
+	/** 
+	* @user - @date 
+	*/
+	private static final long serialVersionUID = -7091365283485985530L;
 	public String exam_no;//申请序号
     public String exam_item;//检查项目
     public String exam_class;//检查类别（C

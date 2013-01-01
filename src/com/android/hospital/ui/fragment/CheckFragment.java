@@ -3,6 +3,7 @@ package com.android.hospital.ui.fragment;
 import com.android.hospital.HospitalApp;
 import com.android.hospital.adapter.CheckAdapter;
 import com.android.hospital.constant.AppConstant;
+import com.android.hospital.entity.CheckEntity;
 import com.android.hospital.ui.activity.AddCheckActivity;
 import com.android.hospital.ui.activity.AddDcAdviceActivity;
 import com.android.hospital.ui.activity.CheckdetailActivity;
@@ -98,7 +99,10 @@ public class CheckFragment extends ListFragment {
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		// TODO Auto-generated method stub
 		super.onListItemClick(l, v, position, id);
+		CheckAdapter adapter=(CheckAdapter) getListAdapter();
+		CheckEntity entity=(CheckEntity) adapter.getItem(position);
 		Intent intent=new Intent();
+		intent.putExtra("check", entity);
 		intent.setClass(getActivity(), CheckdetailActivity.class);
 		startActivity(intent);
 	}

@@ -15,6 +15,11 @@ import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 import org.xmlpull.v1.XmlPullParserException;
 
+import com.android.hospital.entity.CheckEntity;
+import com.android.hospital.entity.DataEntity;
+import com.android.hospital.util.DebugUtil;
+import com.android.hospital.webservice.WebServiceHelper;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ListActivity;
@@ -22,6 +27,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -47,6 +53,7 @@ public class CheckdetailActivity extends Activity{
 
 	public String sFilePath = "";
 	public String sFileName = "";
+	private String exam_no="";//检查序号
 	
 	static class MyHandler extends Handler{
 		WeakReference<CheckdetailActivity> mActivity;
@@ -105,12 +112,18 @@ public class CheckdetailActivity extends Activity{
 		super.onCreate(savedInstanceState);
 		handle = new MyHandler(this);
 		setContentView(R.layout.activity_checkdetail_photolist);
+		
+		Intent intent=getIntent();
+		CheckEntity entity=(CheckEntity) intent.getSerializableExtra("check");
+		exam_no=entity.exam_no;
+		
 		File file = new File(SDPATH);
 		if (!file.exists()){
 			file.mkdir();
 		}
 		listView = (ListView)findViewById(R.id.lvPath);
-		listView.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1,getData()));
+		//listView.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1,getData()));
+		new FilePathTask().execute("");//获取文件路径
 		listView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -173,13 +186,12 @@ public class CheckdetailActivity extends Activity{
 		public void run(){
 			int what = -1;
 			try {
-				String URL = "http://192.168.0.101:8080/DCMConvertService/DCMPort?wsdl";
+				String URL = "http://192.168.0.10:8888/DCMConvertService/DCMPort?wsdl";
 				String NAMESPACE = "http://webservice.lemax.com/";
 				String METHOD_NAME = "getDcmTxt";
 				
 				SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
-				request.addProperty("arg0", sFilePath);
-				
+				request.addProperty("arg0", sFilePath);				
 				SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
 						SoapEnvelope.VER11);
 				envelope.setOutputSoapObject(request);
@@ -227,10 +239,11 @@ public class CheckdetailActivity extends Activity{
 				String URL = "http://192.168.0.10:8888/DCMConvertService/DCMPort?wsdl";
 				String NAMESPACE = "http://webservice.lemax.com/";
 				String METHOD_NAME = "getDcmJpg";
-				
 				SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
-				request.addProperty("arg0", sFilePath);
-				
+				DebugUtil.debug("路径--->"+sFilePath);
+				//request.addProperty("arg0", sFilePath);
+				//request.addProperty("arg0", "C:\\dcm\\agfacr\\1335805255\\1335805259_0.DCM");
+				request.addProperty("arg0", "Z:\\Dcmtemp\\Gect\\20121016\\1350356006\\1350356015_0.DCM");
 				SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
 						SoapEnvelope.VER11);
 				envelope.setOutputSoapObject(request);
@@ -239,8 +252,10 @@ public class CheckdetailActivity extends Activity{
 				try {
 					ht.call("http://webservice.lemax.com/getDcmJpg", envelope);
 					if (envelope.getResponse() != null) {
+						DebugUtil.debug("测试");
 						Object ret = (Object)envelope.getResponse();
 						String retString = String.valueOf(ret);
+						DebugUtil.debug("retString--->"+retString);
 						Log.e("retString", retString);
 						byte[] retByte = (byte[]) Base64.decode(retString);
 						File jpgFile = new File(SDPATH + sFileName + ".jpg");
@@ -381,4 +396,33 @@ public class CheckdetailActivity extends Activity{
             {".zip",    "application/x-zip-compressed"}, 
             {"",        "*/*"}   
         }; 
+	
+	/**
+	 * 
+	* @ClassName: FilePathTask 
+	* @Description: TODO(获取文件名和路径) 
+	* @author wanghailong 81813780@qq.com 
+	* @date 2012-12-31 下午4:59:57 
+	*
+	 */
+	private class FilePathTask extends AsyncTask<String, Void, String>{
+
+		@Override
+		protected String doInBackground(String... params) {
+			// TODO Auto-generated method stub
+			String sql="select filename from dicomtemp@pacs10 where examno='"+exam_no+"'";
+			ArrayList<DataEntity> dataList=WebServiceHelper.getWebServiceData(sql);
+			for (int i = 0; i < dataList.size(); i++) {
+				String path=dataList.get(i).get("filename").replace("\\Dcmtemp", "");
+				data.add(path);
+			}
+			return null;
+		}
+		
+		@Override
+		protected void onPostExecute(String result) {
+			// TODO Auto-generated method stub
+			listView.setAdapter(new ArrayAdapter<String>(CheckdetailActivity.this, android.R.layout.simple_expandable_list_item_1,data));
+		}
+	}
 }
