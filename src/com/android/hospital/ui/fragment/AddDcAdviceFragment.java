@@ -293,7 +293,7 @@ public class AddDcAdviceFragment extends Fragment implements OnClickListener,OnI
 		entity.stop_date_time="";// 停止时间,如果为长期，则为空，否则等于当前时间
 		if (mShortTimeBut.isChecked()) {
 			entity.repeat_indicator = "0";
-			entity.repeat_indicator = entity.start_date_time;
+			entity.stop_date_time = entity.start_date_time;
 		}
         entity.order_status="6";// 在ORDER_STATUS_DICT中查看（新开医嘱标识为1即可）
 		entity.enter_date_time=entity.start_date_time;// 开医嘱录入日期及时间，（同START_DATE_TIME时间，即保存时系统时间)
@@ -406,6 +406,7 @@ public class AddDcAdviceFragment extends Fragment implements OnClickListener,OnI
 		entity.perform_schedule=subEntity.perform_schedule;
 		entity.ordering_dept=subEntity.ordering_dept;
 		entity.drug_billing_attr=entity.drug_billing_attr;
+		entity.enter_date_time=subEntity.enter_date_time;
 	}
 	/**
 	 * 

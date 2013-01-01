@@ -348,8 +348,8 @@ public class AddInspectionFragment extends BaseFragment implements OnItemSelecte
 			orderBuffer.append("'"+app.getDoctor()).append("',");
 			orderBuffer.append("'"+app.getLoginName()).append("',");
 			orderBuffer.append("TO_DATE('"+requested_date_time).append("','yyyy-MM-dd hh24:mi:ss'),");
-			orderBuffer.append("'"+"").append("',");
-			orderBuffer.append("'"+"").append("',");
+			orderBuffer.append("'"+"3").append("',");
+			orderBuffer.append("'"+"3").append("',");
 			orderBuffer.append("'"+test_no).append("')");
 			WebServiceHelper.insertWebServiceData(orderBuffer.toString());
 	    }

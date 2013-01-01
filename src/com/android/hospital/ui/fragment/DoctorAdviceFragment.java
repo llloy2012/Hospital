@@ -14,6 +14,8 @@ import com.android.hospital.ui.activity.AddDcAdviceActivity;
 import com.android.hospital.ui.activity.MainActivity;
 import com.android.hospital.ui.activity.R;
 import com.android.hospital.util.DebugUtil;
+import com.android.hospital.util.Util;
+import com.android.hospital.webservice.WebServiceHelper;
 
 import android.R.menu;
 import android.app.AlertDialog;
@@ -23,6 +25,7 @@ import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -48,12 +51,12 @@ import android.widget.Toast;
  */
 public class DoctorAdviceFragment extends ListFragment {
 
-	
+	private HospitalApp app;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		
+		app=(HospitalApp) getActivity().getApplication();
 		//ArrayList<DcAdviceEntity> arrayList=new DcAdviceEntity("").list;
 //		DcAdviceAdapter adapter=new DcAdviceAdapter(getActivity(),arrayList);
 //		setListAdapter(adapter);
@@ -157,8 +160,40 @@ public class DoctorAdviceFragment extends ListFragment {
 		switch (item.getItemId()) {
 		case 0:
 			 DcAdviceAdapter adapter=(DcAdviceAdapter) getListAdapter();
+			 DcAdviceEntity entity=(DcAdviceEntity) adapter.getItem(position);
+			 String req_date_time=Util.toSimpleDate();//获得系统时间
+			 //临时医嘱或者还没有处理的医嘱，不能停
+			 if("0".equals(entity.repeat_indicator)||"6".equals(entity.order_status)){
+				 Toast.makeText(getActivity(), "临时医嘱或护士未处理的医嘱不能停!", Toast.LENGTH_SHORT).show(); 
+				 return false;
+			 }else{
+				 if(!"1".equals(entity.order_sub_no)){ //如果不是主医嘱
+					 Toast.makeText(getActivity(), "此为子医嘱，需要停主医嘱!", Toast.LENGTH_SHORT).show(); 
+					 return false;
+				 }else{
+					 ArrayList<DcAdviceEntity> list = adapter.getList();//获的所有的医嘱
+					 ArrayList<DcAdviceEntity> list_update = new ArrayList<DcAdviceEntity>();//存放需要停止的医嘱
+					 for (int i = 0; i < list.size(); i++) {
+						if(entity.order_no.equals(list.get(i).order_no)){
+							list_update.add(list.get(i));
+							//DebugUtil.debug("需要停的医嘱的序号-->", list_update.get(i).order_no);
+						}
+					}//for
+					for (int i = 0; i < list_update.size(); i++) {
+						String sql="UPDATE ORDERS  "+
+		                         " SET STOP_DOCTOR= '"+app.getDoctor()+"',"+
+								 " STOP_DATE_TIME= TO_DATE('"+req_date_time+"','yyyy-MM-dd hh24:mi:ss'),"+
+	        		             " ORDER_STATUS='6',BILLING_ATTR='0',DRUG_BILLING_ATTR='0' "+
+	                         " WHERE PATIENT_ID  = '"+app.getPatientEntity().patient_id+"'"+
+	                         " AND VISIT_ID = '"+app.getPatientEntity().visit_id+"'"+
+	                         " AND ORDER_NO = '"+list_update.get(i).order_no+"'"+
+	                         " AND ORDER_SUB_NO = '"+list_update.get(i).order_sub_no+"'";
+						Log.e("更新语句-->", sql);
+						WebServiceHelper.insertWebServiceData(sql);
+					} 
+				 }
+			 }//else1
 			return true;
-
 		default:
 			break;
 		}
@@ -175,3 +210,4 @@ public class DoctorAdviceFragment extends ListFragment {
 		}
 	}
 }
+

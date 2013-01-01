@@ -164,6 +164,38 @@ public class WebServiceHelper {
 		}
     	return false;
     }
+    /**
+    * @Title: updateWebServiceData 
+    * @Description: TODO(更新数据) 
+    * @param @param sql  更新语句
+    * @return boolean    true为更新成功
+     */
+
+    public static boolean updateWebServiceData(String sql){
+       	SoapObject request = new SoapObject(NAMESPACE, "executeByDefaultDBSql");
+       	request.addProperty("in0", sql);
+       	SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
+   				SoapEnvelope.VER11);
+       	envelope.setOutputSoapObject(request);
+       	DebugUtil.debug("更新的sql语句--->"+sql);
+       	HttpTransportSE ht = new HttpTransportSE(SERVERURL);
+       	ht.debug = true;
+       	try {
+   			ht.call("http://service.com/executeByDefaultDBSql", envelope);
+   			if (envelope.getResponse()!=null) {
+   				//SoapObject object = (SoapObject) envelope.getResponse();
+   				String result=envelope.getResponse().toString();
+   				DebugUtil.debug("更新的返回结果->"+result);
+   				if (result.equals("1")) {
+   					return true;
+   				}
+   			}else {
+   				return false;
+   			}
+   		} catch (Exception e) {
+   		}
+       	return false;
+       }
     
     /** 
      * 保持屏幕唤醒状态（即背景灯不熄灭） 
