@@ -2,6 +2,7 @@ package com.android.hospital.ui.activity;
 
 import java.util.ArrayList;
 
+import com.android.hospital.adapter.GroupDcAdviceAdapter;
 import com.android.hospital.entity.DataEntity;
 import com.android.hospital.entity.DcAdviceEntity;
 import com.android.hospital.entity.GroupOrderEntity;
@@ -38,8 +39,6 @@ public class GroupDcAdviceActivity extends Activity{
 		new GroupDcAcviceTask().execute();
 	}
 	
-	
-	
 	/**
 	 * 
 	* @ClassName: GroupDcAcviceTask 
@@ -69,7 +68,7 @@ public class GroupDcAdviceActivity extends Activity{
 				entity.dosage=dataList.get(i).get("dosage").trim();
 				entity.dosage_units=dataList.get(i).get("dosage_units").trim();
 				entity.administration=dataList.get(i).get("administration").trim();
-				entity.frequency=dataList.get(i).get("frequency").trim();//执行频次,这两字段不一样
+				entity.frequency=dataList.get(i).get("frequency").trim();
 				entity.freq_counter=dataList.get(i).get("freq_counter").trim();
 				entity.freq_interval=dataList.get(i).get("freq_interval").trim();
 				entity.freq_interval_unit=dataList.get(i).get("freq_interval_unit").trim();
@@ -78,6 +77,13 @@ public class GroupDcAdviceActivity extends Activity{
 				groupAdviceList.add(entity);
 			}
 			return null;
+		}
+		
+		@Override
+		protected void onPostExecute(String result) {
+			// TODO Auto-generated method stub
+			GroupDcAdviceAdapter adapter=new GroupDcAdviceAdapter(GroupDcAdviceActivity.this, groupAdviceList);
+			mListView.setAdapter(adapter);
 		}
 		
 	}
