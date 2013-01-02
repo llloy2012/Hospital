@@ -3,6 +3,8 @@ package com.android.hospital.entity;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import android.util.Log;
+
 
 
 /**
@@ -90,11 +92,15 @@ public class InspectionEntity implements Serializable{
 						list.set(k-1, list.get(k-1));
 					}else{
 							list_end.add(list.get(k-1));
+							Log.e("ÉêÇëÊ±¼ä-->", list.get(k-1).requested_date_time.toString());
+							k=j;
 							list.get(k).item_name ='('+list.get(j).item_no+')'+list.get(j).item_name;
+							list.set(k, list.get(k));
 							k++;
 					}
 			}else{
 					list.get(j).item_name ='('+list.get(j).item_no+')'+list.get(j).item_name;
+					list.set(j, list.get(j));
 					k++;
 			}
 		}

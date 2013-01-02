@@ -68,7 +68,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="8.5"
                 android:orientation="vertical"
-                android:visibility="visible" >
+                android:visibility="visible" >
+
             <TextView
                 android:id="@+id/main_patient_info_tev"
                 android:layout_width="match_parent"
@@ -79,7 +80,8 @@
                 android:paddingRight="?android:attr/listPreferredItemPaddingRight"
                 android:text="请先选择病人"
                 android:textAppearance="?android:attr/textAppearanceListItemSmall" />
-
+
+
             <FrameLayout
                 android:id="@+id/main_right_frame"
                 android:layout_width="match_parent"
