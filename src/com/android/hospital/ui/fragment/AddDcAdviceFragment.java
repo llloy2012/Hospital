@@ -272,7 +272,7 @@ public class AddDcAdviceFragment extends Fragment implements OnClickListener,OnI
 		entity.order_text=mDcAdViceTev.getText().toString();// 医嘱内容
 		entity.dosage=mDosageEdit.getText().toString();// 剂量
 		entity.dosage_units=mDosageunitsTev.getText().toString();// 剂量单位
-		entity.freq_detail=mInstrutionEdit.getText().toString();// 医生说明，可以以后添加，现在可以为null
+		entity.freq_detail=mInstrutionEdit.getText().toString();// 医生说明
 		entity.administration=mWaySpinner.getItemAtPosition(
 				mWaySpinner.getSelectedItemPosition()).toString();// 途径
 		Map<String, String> freqMap = mFreqList.get(mFreqSpinner
@@ -295,7 +295,7 @@ public class AddDcAdviceFragment extends Fragment implements OnClickListener,OnI
 			entity.repeat_indicator = "0";
 			entity.stop_date_time = entity.start_date_time;
 		}
-        entity.order_status="6";// 在ORDER_STATUS_DICT中查看（新开医嘱标识为1即可）
+        entity.order_status="6";// 在ORDER_STATUS_DICT中查看
 		entity.enter_date_time=entity.start_date_time;// 开医嘱录入日期及时间，（同START_DATE_TIME时间，即保存时系统时间)
         entity.patient_id=app.getPatientEntity().patient_id;//病人ID
         entity.visit_id=app.getPatientEntity().visit_id;//住院次数
