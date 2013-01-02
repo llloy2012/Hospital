@@ -94,13 +94,13 @@ public class PriceTask extends BaseAsyncTask{
 		//循环得到clinic_item_code 的值，以便赋给second_getData（）
         String clinic_item_code=""; //诊疗项目代码
 	    for (int i = 0; i < dcbeacs.size(); i++) {
-			clinic_item_code=dcbeacs.get(i).get("clinic_item_code");
-			item_name = dcbeacs.get(i).get("item_name");
-			backbill_rule = dcbeacs.get(i).get("backbill_rule");
-			item_class = dcbeacs.get(i).get("charge_item_class");
-			charge_item_code = dcbeacs.get(i).get("charge_item_code");
-			charge_item_spec= dcbeacs.get(i).get("charge_item_spec");
-			amount= dcbeacs.get(i).get("amount");	
+			clinic_item_code=dcbeacs.get(i).get("clinic_item_code").trim();
+			item_name = dcbeacs.get(i).get("item_name").trim();
+			backbill_rule = dcbeacs.get(i).get("backbill_rule").trim();
+			item_class = dcbeacs.get(i).get("charge_item_class").trim();
+			charge_item_code = dcbeacs.get(i).get("charge_item_code").trim();
+			charge_item_spec= dcbeacs.get(i).get("charge_item_spec").trim();
+			amount= dcbeacs.get(i).get("amount").trim();	
 		}
 		if (isDrug==0) {
 			second_getData(clinic_item_code);//药品

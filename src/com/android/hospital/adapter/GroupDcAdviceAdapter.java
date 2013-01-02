@@ -29,6 +29,7 @@ import com.android.hospital.ui.fragment.AddDcAdviceFragment;
 import com.android.hospital.ui.fragment.AddDcAdviceFragment.TimeTask;
 import com.android.hospital.ui.fragment.AddDcAdviceFragment.TimeTaskCallback;
 import com.android.hospital.util.DebugUtil;
+import com.android.hospital.util.Util;
 /**
  * 
 * @ClassName: DcAdviceAdapter 
@@ -43,6 +44,7 @@ public class GroupDcAdviceAdapter extends BaseAdapter{
 	private List<Map<String, String>> mFreqList;//Æµ´Îlist
 	private List<Map<String, String>> mWayList;//Í¾¾¶list
 	private HospitalApp app;
+	private String start_time="";
 	
 	public GroupDcAdviceAdapter(Context context,ArrayList<DcAdviceEntity> entities){
 		this.mList=entities;
@@ -50,6 +52,7 @@ public class GroupDcAdviceAdapter extends BaseAdapter{
 		this.app=(HospitalApp) mContext.getApplicationContext();
 		mFreqList=app.getFreqList();
 		mWayList=app.getWayList();
+		start_time=Util.toSimpleDate();
 	}
 	
 	@Override
@@ -124,6 +127,7 @@ public class GroupDcAdviceAdapter extends BaseAdapter{
 		if (item.repeat_indicator.equals("0")) {
 			repeat_indicator="ÁÙÊ±";
 		}
+		item.start_date_time=start_time;
 		viewHolder.tev2.setText(repeat_indicator);
 		viewHolder.tev3.setText(item.start_date_time);
 		viewHolder.tev4.setText(item.order_text);
