@@ -226,14 +226,15 @@
         android:layout_marginRight="5dp"
         android:background="@drawable/main_list_divder" />
        
-        <TextView android:id="@+id/dcadvice_item_tev_12"
+        <Button android:id="@+id/dcadvice_item_tev_12"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:ellipsize="marquee"
             android:fadingEdge="horizontal" 
-            android:text="测试1"
+            android:text="删除"
             style="@style/textdefault"
-            android:layout_weight="2"
+            android:layout_weight="1.5"
+            android:focusable="false"
             />
         
 

@@ -433,12 +433,12 @@ public class AddDcAdviceFragment extends Fragment implements OnClickListener,OnI
 		case R.id.add_dcadvice_spinner_administration:
 			administration=parent.getItemAtPosition(position).toString();
 			frequency=mFreqSpinner.getItemAtPosition(mFreqSpinner.getSelectedItemPosition()).toString();
-			new TimeTask().execute(administration,frequency);
+			new TimeTask(mTimeTev,null).execute(administration,frequency);
 			break;
 		case R.id.add_dcadvice_spinner_frequency:
 			frequency=parent.getItemAtPosition(position).toString();
 			administration=mWaySpinner.getItemAtPosition(mWaySpinner.getSelectedItemPosition()).toString();
-			new TimeTask().execute(administration,frequency);
+			new TimeTask(mTimeTev,null).execute(administration,frequency);
 			break;
 		default:
 			break;
@@ -458,7 +458,14 @@ public class AddDcAdviceFragment extends Fragment implements OnClickListener,OnI
 	* @date 2012-12-25 上午8:37:55 
 	*
 	 */
-	private class TimeTask extends AsyncTask<String, Void, String>{
+	public static class TimeTask extends AsyncTask<String, Void, String>{
+		private TextView mTextView;
+		private TimeTaskCallback mTaskCallback;
+		
+		public TimeTask(TextView textView,TimeTaskCallback taskCallback){
+			this.mTextView=textView;
+			this.mTaskCallback=taskCallback;
+		}
 
 		@Override
 		protected String doInBackground(String... params) {
@@ -471,14 +478,29 @@ public class AddDcAdviceFragment extends Fragment implements OnClickListener,OnI
 			String time="";
 			ArrayList<DataEntity> dataList=WebServiceHelper.getWebServiceData(sqlStr);
 			for (int i = 0; i < dataList.size(); i++) {
-				time=dataList.get(i).get("default_schedule");
+				time=dataList.get(i).get("default_schedule").trim();
 			}
 			return time;
 		}
 		@Override
 		protected void onPostExecute(String result) {
 			// TODO Auto-generated method stub
-			mTimeTev.setText(result);
+			if (mTextView!=null) {
+				mTextView.setText(result);
+			}else {
+				mTaskCallback.callback(result);
+			}
 		}
+	}
+	/**
+	 * 
+	* @ClassName: TimeTaskCallback 
+	* @Description: TODO(获取执行时间回调方法) 
+	* @author wanghailong 81813780@qq.com 
+	* @date 2013-1-2 上午10:40:14 
+	*
+	 */
+	public interface TimeTaskCallback{
+		void callback(String result);
 	}
 }

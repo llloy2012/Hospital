@@ -145,6 +145,7 @@ public class DoctorAdviceFragment extends ListFragment {
             	intent.putExtra("id", id);
             	intent.setClass(getActivity(), GroupDcAdviceActivity.class);
             	startActivity(intent);
+            	position=0;//点击后，重置为零
             }
         })
         .setNegativeButton("取消", new DialogInterface.OnClickListener() {

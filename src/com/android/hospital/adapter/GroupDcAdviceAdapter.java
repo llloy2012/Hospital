@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -24,6 +25,9 @@ import com.android.hospital.HospitalApp;
 import com.android.hospital.entity.DcAdviceEntity;
 import com.android.hospital.ui.activity.GroupDcAdviceActivity;
 import com.android.hospital.ui.activity.R;
+import com.android.hospital.ui.fragment.AddDcAdviceFragment;
+import com.android.hospital.ui.fragment.AddDcAdviceFragment.TimeTask;
+import com.android.hospital.ui.fragment.AddDcAdviceFragment.TimeTaskCallback;
 import com.android.hospital.util.DebugUtil;
 /**
  * 
@@ -108,13 +112,13 @@ public class GroupDcAdviceAdapter extends BaseAdapter{
 			viewHolder.tev9=(TextView) convertView.findViewById(R.id.dcadvice_item_tev_9);
 			viewHolder.tev10=(TextView) convertView.findViewById(R.id.dcadvice_item_tev_10);
 			viewHolder.tev11=(TextView) convertView.findViewById(R.id.dcadvice_item_tev_11);
-			viewHolder.tev12=(TextView) convertView.findViewById(R.id.dcadvice_item_tev_12);
+			viewHolder.mDeleteBut=(Button) convertView.findViewById(R.id.dcadvice_item_tev_12);
 			viewHolder.tevDivider=(View)convertView.findViewById(R.id.listview_divider);
 			convertView.setTag(viewHolder);
 		}else {
 			viewHolder=(ViewHolder) convertView.getTag();
 		}
-		DcAdviceEntity item=mList.get(position);
+		final DcAdviceEntity item=mList.get(position);
 		viewHolder.tev1.setText(item.order_no);
 		String repeat_indicator = "长期";
 		if (item.repeat_indicator.equals("0")) {
@@ -127,10 +131,29 @@ public class GroupDcAdviceAdapter extends BaseAdapter{
 		viewHolder.tev6.setText(item.dosage_units);
 		viewHolder.tev7.setText(item.administration);
 		viewHolder.tev8.setText(item.frequency);
-		viewHolder.tev9.setText(item.perform_schedule);
-		viewHolder.tev10.setText(item.stop_date_time);
+		String perform_schdule=item.perform_schedule==null?"":item.perform_schedule;
+		if (perform_schdule.equals("无")) {
+			viewHolder.tev9.setText("");
+		}else if(perform_schdule.equals("")){
+			if (!item.administration.equals("")||!item.frequency.equals("")) {
+				setPerform_schedule(item, position);
+			}else {
+				viewHolder.tev9.setText("");
+			}
+		}else {
+			viewHolder.tev9.setText(item.perform_schedule);
+		}			
+		viewHolder.tev10.setText(item.doctor);
 		viewHolder.tev11.setText(item.freq_detail);
-		viewHolder.tev12.setText(item.doctor);
+		viewHolder.mDeleteBut.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				mList.remove(item);
+				notifyDataSetChanged();
+			}
+		});
 		
 		viewHolder.tev5.setOnClickListener(new OnClickListener() {
 			
@@ -161,8 +184,9 @@ public class GroupDcAdviceAdapter extends BaseAdapter{
 	}
 	
    private class ViewHolder{
-	public TextView tev1,tev2,tev3,tev4,tev5,tev6,tev7,tev8,tev9,tev10,tev11,tev12;
+	public TextView tev1,tev2,tev3,tev4,tev5,tev6,tev7,tev8,tev9,tev10,tev11;
 	public View tevDivider;
+	public Button mDeleteBut;
    }
    
    /**
@@ -224,14 +248,13 @@ public class GroupDcAdviceAdapter extends BaseAdapter{
            public void onClick(DialogInterface dialog, int whichButton) {
 
                /* User clicked Yes so do some stuff */
-        	   DcAdviceEntity item=(DcAdviceEntity) getItem(position);
+        	   final DcAdviceEntity item=(DcAdviceEntity) getItem(position);
         	   if (which==0) {
         		   item.administration=array[whichChoose];
 			   }else {
 				   item.frequency=array[whichChoose];
 			   }
-        	   mList.set(position, item);
-        	   notifyDataSetChanged();
+        	   setPerform_schedule(item, position);
            }
        })
        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -267,5 +290,28 @@ public class GroupDcAdviceAdapter extends BaseAdapter{
 	  }
 	  return arr;
   }
-   
+  /**
+   * 
+  * @Title: setPerform_schedule 
+  * @Description: TODO(根据途径和频次获取执行时间) 
+  * @param     设定文件 
+  * @return void    返回类型 
+  * @throws
+   */
+  private void setPerform_schedule(final DcAdviceEntity item,final int position){
+	  new TimeTask(null, new TimeTaskCallback() {
+			
+			@Override
+			public void callback(String result) {
+				// TODO Auto-generated method stub
+				   if (result==null||result.equals("")) {
+					   item.perform_schedule="无";
+				   }else {
+					   item.perform_schedule=result;
+				   }	   
+				   mList.set(position, item);
+	        	   notifyDataSetChanged();
+			}
+		}).execute(item.administration,item.frequency);    	  
+  }
 }

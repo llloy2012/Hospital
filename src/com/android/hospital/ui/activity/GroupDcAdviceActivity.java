@@ -3,16 +3,26 @@ package com.android.hospital.ui.activity;
 import java.util.ArrayList;
 
 import com.android.hospital.adapter.GroupDcAdviceAdapter;
+import com.android.hospital.asyntask.add.InsertDcAdviceTask;
+import com.android.hospital.asyntask.add.PriceTask;
+import com.android.hospital.db.ServerDao;
 import com.android.hospital.entity.DataEntity;
 import com.android.hospital.entity.DcAdviceEntity;
 import com.android.hospital.entity.GroupOrderEntity;
 import com.android.hospital.webservice.WebServiceHelper;
 
+import android.R.integer;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 /**
  * 
@@ -22,11 +32,13 @@ import android.widget.ListView;
 * @date 2013-1-1 下午4:58:41 
 *
  */
-public class GroupDcAdviceActivity extends Activity{
+public class GroupDcAdviceActivity extends Activity implements OnClickListener{
 
 	private ListView mListView;
+	private Button mCancleBut,mOkBut;
 	private String group_order_id;//套餐医嘱id
 	private ArrayList<DcAdviceEntity> groupAdviceList;//套餐医嘱明细集合
+	private GroupDcAdviceAdapter adapter;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +48,10 @@ public class GroupDcAdviceActivity extends Activity{
 		Intent intent=getIntent();
 		group_order_id=intent.getStringExtra("id");
 		mListView=(ListView) findViewById(R.id.group_dcadvice_listview);
+		mOkBut=(Button) findViewById(R.id.common_but_ok);
+		mCancleBut=(Button) findViewById(R.id.common_but_cancle);
+		mOkBut.setOnClickListener(this);
+		mCancleBut.setOnClickListener(this);
 		new GroupDcAcviceTask().execute();
 	}
 	
@@ -82,9 +98,67 @@ public class GroupDcAdviceActivity extends Activity{
 		@Override
 		protected void onPostExecute(String result) {
 			// TODO Auto-generated method stub
-			GroupDcAdviceAdapter adapter=new GroupDcAdviceAdapter(GroupDcAdviceActivity.this, groupAdviceList);
+			adapter=new GroupDcAdviceAdapter(GroupDcAdviceActivity.this, groupAdviceList);
 			mListView.setAdapter(adapter);
 		}
 		
+	}
+
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		switch (v.getId()) {
+		case R.id.common_but_ok:
+			if (adapter.getCount()==0) {
+				Toast.makeText(getApplicationContext(), "没有数据!", Toast.LENGTH_SHORT).show();
+			}else {
+				new AlertDialog.Builder(GroupDcAdviceActivity.this)
+	            .setIconAttribute(android.R.attr.alertDialogIcon)
+	            .setTitle("是否确认提交？")
+	            .setPositiveButton("确认", new DialogInterface.OnClickListener() {
+	                public void onClick(DialogInterface dialog, int whichButton) {
+
+	                    /* User clicked OK so do some stuff */
+	                	insertGroupDc();
+	                }
+	            })
+	            .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+	                public void onClick(DialogInterface dialog, int whichButton) {
+
+	                    /* User clicked Cancel so do some stuff */
+	                }
+	            })
+	            .create().show();
+			}
+			break;
+		case R.id.common_but_cancle:
+			Intent intent=new Intent();
+			setResult(1, intent);
+			finish();
+			break;
+		default:
+			break;
+		}
+	}
+	/**
+	 * 
+	* @Title: insertGroupDc 
+	* @Description: TODO(插入任务) 
+	* @param     设定文件 
+	* @return void    返回类型 
+	* @throws
+	 */
+	private void insertGroupDc(){
+		int size=adapter.getCount();
+		for (int i = 0; i < size; i++) {
+			DcAdviceEntity entity=(DcAdviceEntity) adapter.getItem(i);
+			String sql=ServerDao.getInsertOrders(entity);
+			new InsertDcAdviceTask(this, sql).execute();
+			int isDrug=0;
+			if (!entity.order_class.equals("A")) {
+				isDrug=1;
+			}
+			new PriceTask(this, entity, isDrug).execute();
+		}
 	}
 }
