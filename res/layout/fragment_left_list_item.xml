@@ -62,6 +62,16 @@
             android:maxLines="2" 
             android:text="测试2"
             />
+        <TextView android:id="@+id/patient_doctor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@android:id/title"
+            android:layout_alignLeft="@android:id/title"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:ellipsize="end"
+            android:maxLines="2" 
+            android:text="测试3"
+            />
 
     </LinearLayout>
 

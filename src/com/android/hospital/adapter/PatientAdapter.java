@@ -72,6 +72,7 @@ public class PatientAdapter extends BaseAdapter{
 			viewHolder.img=(ImageView) convertView.findViewById(R.id.patient_title_img);
 			viewHolder.name=(TextView) convertView.findViewById(R.id.patient_name);
 			viewHolder.bed_no=(TextView) convertView.findViewById(R.id.patient_bedno);
+			viewHolder.doctor_in_charge=(TextView) convertView.findViewById(R.id.patient_doctor);
 			convertView.setTag(viewHolder);
 		}else {
 			viewHolder=(ViewHolder) convertView.getTag();
@@ -84,6 +85,7 @@ public class PatientAdapter extends BaseAdapter{
 		}else {
 			viewHolder.img.setBackgroundResource(R.drawable.photo_woman);
 		}
+		viewHolder.doctor_in_charge.setText("主治医生："+item.doctor_in_charge);
 		return convertView;
 	}
 
@@ -92,5 +94,6 @@ public class PatientAdapter extends BaseAdapter{
 		public ImageView img;
 		public TextView name;
 		public TextView bed_no;
+		public TextView doctor_in_charge;
 	  }
 }
