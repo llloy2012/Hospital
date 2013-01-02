@@ -188,6 +188,7 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 		DebugUtil.debug("测试getSingle"+value.name);
 		this.patientEntity=value;
 		setTitleTev(value);
+		cancleAsyncTask();
 		putDcAdviceTask(value);
 		putCheckTask(value);
 		putInspectionTask(value);
@@ -336,12 +337,25 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy();
+		cancleAsyncTask();
+	}
+	/**
+	 * 
+	* @Title: cancleAsyncTask 
+	* @Description: TODO(取消异步任务) 
+	* @param     设定文件 
+	* @return void    返回类型 
+	* @throws
+	 */
+	public void cancleAsyncTask(){
 		for (int i = 0; i < asyncTasks.size(); i++) {
 			AsyncTask localAsyncTask=(AsyncTask) asyncTasks.get(i);
 			if (!(localAsyncTask == null) || (localAsyncTask.isCancelled())) {
 				localAsyncTask.cancel(true);
+				DebugUtil.debug("取消执行几次-->"+i);
 			}
 		}
+		asyncTasks.clear();
 		
 		//另外一种方式
 		/*Iterator localIterator=this.asyncTasks.iterator();

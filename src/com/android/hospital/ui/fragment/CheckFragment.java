@@ -106,4 +106,6 @@ public class CheckFragment extends ListFragment {
 		intent.setClass(getActivity(), CheckdetailActivity.class);
 		startActivity(intent);
 	}
+	
+	
 }
