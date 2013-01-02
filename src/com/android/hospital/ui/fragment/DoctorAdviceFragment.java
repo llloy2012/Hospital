@@ -140,12 +140,17 @@ public class DoctorAdviceFragment extends ListFragment {
 
                 /* User clicked Yes so do some stuff */
             	DebugUtil.debug("positon--->"+position);
-            	String id=app.getGroupOrderList().get(position).group_order_id;
-            	Intent intent=new Intent();
-            	intent.putExtra("id", id);
-            	intent.setClass(getActivity(), GroupDcAdviceActivity.class);
-            	startActivity(intent);
-            	position=0;//点击后，重置为零
+            	if (AppConstant.isPatientChoose) {
+            		String id=app.getGroupOrderList().get(position).group_order_id;
+                	Intent intent=new Intent();
+                	intent.putExtra("id", id);
+                	intent.setClass(getActivity(), GroupDcAdviceActivity.class);
+                	startActivity(intent);
+                	position=0;//点击后，重置为零
+				}else {
+					Toast.makeText(getActivity(), "请先选择病人!", Toast.LENGTH_SHORT).show();//可根据左边病人listview是否有被选中判断
+				}
+            	
             }
         })
         .setNegativeButton("取消", new DialogInterface.OnClickListener() {

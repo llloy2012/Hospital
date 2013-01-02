@@ -18,33 +18,19 @@
 */
 -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_height="match_parent"
     android:layout_width="match_parent">
+
     
-    <ListView android:id="@+id/group_dcadvice_listview"
-                android:layout_width="match_parent"
-                android:layout_height="0px"
-                android:layout_weight="1"
-                android:paddingLeft="@dimen/preference_screen_header_padding_side"
-                android:paddingRight="@dimen/preference_screen_header_padding_side"
-                android:paddingTop="@dimen/preference_screen_header_vertical_padding"
-                android:paddingBottom="@dimen/preference_screen_header_vertical_padding"
-                android:clipToPadding="false"
-                android:scrollbarStyle="@integer/preference_screen_header_scrollbarStyle"
-                android:drawSelectorOnTop="false"
-                android:cacheColorHint="@android:color/transparent"
-                android:listPreferredItemHeight="48dp"
-                android:scrollbarAlwaysDrawVerticalTrack="true" 
-                style="@style/Widget.Holo.ListView"
-                />
     <RelativeLayout
         android:id="@+id/button_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0"
-        android:visibility="visible" >
+        android:visibility="visible"
+        android:layout_alignParentBottom="true" 
+        >
 
         <Button
             android:id="@+id/common_but_cancle"
@@ -77,4 +63,38 @@
         </LinearLayout>
     </RelativeLayout>
 
-</LinearLayout>
+    <ListView android:id="@+id/group_dcadvice_listview"
+                android:layout_above="@id/button_bar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingLeft="@dimen/preference_screen_header_padding_side"
+                android:paddingRight="@dimen/preference_screen_header_padding_side"
+                android:paddingTop="@dimen/preference_screen_header_vertical_padding"
+                android:paddingBottom="@dimen/preference_screen_header_vertical_padding"
+                android:clipToPadding="false"
+                android:scrollbarStyle="@integer/preference_screen_header_scrollbarStyle"
+                android:drawSelectorOnTop="false"
+                android:cacheColorHint="@android:color/transparent"
+                android:listPreferredItemHeight="48dp"
+                android:scrollbarAlwaysDrawVerticalTrack="true" 
+                style="@style/Widget.Holo.ListView"
+                />
+   <LinearLayout android:orientation="horizontal"
+                 android:id="@+id/group_progressbar"
+                 android:layout_width="fill_parent"
+                 android:layout_height="wrap_content"
+                 android:layout_centerInParent="true"
+                 >
+       <ProgressBar 
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+       />
+       <TextView 
+           android:text="载入中...."
+           android:textSize="20dp"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           />
+   </LinearLayout>
+   
+</RelativeLayout>

@@ -218,7 +218,10 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 			DcAdviceAdapter adapter=(DcAdviceAdapter) fragment.getListAdapter();
 			if (null!=adapter&&adapter.getCount()!=0) {
 				adapter.clearAdapter();
-			}		
+				if (fragment.isAdded()) {
+					fragment.setListShown(false);
+				}				
+			}				
 			String tableName="orders";
 			String[] paramArray1=new String[]{"repeat_indicator","TO_CHAR(start_date_time,'yyyy-MM-dd hh24:mi:ss') as start_date_time",
 					                          "order_text","dosage","dosage_units","administration","frequency","perform_schedule",
@@ -272,7 +275,10 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 			InspectionAdapter adapter=(InspectionAdapter) fragment.getListAdapter();
 			if (null!=adapter&&adapter.getCount()!=0) {
 				adapter.clearAdapter();
-			}
+				if (fragment.isAdded()) {
+					fragment.setListShown(false);
+				}				
+			}			
 			String tableName="LAB_TEST_ITEMS ,LAB_TEST_MASTER ,DEPT_DICT";
 			String[] paramArray1=new String[]{"LAB_TEST_ITEMS.ITEM_NO","LAB_TEST_ITEMS.ITEM_NAME","LAB_TEST_MASTER.SPECIMEN","LAB_TEST_ITEMS.ITEM_CODE","LAB_TEST_ITEMS.TEST_NO",
 					                          "DEPT_DICT.DEPT_NAME","LAB_TEST_MASTER.RESULT_STATUS","TO_CHAR(LAB_TEST_MASTER.REQUESTED_DATE_TIME,'yyyy-MM-dd hh24:mi:ss') as REQUESTED_DATE_TIME",
@@ -306,7 +312,10 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 			PrescriptionAdapter adapter=(PrescriptionAdapter) fragment.getListAdapter();
 			if (null!=adapter&&adapter.getCount()!=0) {
 				adapter.clearAdapter();
-			}
+				if (fragment.isAdded()) {
+					fragment.setListShown(false);
+				}				
+			}			
 			String tableName="DOCT_DRUG_PRESC_MASTER, dept_dict";
 			String[] paramArray1=new String[]{"DOCT_DRUG_PRESC_MASTER.PRESC_NO","TO_CHAR(DOCT_DRUG_PRESC_MASTER.PRESC_DATE,'yyyy-MM-dd hh24:mi:ss') as PRESC_DATE",
 					                          "DOCT_DRUG_PRESC_MASTER.PRESCRIBED_BY","DEPT_DICT.DEPT_NAME","DOCT_DRUG_PRESC_MASTER.PRESC_TYPE","DOCT_DRUG_PRESC_MASTER.REPETITION",

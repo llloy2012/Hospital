@@ -99,6 +99,7 @@ public class UpdateDBTask extends AsyncTask<Object, Integer, Object>{
 	@Override
 	protected void onPostExecute(Object result) {
 		// TODO Auto-generated method stub
+		mProgressDialog.setProgress(100);
 		mProgressDialog.cancel();
 		Toast.makeText(mActivity, "数据导入成功!", Toast.LENGTH_SHORT).show();
 		endDrugOrNonDrug();

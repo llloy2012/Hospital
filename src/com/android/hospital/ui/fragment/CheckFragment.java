@@ -19,7 +19,9 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 /**
  * 
@@ -30,7 +32,7 @@ import android.widget.Toast;
 *
  */
 public class CheckFragment extends ListFragment {
-
+		
 	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -79,6 +81,9 @@ public class CheckFragment extends ListFragment {
 	    CheckAdapter adapter=(CheckAdapter) getListAdapter();
 		if (null!=adapter&&adapter.getCount()!=0) {
 			adapter.clearAdapter();
+			if (isAdded()) {
+				setListShown(false);
+			}			
 		}
 	}
 	
@@ -107,5 +112,5 @@ public class CheckFragment extends ListFragment {
 		startActivity(intent);
 	}
 	
-	
+
 }

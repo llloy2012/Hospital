@@ -45,6 +45,7 @@ public class DcAdviceTask extends BaseAsyncTask{
 			DcAdviceAdapter adapter=new DcAdviceAdapter(mFragment.getActivity(), arrayList);
 			mFragment.setListAdapter(adapter);
 			if (mFragment.isAdded()) {
+				mFragment.setListShown(true);
 				mFragment.setSelection(adapter.getCount()-1);
 			}
 		}
