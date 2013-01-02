@@ -2,4 +2,9 @@
     <string name="app_name">移动助理</string>
     <string name="title_item_list">移动助理</string>
     <string name="menu_settings">Settings</string>   
+    <string name="add_dcadvice">新增医嘱</string>   
+    <string name="add_check">新增检查</string>   
+    <string name="add_inspection">新增检验</string>   
+    <string name="add_prescription">新增处方</string>   
+    <string name="group_dcadvice">套餐医嘱</string>   
 </resources>
