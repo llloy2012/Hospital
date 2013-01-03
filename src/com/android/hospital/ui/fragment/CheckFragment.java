@@ -45,24 +45,17 @@ public class CheckFragment extends ListFragment {
 	
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		menu.add(Menu.NONE, Menu.FIRST, 0, "新增检查")
-        .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-		menu.addSubMenu(1, Menu.FIRST+1, 1, "按时间查询");
+		menu.addSubMenu(1, Menu.FIRST+5, 1, "按时间查询");
 	}
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// TODO Auto-generated method stub
 		Intent intent;
+		DebugUtil.debug("itemid--->"+item.getItemId());
 		switch (item.getItemId()) {
-		case Menu.FIRST:
-			if (AppConstant.isPatientChoose) {
-				intent=new Intent();
-				intent.setClass(getActivity(), AddCheckActivity.class);
-				startActivityForResult(intent, 12);
-			}else {
-				Toast.makeText(getActivity(), "请先选择病人!", Toast.LENGTH_SHORT).show();//可根据左边病人listview是否有被选中判断
-			}	
+		case Menu.FIRST+5:
+			Toast.makeText(getActivity(), "功能尚未添加!", Toast.LENGTH_SHORT).show(); 
 			break;
 		default:
 			break;

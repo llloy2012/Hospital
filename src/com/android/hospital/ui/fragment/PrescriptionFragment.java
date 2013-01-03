@@ -42,9 +42,7 @@ public class PrescriptionFragment extends ListFragment{
 	
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		menu.add(Menu.NONE, Menu.FIRST, 0, "新增处方")
-        .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-		menu.addSubMenu(1, Menu.FIRST+1, 1, "按时间查询");
+		menu.addSubMenu(1, 41, 1, "按时间查询");
 	}
 	
 	@Override
@@ -52,14 +50,8 @@ public class PrescriptionFragment extends ListFragment{
 		// TODO Auto-generated method stub
 		Intent intent;
 		switch (item.getItemId()) {
-		case Menu.FIRST:
-			if (AppConstant.isPatientChoose) {
-				intent=new Intent();
-				intent.setClass(getActivity(), AddPrescriptionActivity.class);
-				startActivityForResult(intent, 14);
-			}else {
-				Toast.makeText(getActivity(), "请先选择病人!", Toast.LENGTH_SHORT).show();//可根据左边病人listview是否有被选中判断
-			}	
+		case 41:
+			Toast.makeText(getActivity(), "功能尚未添加!", Toast.LENGTH_SHORT).show(); 		
 			break;
 		case Menu.FIRST+1:
 			

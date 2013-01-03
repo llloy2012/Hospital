@@ -99,69 +99,27 @@ public class DoctorAdviceFragment extends ListFragment {
 		
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-//		menu.add(Menu.NONE, Menu.FIRST, 0, "新增医嘱")
-//        .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-		menu.add(Menu.NONE, Menu.FIRST+1, 0, "套餐医嘱")
-        .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-		menu.addSubMenu(1, Menu.FIRST+2, 1, "全部");
-		menu.addSubMenu(1, Menu.FIRST+3, 1, "长期");
-		menu.addSubMenu(1, Menu.FIRST+4, 1, "临时");
-		menu.addSubMenu(1, Menu.FIRST+5, 1, "按时间查询");
+		menu.addSubMenu(1, 11, 1, "全部");
+		menu.addSubMenu(1, 12, 1, "长期");
+		menu.addSubMenu(1, 13, 1, "临时");
+		menu.addSubMenu(1, 14, 1, "按时间查询");
 	}
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		Intent intent;
 		switch (item.getItemId()) {
-		case Menu.FIRST:
-			/*intent=new Intent();
-			DoctorAdviceFragment fragment=(DoctorAdviceFragment) getActivity().getFragmentManager().findFragmentByTag("dcadvice");
-			DcAdviceAdapter adapter=(DcAdviceAdapter) fragment.getListAdapter();		
-			if (AppConstant.isPatientChoose) {
-				DcAdviceEntity entity=(DcAdviceEntity) adapter.getItem(adapter.getCount()-1);
-				intent.putExtra("subentity", entity);
-				intent.setClass(getActivity(), AddDcAdviceActivity.class);
-				startActivityForResult(intent, 11);
-			}else {
-				Toast.makeText(getActivity(), "请先选择病人!", Toast.LENGTH_SHORT).show();//可根据左边病人listview是否有被选中判断
-			}			
-*/			break;
-		case Menu.FIRST+1:			
-			new AlertDialog.Builder(getActivity())
-        .setIconAttribute(android.R.attr.alertDialogIcon)
-        .setTitle("医嘱模板")
-        .setSingleChoiceItems(getArrayItem(), 0, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-
-                /* User clicked on a radio button do some stuff */
-            	position=whichButton;
-            }
-        })
-        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-
-                /* User clicked Yes so do some stuff */
-            	DebugUtil.debug("positon--->"+position);
-            	if (AppConstant.isPatientChoose) {
-            		String id=app.getGroupOrderList().get(position).group_order_id;
-                	Intent intent=new Intent();
-                	intent.putExtra("id", id);
-                	intent.setClass(getActivity(), GroupDcAdviceActivity.class);
-                	startActivity(intent);
-                	position=0;//点击后，重置为零
-				}else {
-					Toast.makeText(getActivity(), "请先选择病人!", Toast.LENGTH_SHORT).show();//可根据左边病人listview是否有被选中判断
-				}
-            	
-            }
-        })
-        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-
-                /* User clicked No so do some stuff */
-            }
-        })
-       .create().show();
+		case 11:
+			Toast.makeText(getActivity(), "功能尚未添加!", Toast.LENGTH_SHORT).show(); 
+		break;
+		case 12:			
+			Toast.makeText(getActivity(), "功能尚未添加!", Toast.LENGTH_SHORT).show(); 
+		break;
+		case 13:			
+			Toast.makeText(getActivity(), "功能尚未添加!", Toast.LENGTH_SHORT).show(); 
+		break;
+		case 14:			
+			Toast.makeText(getActivity(), "功能尚未添加!", Toast.LENGTH_SHORT).show(); 
 		break;
 		default:
 			break;
