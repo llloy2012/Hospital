@@ -34,7 +34,7 @@ public class ServerDao {
 		StringBuffer buffer=new StringBuffer();
 		buffer.append("insert into orders (start_date_time,order_text,dosage" +
 				                          ",dosage_units,freq_detail,administration,frequency" +
-				                          ",freq_counter,freq_interval,freq_interval_units" +
+				                          ",freq_counter,freq_interval,freq_interval_unit" +
 				                          ",doctor,order_class,repeat_indicator" +
 				                          ",stop_date_time,order_code,order_status" +
 				                          ",enter_date_time,patient_id,visit_id" +
@@ -51,7 +51,7 @@ public class ServerDao {
 		buffer.append("'"+entity.frequency+"'").append(",");
 		buffer.append("'"+entity.freq_counter+"'").append(",");
 		buffer.append("'"+entity.freq_interval+"'").append(",");
-		buffer.append("'"+entity.freq_interval_units+"'").append(",");
+		buffer.append("'"+entity.freq_interval_unit+"'").append(",");
 		buffer.append("'"+entity.doctor+"'").append(",");
 		buffer.append("'"+entity.order_class+"'").append(",");
 		buffer.append("'"+entity.repeat_indicator+"'").append(",");

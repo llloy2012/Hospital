@@ -45,7 +45,6 @@ public class GroupDcAdviceAdapter extends BaseAdapter{
 	private List<Map<String, String>> mFreqList;//频次list
 	private List<Map<String, String>> mWayList;//途径list
 	private HospitalApp app;
-	private String start_time="";
 	
 	public GroupDcAdviceAdapter(Context context,ArrayList<DcAdviceEntity> entities){
 		this.mList=entities;
@@ -53,7 +52,6 @@ public class GroupDcAdviceAdapter extends BaseAdapter{
 		this.app=(HospitalApp) mContext.getApplicationContext();
 		mFreqList=app.getFreqList();
 		mWayList=app.getWayList();
-		start_time=Util.toSimpleDate();
 	}
 	
 	@Override
@@ -128,7 +126,6 @@ public class GroupDcAdviceAdapter extends BaseAdapter{
 		if (item.repeat_indicator.equals("0")) {
 			repeat_indicator="临时";
 		}
-		item.start_date_time=start_time;
 		viewHolder.tev2.setText(repeat_indicator);
 		viewHolder.tev3.setText(item.start_date_time);
 		viewHolder.tev4.setText(item.order_text);
@@ -268,8 +265,8 @@ public class GroupDcAdviceAdapter extends BaseAdapter{
 				   item.frequency=array[whichChoose];
 				   item.freq_counter=mFreqList.get(whichChoose).get("freq_counter");
 				   item.freq_interval=mFreqList.get(whichChoose).get("freq_interval");
-				   item.freq_interval_units=mFreqList.get(whichChoose).get("freq_interval_units");
-				   DebugUtil.debug("频次中的值--->"+mFreqList.get(whichChoose).get("freq_interval_units"));
+				   item.freq_interval_unit=mFreqList.get(whichChoose).get("freq_interval_unit");
+				   DebugUtil.debug("频次中的值--->"+mFreqList.get(whichChoose).get("freq_interval_unit"));
 			   }
         	   setPerform_schedule(item, position);
         	   whichChoose=0;
