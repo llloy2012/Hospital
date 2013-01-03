@@ -12,6 +12,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -267,7 +268,9 @@ public class GroupDcAdviceAdapter extends BaseAdapter{
 				   item.frequency=array[whichChoose];
 				   item.freq_counter=mFreqList.get(whichChoose).get("freq_counter");
 				   item.freq_interval=mFreqList.get(whichChoose).get("freq_interval");
-				   item.freq_interval_unit=mFreqList.get(whichChoose).get("freq_interval_unit");
+				   item.freq_interval_units=mFreqList.get(whichChoose).get("freq_interval_units");
+				   DebugUtil.debug("Æµ´Î1-->", item.freq_interval);
+				   DebugUtil.debug("Æµ´Î2-->", item.freq_interval_units);
 			   }
         	   setPerform_schedule(item, position);
            }

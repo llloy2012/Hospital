@@ -20,7 +20,7 @@ public class DcAdviceEntity implements Serializable{
 	public String order_no;//医嘱代码，区分子医嘱和主医嘱
 	public String freq_counter;//频率次数
     public String freq_interval;//频率间隔
-    public String freq_interval_unit;//频率间隔单位
+    public String freq_interval_units;//频率间隔单位
     public String order_status;//在ORDER_STATUS_DICT中查看（新开医嘱标识为1即可）
     public String ordering_dept;//开医嘱科室 staff_dict.dept_code
     public String drug_billing_attr;//药品计价属性 反映药品是否计价，0-正常，1-自带药(一般是0）
@@ -61,7 +61,7 @@ public class DcAdviceEntity implements Serializable{
 			entity.order_no=dataList.get(i).get("order_no").trim();
 			entity.freq_counter=dataList.get(i).get("freq_counter").trim();
 			entity.freq_interval=dataList.get(i).get("freq_interval").trim();
-			entity.freq_interval_unit=dataList.get(i).get("freq_interval_unit").trim();
+			entity.freq_interval_units=dataList.get(i).get("freq_interval_units").trim();
 			entity.order_status=dataList.get(i).get("order_status").trim();
 			entity.ordering_dept=dataList.get(i).get("ordering_dept").trim();
 			entity.drug_billing_attr=dataList.get(i).get("drug_billing_attr").trim();

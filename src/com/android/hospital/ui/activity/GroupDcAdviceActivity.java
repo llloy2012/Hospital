@@ -80,7 +80,7 @@ public class GroupDcAdviceActivity extends Activity implements OnClickListener{
 		protected String doInBackground(Void... params) {
 			// TODO Auto-generated method stub
 			String sql="select group_order_id,item_no,item_sub_no,repeat_indicator,order_class,order_text,order_code,dosage," +
-					"dosage_units,administration,frequency,freq_counter,freq_interval,freq_interval_unit,freq_detail,"+
+					"dosage_units,administration,frequency,freq_counter,freq_interval,freq_interval_units,freq_detail,"+
 					"drug_spec,drug_billing_attr " +
 					"from group_order_items where group_order_id='"+group_order_id+"'";
 			ArrayList<DataEntity> dataList=WebServiceHelper.getWebServiceData(sql);
@@ -99,7 +99,7 @@ public class GroupDcAdviceActivity extends Activity implements OnClickListener{
 				entity.frequency=dataList.get(i).get("frequency").trim();
 				entity.freq_counter=dataList.get(i).get("freq_counter").trim();
 				entity.freq_interval=dataList.get(i).get("freq_interval").trim();
-				entity.freq_interval_unit=dataList.get(i).get("freq_interval_unit").trim();
+				entity.freq_interval_units=dataList.get(i).get("freq_interval_units").trim();
 				entity.freq_detail=dataList.get(i).get("freq_detail").trim();
 				entity.drug_spec=dataList.get(i).get("drug_spec").trim();
 				entity.drug_billing_attr=dataList.get(i).get("drug_billing_attr").trim();
@@ -245,7 +245,7 @@ public class GroupDcAdviceActivity extends Activity implements OnClickListener{
 			entity.frequency = "";
 			entity.freq_counter = "1";
 			entity.freq_interval = "1";
-			entity.freq_interval_unit = "日";
+			entity.freq_interval_units = "日";
 			entity.perform_schedule = "";
 			break;
 		case 1:
@@ -255,7 +255,7 @@ public class GroupDcAdviceActivity extends Activity implements OnClickListener{
 			entity.frequency = "";
 			entity.freq_counter = "1";
 			entity.freq_interval = "1";
-			entity.freq_interval_unit = "日";
+			entity.freq_interval_units = "日";
 			entity.perform_schedule = "";
 			break;
 		case 2:
@@ -264,7 +264,7 @@ public class GroupDcAdviceActivity extends Activity implements OnClickListener{
 			entity.administration = "";
 			break;
 		case 3:
-			entity.freq_interval_unit="日";
+			entity.freq_interval_units="日";
 		default:
 			break;
 		}
