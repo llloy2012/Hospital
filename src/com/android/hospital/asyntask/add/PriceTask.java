@@ -14,8 +14,8 @@ import com.android.hospital.webservice.WebServiceHelper;
  * 
 * @ClassName: PriceTask 
 * @Description: TODO(计价任务) 
-* @author wanghailong 81813780@qq.com 
-* @date 2012-12-25 上午9:05:50 
+* @author lll
+* @date 2012-12-25 
 *
  */
 public class PriceTask extends BaseAsyncTask{
@@ -162,7 +162,12 @@ public class PriceTask extends BaseAsyncTask{
 		}
 		if(dose_per_unit!= null && !dose_per_unit.equals("") ){
 			double double1  =  Double.parseDouble(dose_per_unit);//单位剂量
-			double double2  =  Double.parseDouble(mAdviceEntity.dosage);//药品实体的单次剂量
+			double double2;//药品实体的单次剂量
+			if(mAdviceEntity.dosage.equals("")){
+				double2 = 0.0;
+			}else{
+				double2 = Double.parseDouble(mAdviceEntity.dosage);
+			}
 			double  count = Math.ceil(double2/double1); // 总数量=单次剂量/单位剂量
 			amount = String.valueOf(count);
 			int int_count = (int)count; //总数量转换成int型
