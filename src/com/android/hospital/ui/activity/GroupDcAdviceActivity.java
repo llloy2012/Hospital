@@ -99,7 +99,7 @@ public class GroupDcAdviceActivity extends Activity implements OnClickListener{
 				entity.frequency=dataList.get(i).get("frequency").trim();
 				entity.freq_counter=dataList.get(i).get("freq_counter").trim();
 				entity.freq_interval=dataList.get(i).get("freq_interval").trim();
-				entity.freq_interval_units=dataList.get(i).get("freq_interval_units").trim();
+				entity.freq_interval_units=dataList.get(i).get("freq_interval_unit").trim();
 				entity.freq_detail=dataList.get(i).get("freq_detail").trim();
 				entity.drug_spec=dataList.get(i).get("drug_spec").trim();
 				entity.drug_billing_attr=dataList.get(i).get("drug_billing_attr").trim();

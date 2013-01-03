@@ -227,8 +227,8 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 			if (null!=adapter&&adapter.getCount()!=0) {
 				adapter.clearAdapter();
 				if (fragment.isAdded()) {
+					fragment.setEmptyText(null);
 					fragment.setListShown(false);
-					fragment.setEmptyText("");
 				}				
 			}				
 			String tableName="orders";

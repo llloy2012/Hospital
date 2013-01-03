@@ -7,10 +7,6 @@
         android:orientation="horizontal"
         >
         
-       <ProgressBar
-           android:id="@+id/progressBar1"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content" />
        
        <TextView
                 android:id="@+id/main_patient_info_tev"
@@ -20,7 +16,8 @@
                 android:minHeight="?android:attr/listPreferredItemHeightSmall"
                 android:paddingLeft="?android:attr/listPreferredItemPaddingLeft"
                 android:paddingRight="?android:attr/listPreferredItemPaddingRight"
-                android:text="正在获取..."
+                android:text="没有数据"
+                android:textColor="@color/black"
                 android:textAppearance="?android:attr/textAppearanceListItemSmall" />
 
        
