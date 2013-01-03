@@ -32,7 +32,7 @@ import com.android.hospital.util.DebugUtil;
 import com.android.hospital.util.Util;
 /**
  * 
-* @ClassName: DcAdviceAdapter 
+* @ClassName: GroupDcAdviceAdapter 
 * @Description: TODO(医嘱Adatper) 
 * @author wanghailong 81813780@qq.com 
 * @date 2012-12-14 上午11:39:14 
@@ -184,6 +184,14 @@ public class GroupDcAdviceAdapter extends BaseAdapter{
 				showSingleChoiceDialog(position, 1);
 			}
 		});
+		if(!"1".equals(item.order_sub_no)){ //子医嘱显示，不必要的项目填空
+			viewHolder.tev1.setText("");
+			viewHolder.tev2.setText("");
+			viewHolder.tev3.setText("");
+			viewHolder.tev7.setText("");
+			viewHolder.tev8.setText("");
+			viewHolder.tev9.setText("");
+		}
 		return convertView;
 	}
 	

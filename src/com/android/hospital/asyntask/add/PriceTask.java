@@ -266,13 +266,16 @@ public class PriceTask extends BaseAsyncTask{
 	     		              "   and item_spec = '"+charge_item_spec+"'";
 	     	ArrayList<DataEntity> cList=WebServiceHelper.getWebServiceData(sqlprice);    	
 	    	item_no=String.valueOf(((i+1)+1));
-	    	item_spec = cList.get(0).get("item_spec");
-	    	item_name = cList.get(0).get("item_name");
-	    	item_class = cList.get(0).get("item_class");
-	    	item_code = cList.get(0).get("item_code");
-	    	costs = cList.get(0).get("price");
-	    	units =  cList.get(0).get("units");
-	    	insertData();//插入到orders_costs
+	    	for (int j = 0; j < cList.size(); j++) {
+	    		item_spec = cList.get(j).get("item_spec");
+		    	item_name = cList.get(j).get("item_name");
+		    	item_class = cList.get(j).get("item_class");
+		    	item_code = cList.get(j).get("item_code");
+		    	costs = cList.get(j).get("price");
+		    	units =  cList.get(j).get("units");
+		    	insertData();//插入到orders_costs
+			}
+	    	
 	    }
 	}
 }
