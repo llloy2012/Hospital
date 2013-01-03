@@ -80,8 +80,10 @@
                 android:paddingRight="?android:attr/listPreferredItemPaddingRight"
                 android:text="请先选择病人"
                 android:textAppearance="?android:attr/textAppearanceListItemSmall" />
-
-
+            
+            <include layout="@layout/fragment_dcadvice_list_item"              
+                /> 
+            
             <FrameLayout
                 android:id="@+id/main_right_frame"
                 android:layout_width="match_parent"

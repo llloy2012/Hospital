@@ -12,10 +12,15 @@ import com.android.hospital.entity.GroupOrderEntity;
 import com.android.hospital.entity.InspectionItemEntity;
 import com.android.hospital.entity.NonDrugEntity;
 import com.android.hospital.ui.activity.LoginActivity;
+import com.android.hospital.util.DebugUtil;
 import com.android.hospital.webservice.WebServiceHelper;
 import com.android.hospital.widgets.MyProssDialog;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.Message;
 import android.widget.Toast;
 
 /**
@@ -26,7 +31,7 @@ import android.widget.Toast;
 * @date 2012-12-28 上午11:26:25 
 *
  */
-public class UpdateDBTask extends BaseAsyncTask{
+public class UpdateDBTask extends AsyncTask<Object, Integer, Object>{
 
 	private LoginActivity mActivity;
 	private HospitalApp app;
@@ -39,18 +44,45 @@ public class UpdateDBTask extends BaseAsyncTask{
 	private List<Map<String, String>> inspectionDeptList;//检验科室
 	private List<Map<String, String>> inspectionClassList;//检验类别
 	private ArrayList<InspectionItemEntity> inspectionItemList;//检验项目集合
-	private MyProssDialog mDialog;
 	
+	private ProgressDialog mProgressDialog;
+	private static final int MAX_PROGRESS = 100;
+	private int mProgress;
+    private Handler mProgressHandler;
+
 	
 	public UpdateDBTask(Activity activity){
 		this.mActivity=(LoginActivity) activity;
 		this.app=(HospitalApp) mActivity.getApplication();
+		
+		mProgressHandler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                if (mProgress >= MAX_PROGRESS) {
+                    mProgressDialog.dismiss();
+                } else {
+                    mProgress++;
+                    mProgressDialog.incrementProgressBy(1);
+                    mProgressHandler.sendEmptyMessageDelayed(0, 100);
+                }
+            }
+        };
 	}
 		
 	@Override
 	protected void onPreExecute() {
-        mDialog=new MyProssDialog(mActivity, "更新", "正在更新数据库，请稍候...");
-        mDialog.setCancelable();
+        mProgressDialog = new ProgressDialog(mActivity);
+        mProgressDialog.setIconAttribute(android.R.attr.alertDialogIcon);
+        mProgressDialog.setTitle("正在更新数据库....");
+        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        mProgressDialog.setMax(MAX_PROGRESS);
+        mProgressDialog.show();
+        
+        mProgress = 0;
+        mProgressDialog.setProgress(0);
+        mProgressHandler.sendEmptyMessage(0);
+        mProgressDialog.setCancelable(false);
 	}
 	
 	@Override
@@ -60,15 +92,16 @@ public class UpdateDBTask extends BaseAsyncTask{
 		startFreqAndWayTask();
 		startClassAndDeptTask();
 		startInspectionDeptTask();
-		startInspectionItemTask();
+		startInspectionItemTask();		
 		return null;
 	}
 
 	@Override
 	protected void onPostExecute(Object result) {
 		// TODO Auto-generated method stub
-		mDialog.cancel();
-		Toast.makeText(mActivity, "更新成功!", Toast.LENGTH_SHORT).show();
+		mProgressDialog.setProgress(100);
+		mProgressDialog.cancel();
+		Toast.makeText(mActivity, "数据导入成功!", Toast.LENGTH_SHORT).show();
 		endDrugOrNonDrug();
 		endFreqAndTask();
 		endClassAndDeptTask();

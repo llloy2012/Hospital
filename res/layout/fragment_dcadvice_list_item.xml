@@ -23,6 +23,7 @@
     android:gravity="center_vertical"
     android:paddingRight="?android:attr/scrollbarSize"
     android:padding="5dp"
+    android:id="@+id/listview_common_titlebar"
     >
   
         <TextView
@@ -32,7 +33,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="marquee"
             android:fadingEdge="horizontal"
-            android:text="测试1"
+            android:text="序号"
             android:textColor="@color/cornflowerblue" 
             android:layout_weight="1"
             />
@@ -52,7 +53,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="marquee"
             android:fadingEdge="horizontal"
-            android:text="测试1"
+            android:text="长期"
             android:layout_weight="1"
              />
 
@@ -69,7 +70,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="marquee"
             android:fadingEdge="horizontal" 
-            android:text="测试1"
+            android:text="下达时间"
             style="@style/textdefault"
             android:layout_weight="3"
             />
@@ -88,7 +89,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="marquee"
             android:fadingEdge="horizontal"
-            android:text="测试1"
+            android:text="医嘱内容"
             android:layout_weight="5"
              />
 
@@ -104,7 +105,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="marquee"
             android:fadingEdge="horizontal" 
-            android:text="测试1"
+            android:text="剂量"
             style="@style/textdefault"
             android:layout_weight="1"
             />
@@ -123,7 +124,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="marquee"
             android:fadingEdge="horizontal"
-            android:text="测试1"
+            android:text="单位"
             android:layout_weight="1"
              />
 
@@ -141,7 +142,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="marquee"
             android:fadingEdge="horizontal"
-            android:text="测试1"
+            android:text="途径"
             android:layout_weight="1"
              />
 
@@ -159,7 +160,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="marquee"
             android:fadingEdge="horizontal"
-            android:text="测试1"
+            android:text="频次"
             android:layout_weight="1"
              />
 
@@ -177,7 +178,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="marquee"
             android:fadingEdge="horizontal"
-            android:text="测试1"
+            android:text="执行时间"
             android:layout_weight="2"
             />
 
@@ -195,7 +196,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="marquee"
             android:fadingEdge="horizontal"
-            android:text="测试1"
+            android:text="结束时间"
             android:layout_weight="3"
              />
 
@@ -213,7 +214,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="marquee"
             android:fadingEdge="horizontal"
-            android:text="测试1"
+            android:text="医生说明"
             android:layout_weight="2"
              />
        <View
@@ -228,7 +229,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="marquee"
             android:fadingEdge="horizontal" 
-            android:text="测试1"
+            android:text="执行医生"
             style="@style/textdefault"
             android:layout_weight="2"
             />

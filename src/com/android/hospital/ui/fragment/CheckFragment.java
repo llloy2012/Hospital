@@ -19,7 +19,9 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 /**
  * 
@@ -30,7 +32,7 @@ import android.widget.Toast;
 *
  */
 public class CheckFragment extends ListFragment {
-
+		
 	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -38,28 +40,22 @@ public class CheckFragment extends ListFragment {
 		super.onActivityCreated(savedInstanceState);
 		setHasOptionsMenu(true);
 		getListView().setFastScrollEnabled(true);
+		getActivity().findViewById(R.id.listview_common_titlebar).setVisibility(View.GONE);
 	}
 	
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		menu.add(Menu.NONE, Menu.FIRST, 0, "新增检查")
-        .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-		menu.addSubMenu(1, Menu.FIRST+1, 1, "按时间查询");
+		menu.addSubMenu(1, Menu.FIRST+5, 1, "按时间查询");
 	}
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// TODO Auto-generated method stub
 		Intent intent;
+		DebugUtil.debug("itemid--->"+item.getItemId());
 		switch (item.getItemId()) {
-		case Menu.FIRST:
-			if (AppConstant.isPatientChoose) {
-				intent=new Intent();
-				intent.setClass(getActivity(), AddCheckActivity.class);
-				startActivityForResult(intent, 12);
-			}else {
-				Toast.makeText(getActivity(), "请先选择病人!", Toast.LENGTH_SHORT).show();//可根据左边病人listview是否有被选中判断
-			}	
+		case Menu.FIRST+5:
+			Toast.makeText(getActivity(), "功能尚未添加!", Toast.LENGTH_SHORT).show(); 
 			break;
 		default:
 			break;
@@ -79,6 +75,9 @@ public class CheckFragment extends ListFragment {
 	    CheckAdapter adapter=(CheckAdapter) getListAdapter();
 		if (null!=adapter&&adapter.getCount()!=0) {
 			adapter.clearAdapter();
+			if (isAdded()) {
+				setListShown(false);
+			}			
 		}
 	}
 	
@@ -106,4 +105,6 @@ public class CheckFragment extends ListFragment {
 		intent.setClass(getActivity(), CheckdetailActivity.class);
 		startActivity(intent);
 	}
+	
+
 }

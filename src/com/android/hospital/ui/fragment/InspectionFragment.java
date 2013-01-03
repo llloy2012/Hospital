@@ -8,6 +8,7 @@ import com.android.hospital.ui.activity.AddCheckActivity;
 import com.android.hospital.ui.activity.AddInspectionActivity;
 import com.android.hospital.ui.activity.InspectiondetailActivity;
 import com.android.hospital.ui.activity.MainActivity;
+import com.android.hospital.ui.activity.R;
 import com.android.hospital.util.DebugUtil;
 
 import android.app.ListFragment;
@@ -42,13 +43,12 @@ public class InspectionFragment extends ListFragment{
 		super.onActivityCreated(savedInstanceState);
 		setHasOptionsMenu(true);
 		getListView().setFastScrollEnabled(true);
+		getActivity().findViewById(R.id.listview_common_titlebar).setVisibility(View.GONE);
 	}
 	
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		menu.add(Menu.NONE, Menu.FIRST, 0, "新增检验")
-        .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-		menu.addSubMenu(1, Menu.FIRST+1, 1, "按时间查询");
+		menu.addSubMenu(1, 31, 1, "按时间查询");
 	}
 	
 	@Override
@@ -56,14 +56,8 @@ public class InspectionFragment extends ListFragment{
 		// TODO Auto-generated method stub
 		Intent intent;
 		switch (item.getItemId()) {
-		case Menu.FIRST:
-			if (AppConstant.isPatientChoose) {
-				intent=new Intent();
-				intent.setClass(getActivity(), AddInspectionActivity.class);
-				startActivityForResult(intent, 13);
-			}else {
-				Toast.makeText(getActivity(), "请先选择病人!", Toast.LENGTH_SHORT).show();//可根据左边病人listview是否有被选中判断
-			}				
+		case 31:
+			Toast.makeText(getActivity(), "功能尚未添加!", Toast.LENGTH_SHORT).show(); 				
 			break;
 
 		default:

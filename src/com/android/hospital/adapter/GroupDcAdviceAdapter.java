@@ -265,6 +265,9 @@ public class GroupDcAdviceAdapter extends BaseAdapter{
         		   item.administration=array[whichChoose];
 			   }else {
 				   item.frequency=array[whichChoose];
+				   item.freq_counter=mFreqList.get(whichChoose).get("freq_counter");
+				   item.freq_interval=mFreqList.get(whichChoose).get("freq_interval");
+				   item.freq_interval_unit=mFreqList.get(whichChoose).get("freq_interval_unit");
 			   }
         	   setPerform_schedule(item, position);
            }

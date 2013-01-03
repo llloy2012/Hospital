@@ -25,6 +25,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -43,6 +44,7 @@ public class GroupDcAdviceActivity extends Activity implements OnClickListener{
 	private String group_order_id;//套餐医嘱id
 	private ArrayList<DcAdviceEntity> groupAdviceList;//套餐医嘱明细集合
 	private GroupDcAdviceAdapter adapter;
+	private LinearLayout prossbarLayout;
 	private HospitalApp app;
 	
 	@Override
@@ -56,6 +58,8 @@ public class GroupDcAdviceActivity extends Activity implements OnClickListener{
 		mListView=(ListView) findViewById(R.id.group_dcadvice_listview);
 		mOkBut=(Button) findViewById(R.id.common_but_ok);
 		mCancleBut=(Button) findViewById(R.id.common_but_cancle);
+		prossbarLayout=(LinearLayout) findViewById(R.id.group_progressbar);
+		
 		mOkBut.setOnClickListener(this);
 		mCancleBut.setOnClickListener(this);
 		new GroupDcAcviceTask().execute();
@@ -71,7 +75,7 @@ public class GroupDcAdviceActivity extends Activity implements OnClickListener{
 	*
 	 */
 	private class GroupDcAcviceTask extends AsyncTask<Void, Void, String>{
-
+	
 		@Override
 		protected String doInBackground(Void... params) {
 			// TODO Auto-generated method stub
@@ -107,6 +111,7 @@ public class GroupDcAdviceActivity extends Activity implements OnClickListener{
 		@Override
 		protected void onPostExecute(String result) {
 			// TODO Auto-generated method stub
+			prossbarLayout.setVisibility(View.GONE);
 			adapter=new GroupDcAdviceAdapter(GroupDcAdviceActivity.this, groupAdviceList);
 			mListView.setAdapter(adapter);
 		}
@@ -204,7 +209,7 @@ public class GroupDcAdviceActivity extends Activity implements OnClickListener{
 					butChoose(2, entity); // 如果为长非药，清空单位，剂量，途径
 				}
 			}
-			if(entity.perform_schedule.equals("无")){
+			if(entity.perform_schedule==null||entity.perform_schedule.equals("无")){
 				entity.perform_schedule="";
 			}
 			//对医嘱进行重新编号

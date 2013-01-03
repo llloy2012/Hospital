@@ -30,7 +30,7 @@
         <item name="android:actionBarTabBarStyle">@android:style/Widget.DeviceDefault.ActionBar.TabBar</item>
         <item name="android:actionBarTabTextStyle">@android:style/Widget.DeviceDefault.ActionBar.TabText</item>
         <item name="android:actionBarStyle">@android:style/Widget.DeviceDefault.ActionBar</item>
-        <item name="android:buttonBarStyle">@android:style/DeviceDefault.ButtonBar</item>
+        <item name="android:buttonBarStyle">@android:style/DeviceDefault.ButtonBar</item>        
     </style>
     <style name="textsmall">
         <item name="android:textSize">14dp</item>
