@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import com.android.hospital.HospitalApp;
 import com.android.hospital.adapter.CheckAdapter;
 import com.android.hospital.adapter.DcAdviceAdapter;
 import com.android.hospital.adapter.InspectionAdapter;
@@ -17,7 +18,9 @@ import com.android.hospital.asyntask.BaseAsyncTask.AsyncTaskCallback;
 import com.android.hospital.asyntask.add.DrugOrNonDrugTask;
 import com.android.hospital.asyntask.InspectionTask;
 import com.android.hospital.asyntask.PrescriptionTask;
+import com.android.hospital.constant.AppConstant;
 import com.android.hospital.db.ServerDao;
+import com.android.hospital.entity.DcAdviceEntity;
 import com.android.hospital.entity.PatientEntity;
 import com.android.hospital.ui.fragment.CheckFragment;
 import com.android.hospital.ui.fragment.DoctorAdviceFragment;
@@ -42,6 +45,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
@@ -63,12 +67,15 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 	private ActionBar actionBar;
 	private List<AsyncTask> asyncTasks=null;
 	private PatientEntity patientEntity;
+	private HospitalApp app;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+		app=(HospitalApp) getApplication();
 		
 		actionBar=getActionBar();
 		actionBar.setHomeButtonEnabled(true);//设置可点击
@@ -411,13 +418,134 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// TODO Auto-generated method stub
-		menu.addSubMenu(1, Menu.FIRST+2, 1, "新增医嘱").setIcon(android.R.drawable.ic_menu_add);
-		menu.addSubMenu(1, Menu.FIRST+3, 1, "新增检查").setIcon(android.R.drawable.ic_menu_add);
-		menu.addSubMenu(1, Menu.FIRST+4, 1, "新增检验").setIcon(android.R.drawable.ic_menu_add);
-		menu.addSubMenu(1, Menu.FIRST+5, 1, "新增处方").setIcon(android.R.drawable.ic_menu_add);
+		menu.addSubMenu(1, Menu.FIRST, 1, "新增医嘱").setIcon(android.R.drawable.ic_menu_add);
+		menu.addSubMenu(1, Menu.FIRST+4, 1, "套餐医嘱").setIcon(android.R.drawable.ic_menu_add);
+		menu.addSubMenu(1, Menu.FIRST+1, 1, "新增检查").setIcon(android.R.drawable.ic_menu_add);
+		menu.addSubMenu(1, Menu.FIRST+2, 1, "新增检验").setIcon(android.R.drawable.ic_menu_add);
+		menu.addSubMenu(1, Menu.FIRST+3, 1, "新增处方").setIcon(android.R.drawable.ic_menu_add);
+		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// TODO Auto-generated method stub
+		Intent intent;
+		switch (item.getItemId()) {
+		case Menu.FIRST:
+			if (AppConstant.isPatientChoose) {
+				intent=new Intent();
+				DoctorAdviceFragment fragment=(DoctorAdviceFragment) this.getFragmentManager().findFragmentByTag("dcadvice");
+				DcAdviceAdapter adapter=(DcAdviceAdapter) fragment.getListAdapter();		
+				DcAdviceEntity entity=(DcAdviceEntity) adapter.getItem(adapter.getCount()-1);
+				intent.putExtra("subentity", entity);
+				intent.setClass(this, AddDcAdviceActivity.class);
+				startActivityForResult(intent, 11);
+			}else {
+				Toast.makeText(this, "请先选择病人!", Toast.LENGTH_SHORT).show();//可根据左边病人listview是否有被选中判断
+			}			
+			break;
+		case Menu.FIRST+1:
+			if (AppConstant.isPatientChoose) {
+				intent=new Intent();
+				intent.setClass(this, AddCheckActivity.class);
+				startActivityForResult(intent, 12);
+			}else {
+				Toast.makeText(this, "请先选择病人!", Toast.LENGTH_SHORT).show();//可根据左边病人listview是否有被选中判断
+			}	
+			break;
+		case Menu.FIRST+2:
+			if (AppConstant.isPatientChoose) {
+				intent=new Intent();
+				intent.setClass(this, AddInspectionActivity.class);
+				startActivityForResult(intent, 13);
+			}else {
+				Toast.makeText(this, "请先选择病人!", Toast.LENGTH_SHORT).show();//可根据左边病人listview是否有被选中判断
+			}		
+			break;
+		case Menu.FIRST+3:
+			if (AppConstant.isPatientChoose) {
+				intent=new Intent();
+				intent.setClass(this, AddPrescriptionActivity.class);
+				startActivityForResult(intent, 14);
+			}else {
+				Toast.makeText(this, "请先选择病人!", Toast.LENGTH_SHORT).show();//可根据左边病人listview是否有被选中判断
+			}	
+			break;
+		case Menu.FIRST+4:
+            showGroupDc();
+			break;
+		default:
+			break;
+		}
 		return true;
 	}
     
+	
+	private int whichButtonChoose=0;
+	
+	/**
+	 * 
+	* @Title: showGroupDc 
+	* @Description: TODO(弹出套餐医嘱选择框) 
+	* @param     设定文件 
+	* @return void    返回类型 
+	* @throws
+	 */
+	private void showGroupDc(){
+		new AlertDialog.Builder(this)
+        .setIconAttribute(android.R.attr.alertDialogIcon)
+        .setTitle("医嘱模板")
+        .setSingleChoiceItems(getArrayItem(), 0, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+
+                /* User clicked on a radio button do some stuff */
+            	whichButtonChoose=whichButton;
+            }
+        })
+        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+
+                /* User clicked Yes so do some stuff */
+            	DebugUtil.debug("positon--->"+whichButtonChoose);
+            	if (AppConstant.isPatientChoose) {
+            		String id=app.getGroupOrderList().get(whichButtonChoose).group_order_id;
+                	Intent intent=new Intent();
+                	intent.putExtra("id", id);
+                	intent.setClass(MainActivity.this, GroupDcAdviceActivity.class);
+                	startActivity(intent);
+                	whichButtonChoose=0;//点击后，重置为零
+				}else {
+					Toast.makeText(MainActivity.this, "请先选择病人!", Toast.LENGTH_SHORT).show();//可根据左边病人listview是否有被选中判断
+				}
+            	
+            }
+        })
+        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+
+                /* User clicked No so do some stuff */
+            }
+        })
+       .create().show();
+	}
+	
+	/**
+	 * 
+	* @Title: getArrayItem 
+	* @Description: TODO(得到模板数组) 
+	* @param     设定文件 
+	* @return void    返回类型 
+	* @throws
+	 */
+	public String[] getArrayItem(){
+		int size=app.getGroupOrderList().size();
+		String[] arr=new String[size];
+		for (int i = 0; i < size; i++) {
+			arr[i]=app.getGroupOrderList().get(i).title;
+		}
+		return arr;
+	}
+	
 	/*private void addCustomView() {
 	// TODO Auto-generated method stub
 	View mCustomView = getLayoutInflater().inflate(

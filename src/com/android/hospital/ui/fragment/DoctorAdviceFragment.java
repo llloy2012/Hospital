@@ -99,8 +99,8 @@ public class DoctorAdviceFragment extends ListFragment {
 		
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		menu.add(Menu.NONE, Menu.FIRST, 0, "新增医嘱")
-        .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+//		menu.add(Menu.NONE, Menu.FIRST, 0, "新增医嘱")
+//        .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 		menu.add(Menu.NONE, Menu.FIRST+1, 0, "套餐医嘱")
         .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 		menu.addSubMenu(1, Menu.FIRST+2, 1, "全部");
@@ -114,7 +114,7 @@ public class DoctorAdviceFragment extends ListFragment {
 		Intent intent;
 		switch (item.getItemId()) {
 		case Menu.FIRST:
-			intent=new Intent();
+			/*intent=new Intent();
 			DoctorAdviceFragment fragment=(DoctorAdviceFragment) getActivity().getFragmentManager().findFragmentByTag("dcadvice");
 			DcAdviceAdapter adapter=(DcAdviceAdapter) fragment.getListAdapter();		
 			if (AppConstant.isPatientChoose) {
@@ -125,7 +125,7 @@ public class DoctorAdviceFragment extends ListFragment {
 			}else {
 				Toast.makeText(getActivity(), "请先选择病人!", Toast.LENGTH_SHORT).show();//可根据左边病人listview是否有被选中判断
 			}			
-			break;
+*/			break;
 		case Menu.FIRST+1:			
 			new AlertDialog.Builder(getActivity())
         .setIconAttribute(android.R.attr.alertDialogIcon)

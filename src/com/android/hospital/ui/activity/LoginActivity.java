@@ -221,7 +221,7 @@ public class LoginActivity extends Activity implements OnClickListener{
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// TODO Auto-generated method stub
-		Toast.makeText(this, "Selected Item: " + item.getTitle(), Toast.LENGTH_SHORT).show();
+		//Toast.makeText(this, "Selected Item: " + item.getTitle(), Toast.LENGTH_SHORT).show();
 		Intent intentCheckVersion = new Intent();
 		intentCheckVersion.setClass(LoginActivity.this,
 				CheckVersionActivity.class);
