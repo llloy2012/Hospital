@@ -14,9 +14,9 @@
         android:name="com.android.hospital.HospitalApp"
          >
         <activity
-            android:name=".LoginActivity"
+            android:name=".StartActivity"
             android:label="@string/title_item_list" 
-            android:theme="@style/HospitalTheme"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,6 +26,7 @@
         </activity>
         
         <activity android:name=".AddDcAdviceActivity"  android:label="@string/add_dcadvice" android:theme="@style/HospitalTheme"/>
+        <activity android:name=".LoginActivity"  android:label="@string/lgoin" android:theme="@style/HospitalTheme"/>
         <activity android:name=".MainActivity" android:theme="@style/HospitalTheme"  />
         <activity android:name=".InspectiondetailActivity" android:theme="@style/HospitalTheme" />
         <activity android:name=".PrescriptiondetailActivity" android:theme="@style/HospitalTheme"/>

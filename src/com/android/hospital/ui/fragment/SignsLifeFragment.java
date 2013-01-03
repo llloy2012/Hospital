@@ -37,8 +37,15 @@ public class SignsLifeFragment extends Fragment{
 			Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		View view=inflater.inflate(R.layout.fragment_signslife, null);
-		mGridView=(GridView) view.findViewById(R.id.signslife_gridview);
-		mGridView.setAdapter(mAdapter);	
+		//mGridView=(GridView) view.findViewById(R.id.signslife_gridview);
+		//mGridView.setAdapter(mAdapter);	
 		return view;
 	}	
+	
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onActivityCreated(savedInstanceState);
+		getActivity().findViewById(R.id.listview_common_titlebar).setVisibility(View.GONE);
+	}
 }
