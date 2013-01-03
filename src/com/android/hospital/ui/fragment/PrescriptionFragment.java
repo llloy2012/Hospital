@@ -8,6 +8,7 @@ import com.android.hospital.ui.activity.AddCheckActivity;
 import com.android.hospital.ui.activity.AddPrescriptionActivity;
 import com.android.hospital.ui.activity.MainActivity;
 import com.android.hospital.ui.activity.PrescriptiondetailActivity;
+import com.android.hospital.ui.activity.R;
 import com.android.hospital.util.DebugUtil;
 
 import android.app.ListFragment;
@@ -36,6 +37,7 @@ public class PrescriptionFragment extends ListFragment{
 		super.onActivityCreated(savedInstanceState);
 		setHasOptionsMenu(true);
 		getListView().setFastScrollEnabled(true);
+		getActivity().findViewById(R.id.listview_common_titlebar).setVisibility(View.GONE);
 	}
 	
 	@Override

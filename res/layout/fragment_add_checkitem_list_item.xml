@@ -24,7 +24,7 @@
     android:paddingRight="?android:attr/scrollbarSize"
     android:padding="5dp"
     >
-  
+  
         <TextView
             android:id="@+id/search_item_tev_1"
             style="@style/textdefault"

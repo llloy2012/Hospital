@@ -119,6 +119,7 @@ public class DcAdviceAdapter extends BaseAdapter{
 			if(null!=last_item){
 				if(last_item.order_no.equals(item.order_no)){//当该遗嘱为上一条的子医嘱时
 					//子医嘱部分信息部显示，置空
+					viewHolder.tev1.setText(""); //order_no
 					viewHolder.tev2.setText("");
 					viewHolder.tev3.setText("");
 					viewHolder.tev7.setText("");

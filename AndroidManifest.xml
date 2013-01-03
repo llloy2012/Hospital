@@ -15,7 +15,9 @@
          >
         <activity
             android:name=".LoginActivity"
-            android:label="@string/title_item_list" >
+            android:label="@string/title_item_list" 
+            android:theme="@style/HospitalTheme"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

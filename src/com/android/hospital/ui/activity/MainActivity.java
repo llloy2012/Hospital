@@ -41,6 +41,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.Menu;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
@@ -220,6 +221,7 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 				adapter.clearAdapter();
 				if (fragment.isAdded()) {
 					fragment.setListShown(false);
+					fragment.setEmptyText("");
 				}				
 			}				
 			String tableName="orders";
@@ -404,8 +406,18 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 					});
 			AlertDialog alert = builder.create();
 			alert.show();
-		}
+    }
 	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// TODO Auto-generated method stub
+		menu.addSubMenu(1, Menu.FIRST+2, 1, "新增医嘱").setIcon(android.R.drawable.ic_menu_add);
+		menu.addSubMenu(1, Menu.FIRST+3, 1, "新增检查").setIcon(android.R.drawable.ic_menu_add);
+		menu.addSubMenu(1, Menu.FIRST+4, 1, "新增检验").setIcon(android.R.drawable.ic_menu_add);
+		menu.addSubMenu(1, Menu.FIRST+5, 1, "新增处方").setIcon(android.R.drawable.ic_menu_add);
+		return true;
+	}
+    
 	/*private void addCustomView() {
 	// TODO Auto-generated method stub
 	View mCustomView = getLayoutInflater().inflate(

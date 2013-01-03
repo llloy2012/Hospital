@@ -47,6 +47,12 @@ public class CheckTask extends BaseAsyncTask{
 				mFragment.setSelection(adapter.getCount()-1);
 				mFragment.setListShown(true);
 			}
+		}else {
+			if (mFragment.isAdded()) {
+				mFragment.setListShown(true);
+				mFragment.setEmptyText("未获取到数据!");
+			}
+            
 		}
 	}
 }

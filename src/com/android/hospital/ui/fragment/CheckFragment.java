@@ -40,6 +40,7 @@ public class CheckFragment extends ListFragment {
 		super.onActivityCreated(savedInstanceState);
 		setHasOptionsMenu(true);
 		getListView().setFastScrollEnabled(true);
+		getActivity().findViewById(R.id.listview_common_titlebar).setVisibility(View.GONE);
 	}
 	
 	@Override

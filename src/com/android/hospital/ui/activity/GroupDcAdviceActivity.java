@@ -209,7 +209,7 @@ public class GroupDcAdviceActivity extends Activity implements OnClickListener{
 					butChoose(2, entity); // 如果为长非药，清空单位，剂量，途径
 				}
 			}
-			if(entity.perform_schedule.equals("无")){
+			if(entity.perform_schedule==null||entity.perform_schedule.equals("无")){
 				entity.perform_schedule="";
 			}
 			//对医嘱进行重新编号
