@@ -77,6 +77,7 @@ public class CheckFragment extends ListFragment {
 			adapter.clearAdapter();
 			if (isAdded()) {
 				setListShown(false);
+				setEmptyText("");
 			}			
 		}
 	}

@@ -512,7 +512,7 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
                 	Intent intent=new Intent();
                 	intent.putExtra("id", id);
                 	intent.setClass(MainActivity.this, GroupDcAdviceActivity.class);
-                	startActivity(intent);
+                	startActivityForResult(intent, 11);
                 	whichButtonChoose=0;//点击后，重置为零
 				}else {
 					Toast.makeText(MainActivity.this, "请先选择病人!", Toast.LENGTH_SHORT).show();//可根据左边病人listview是否有被选中判断
@@ -568,5 +568,29 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 		}
 	});
 }*/
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    	// TODO Auto-generated method stub
+    	switch (resultCode) {
+		case 11:
+			putDcAdviceTask(app.getPatientEntity());
+			break;
+		case 12:
+			putCheckTask(app.getPatientEntity());
+			putDcAdviceTask(app.getPatientEntity());
+			break;
+		case 13:
+			putInspectionTask(app.getPatientEntity());
+			putDcAdviceTask(app.getPatientEntity());
+			break;
+		case 14:
+			putPrescriptionTask(app.getPatientEntity());
+			putDcAdviceTask(app.getPatientEntity());
+			break;
+		default:
+			break;
+		}
+    	
+    	super.onActivityResult(requestCode, resultCode, data);
+    }
 }

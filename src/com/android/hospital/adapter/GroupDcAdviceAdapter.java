@@ -267,9 +267,11 @@ public class GroupDcAdviceAdapter extends BaseAdapter{
 				   item.frequency=array[whichChoose];
 				   item.freq_counter=mFreqList.get(whichChoose).get("freq_counter");
 				   item.freq_interval=mFreqList.get(whichChoose).get("freq_interval");
-				   item.freq_interval_unit=mFreqList.get(whichChoose).get("freq_interval_unit");
+				   item.freq_interval_units=mFreqList.get(whichChoose).get("freq_interval_units");
+				   DebugUtil.debug("频次中的值--->"+mFreqList.get(whichChoose).get("freq_interval_units"));
 			   }
         	   setPerform_schedule(item, position);
+        	   whichChoose=0;
            }
        })
        .setNegativeButton("取消", new DialogInterface.OnClickListener() {

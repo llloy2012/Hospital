@@ -51,7 +51,7 @@ public class ServerDao {
 		buffer.append("'"+entity.frequency+"'").append(",");
 		buffer.append("'"+entity.freq_counter+"'").append(",");
 		buffer.append("'"+entity.freq_interval+"'").append(",");
-		buffer.append("'"+entity.freq_interval_unit+"'").append(",");
+		buffer.append("'"+entity.freq_interval_units+"'").append(",");
 		buffer.append("'"+entity.doctor+"'").append(",");
 		buffer.append("'"+entity.order_class+"'").append(",");
 		buffer.append("'"+entity.repeat_indicator+"'").append(",");

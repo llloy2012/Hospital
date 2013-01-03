@@ -280,9 +280,9 @@ public class AddDcAdviceFragment extends Fragment implements OnClickListener,OnI
 		entity.frequency=freqMap.get("freq_desc");// 频次
 		entity.freq_counter=freqMap.get("freq_counter");// 频率次数
 		entity.freq_interval=freqMap.get("freq_interval");/// 频率间隔
-		entity.freq_interval_unit=freqMap.get("freq_interval_unit");// 频率间隔单位
-		if (null!=entity.freq_interval_unit&&entity.freq_interval_unit.equals("")) {
-			entity.freq_interval_unit="日";
+		entity.freq_interval_units=freqMap.get("freq_interval_unit");// 频率间隔单位
+		if (null!=entity.freq_interval_units&&entity.freq_interval_units.equals("")) {
+			entity.freq_interval_units="日";
 		}
 		entity.doctor=app.getDoctor();// 医生
 		entity.order_class=this.order_class;// 医嘱类别 药品：
@@ -360,7 +360,7 @@ public class AddDcAdviceFragment extends Fragment implements OnClickListener,OnI
 			entity.frequency = "";
 			entity.freq_counter = "1";
 			entity.freq_interval = "1";
-			entity.freq_interval_unit = "日";
+			entity.freq_interval_units = "日";
 			entity.perform_schedule = "";
 			break;
 		case 1:
@@ -370,7 +370,7 @@ public class AddDcAdviceFragment extends Fragment implements OnClickListener,OnI
 			entity.frequency = "";
 			entity.freq_counter = "1";
 			entity.freq_interval = "1";
-			entity.freq_interval_unit = "日";
+			entity.freq_interval_units = "日";
 			entity.perform_schedule = "";
 			break;
 		case 2:
@@ -398,7 +398,7 @@ public class AddDcAdviceFragment extends Fragment implements OnClickListener,OnI
 		entity.frequency=subEntity.frequency;
 		entity.freq_counter=subEntity.freq_counter;
 		entity.freq_interval=subEntity.freq_interval;
-		entity.freq_interval_unit=subEntity.freq_interval_unit;
+		entity.freq_interval_units=subEntity.freq_interval_units;
 		entity.repeat_indicator=subEntity.repeat_indicator;
 		entity.order_no=subEntity.order_no;
 		int order_sub_no=Integer.parseInt(subEntity.order_sub_no)+1;
