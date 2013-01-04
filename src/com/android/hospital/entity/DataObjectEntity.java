@@ -33,8 +33,19 @@ public class DataObjectEntity implements Serializable{
 	public String getValue() {
 		return value;
 	}
-
+    /**
+     * 
+    * @Title: setValue 
+    * @Description: TODO(如果从服务器获得的某个字段为空或者==null，则赋值为空字符串); 
+    * @param @param value    设定文件 
+    * @return void    返回类型 
+    * @throws
+     */
 	public void setValue(String value) {
+		value=value.trim();
+		if (value==null||value.equals("null")) {
+			value="";
+		}
 		this.value = value;
 	}
 	
