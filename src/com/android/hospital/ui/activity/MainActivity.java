@@ -198,7 +198,7 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 
 
 	@Override
-	public void getSingle(PatientEntity value) {
+	public void getSingle(PatientEntity value) {//根据tab的选中id来进行任务
 		// TODO Auto-generated method stub
 		DebugUtil.debug("测试getSingle"+value.name);
 		this.patientEntity=value;
@@ -700,10 +700,27 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 				+ startBut.getText().toString()
 				+ "' and TO_CHAR(start_date_time,'yyyy-MM-dd')<='"
 				+ endBut.getText().toString() + "' ";
-		putDcAdviceTask(patientEntity, sQueryAnd);
-		putCheckTask(patientEntity, sQueryAnd);
-		putInspectionTask(patientEntity, sQueryAnd);
-		putPrescriptionTask(patientEntity, sQueryAnd);
+								
+		switch (getActionBar().getSelectedNavigationIndex()) {
+		case 0:
+			putDcAdviceTask(patientEntity, sQueryAnd);
+			DebugUtil.debug("actionbar--->id00000");
+			break;
+		case 1:
+			putCheckTask(patientEntity, sQueryAnd);
+			DebugUtil.debug("actionbar--->id111111");
+			break;
+		case 2:
+			putInspectionTask(patientEntity, sQueryAnd);
+			DebugUtil.debug("actionbar--->id222222");
+			break;
+		case 3:
+			putPrescriptionTask(patientEntity, sQueryAnd);
+			DebugUtil.debug("actionbar--->id333333");
+			break;
+		default:
+			break;
+		}
     }           
     
     @Override
