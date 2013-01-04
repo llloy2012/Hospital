@@ -41,6 +41,9 @@ public class CheckFragment extends ListFragment {
 		setHasOptionsMenu(true);
 		getListView().setFastScrollEnabled(true);
 		getActivity().findViewById(R.id.listview_common_titlebar).setVisibility(View.GONE);
+		if (isAdded()) {
+			DebugUtil.debug("fragment±»added");
+		}
 	}
 	
 	/**
