@@ -1,1 +1,7 @@
-/bin
+# built application files
+*.apk
+*.ap_
+
+# generated files
+bin/
+gen/
