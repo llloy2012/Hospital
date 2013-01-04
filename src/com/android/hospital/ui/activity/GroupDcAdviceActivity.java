@@ -12,7 +12,6 @@ import com.android.hospital.db.ServerDao;
 import com.android.hospital.entity.DataEntity;
 import com.android.hospital.entity.DcAdviceEntity;
 import com.android.hospital.entity.GroupOrderEntity;
-import com.android.hospital.util.DebugUtil;
 import com.android.hospital.util.Util;
 import com.android.hospital.webservice.WebServiceHelper;
 

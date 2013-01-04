@@ -39,30 +39,7 @@ public class PrescriptionFragment extends ListFragment{
 		getListView().setFastScrollEnabled(true);
 		getActivity().findViewById(R.id.listview_common_titlebar).setVisibility(View.GONE);
 	}
-	
-	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		menu.addSubMenu(1, 41, 1, "按时间查询");
-	}
-	
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// TODO Auto-generated method stub
-		Intent intent;
-		switch (item.getItemId()) {
-		case 41:
-			Toast.makeText(getActivity(), "功能尚未添加!", Toast.LENGTH_SHORT).show(); 		
-			break;
-		case Menu.FIRST+1:
 			
-			break;
-		default:
-			break;
-		}
-		return super.onOptionsItemSelected(item);
-	}
-	
-	
 	/**
 	 * @method: 处方点击  
      * @Description: TODO(处方实体) 

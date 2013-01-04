@@ -9,12 +9,15 @@ import com.android.hospital.entity.DataEntity;
 import com.android.hospital.entity.InspectionEntity;
 import com.android.hospital.entity.InspectiondetailEntity;
 import com.android.hospital.entity.PatientEntity;
+import com.android.hospital.util.DebugUtil;
 import com.android.hospital.webservice.WebServiceHelper;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -92,6 +95,8 @@ public class InspectiondetailActivity extends Activity{
 			if (arrayList.size()!=0) {
 				InspectionDetailAdapter adapter=new InspectionDetailAdapter(InspectiondetailActivity.this, arrayList);
 				mListView.setAdapter(adapter);
+			}else {
+				mListView.setEmptyView(InspectiondetailActivity.this.findViewById(R.id.main_patient_info_tev));
 			}
 		}
 	}

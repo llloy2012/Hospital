@@ -58,7 +58,7 @@
             android:ellipsize="marquee"
             android:fadingEdge="horizontal"
             android:text="测试1"
-            android:layout_weight="2.5"
+            android:layout_weight="2"
              />
 
         <View
@@ -76,7 +76,7 @@
             android:fadingEdge="horizontal" 
             android:text="测试1"
             style="@style/textsmall"
-            android:layout_weight="2.5"
+            android:layout_weight="2"
             />
         <View
         android:id="@+id/listview_divider"
@@ -87,15 +87,17 @@
         android:background="@drawable/main_list_divder" />
        
 
-        <EditText 
-                android:id="@+id/add_prescription_left_item_edit_4"
+        <TextView 
+                android:id="@+id/add_prescription_left_item_tev_4"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 style="@style/textsmall"
+                android:gravity="center"
                 android:minHeight="?android:attr/listPreferredItemHeightSmall"
                 android:hint="剂量"
                 android:inputType="numberDecimal"
-                android:layout_weight="1"
+                android:layout_weight="1.5"
+                android:clickable="true"
             />
 
        <View
@@ -113,7 +115,7 @@
             android:fadingEdge="horizontal" 
             android:text="测试1"
             style="@style/textsmall"
-            android:layout_weight="0.5"
+            android:layout_weight="1"
             />
 
         <View
@@ -125,13 +127,15 @@
         android:background="@drawable/main_list_divder" />
        
 
-        <Spinner 
-                android:id="@+id/add_prescription_left_item_spinner_6"
+        <TextView 
+                android:id="@+id/add_prescription_left_item_tev_6"
+                style="@style/textsmall"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceListItemSmall"
-                android:minHeight="?android:attr/listPreferredItemHeightSmall"
+                android:ellipsize="marquee"
+                android:fadingEdge="horizontal"
                 android:layout_weight="2"
+                android:clickable="true"
             />
 
        <View
@@ -143,13 +147,15 @@
         android:background="@drawable/main_list_divder" />
        
 
-        <Spinner 
-                android:id="@+id/add_prescription_left_item_spinner_7"
+        <TextView 
+                android:id="@+id/add_prescription_left_item_tev_7"
+                style="@style/textsmall"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceListItemSmall"
-                android:minHeight="?android:attr/listPreferredItemHeightSmall"
+                android:ellipsize="marquee"
+                android:fadingEdge="horizontal"
                 android:layout_weight="2"
+                android:clickable="true"
             />
 
         <View
@@ -161,15 +167,17 @@
         android:background="@drawable/main_list_divder" />
        
 
-        <EditText 
-                android:id="@+id/add_prescription_left_item_edit_8"
+        <TextView 
+                android:id="@+id/add_prescription_left_item_tev_8"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 style="@style/textsmall"
                 android:minHeight="?android:attr/listPreferredItemHeightSmall"
                 android:hint="总量"
+                android:gravity="center"
                 android:inputType="numberDecimal"
-                android:layout_weight="1"
+                android:layout_weight="1.5"
+                android:clickable="true"
             />
 
       <View
@@ -189,7 +197,7 @@
             android:ellipsize="marquee"
             android:fadingEdge="horizontal"
             android:text="测试1"
-            android:layout_weight="0.5"
+            android:layout_weight="1"
             />
 
        <View

@@ -102,15 +102,26 @@
             android:layout_marginRight="2dp"
             android:background="?android:attr/detailsElementBackground"
              >
-
+ 
             <ListView
                         android:id="@+id/inspection_detail_listview"
                         android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="fill_parent"
                         android:layout_margin="4dp"
                         android:cacheColorHint="#00000000"
                         android:dividerHeight="2dp"
                         android:focusable="true" >
                     </ListView>
+            <TextView
+                android:id="@+id/main_patient_info_tev"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:gravity="center"
+                android:minHeight="?android:attr/listPreferredItemHeightSmall"
+                android:paddingLeft="?android:attr/listPreferredItemPaddingLeft"
+                android:paddingRight="?android:attr/listPreferredItemPaddingRight"
+                android:text="没有数据"
+                android:textColor="@color/black"
+                android:textAppearance="?android:attr/textAppearanceListItemSmall" />
         </LinearLayout>
     </LinearLayout>

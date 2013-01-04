@@ -62,6 +62,7 @@ public class AddDcAdviceActivity extends Activity implements OnClickListener{
 	private void initView(){
 		mCancleBut=(Button) findViewById(R.id.common_but_cancle);
 		mOkBut=(Button) findViewById(R.id.common_but_ok);
+		findViewById(R.id.common_but_clear).setVisibility(View.GONE);
 		
 		mCancleBut.setOnClickListener(this);
 		mOkBut.setOnClickListener(this);

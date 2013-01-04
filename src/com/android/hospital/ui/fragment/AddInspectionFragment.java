@@ -134,6 +134,11 @@ public class AddInspectionFragment extends BaseFragment implements OnItemSelecte
 		
 	}
 
+	public void clear(){
+		mAdapter.clear();
+        setSpinner();
+	}
+	
 	public void setListView(InspectionItemEntity entity){
 		DebugUtil.debug("expand1-->"+entity.expand1+","+"expand2-->"+entity.expand2+","+"expand3-->"+entity.expand3);
 		inspectionItemEntity=entity;

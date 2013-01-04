@@ -46,25 +46,6 @@ public class InspectionFragment extends ListFragment{
 		getActivity().findViewById(R.id.listview_common_titlebar).setVisibility(View.GONE);
 	}
 	
-	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		menu.addSubMenu(1, 31, 1, "按时间查询");
-	}
-	
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// TODO Auto-generated method stub
-		Intent intent;
-		switch (item.getItemId()) {
-		case 31:
-			Toast.makeText(getActivity(), "功能尚未添加!", Toast.LENGTH_SHORT).show(); 				
-			break;
-
-		default:
-			break;
-		}
-		return super.onOptionsItemSelected(item);
-	}
 	
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {

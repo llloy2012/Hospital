@@ -44,10 +44,12 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
@@ -228,7 +230,7 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 				adapter.clearAdapter();
 				if (fragment.isAdded()) {
 					fragment.setListShown(false);
-					fragment.setEmptyText("");
+					fragment.setEmptyText("");					
 				}				
 			}				
 			String tableName="orders";
@@ -423,6 +425,7 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 		menu.addSubMenu(1, Menu.FIRST+1, 1, "新增检查").setIcon(android.R.drawable.ic_menu_add);
 		menu.addSubMenu(1, Menu.FIRST+2, 1, "新增检验").setIcon(android.R.drawable.ic_menu_add);
 		menu.addSubMenu(1, Menu.FIRST+3, 1, "新增处方").setIcon(android.R.drawable.ic_menu_add);
+		menu.addSubMenu(1, 14, 1, "按时间查询");
 		return true;
 	}
 	
@@ -430,6 +433,7 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// TODO Auto-generated method stub
 		Intent intent;
+		DebugUtil.debug("id为"+item.getItemId());
 		switch (item.getItemId()) {
 		case Menu.FIRST:
 			if (AppConstant.isPatientChoose) {
@@ -473,6 +477,18 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 			break;
 		case Menu.FIRST+4:
             showGroupDc();
+			break;
+		case 11:
+			Toast.makeText(this, "功能尚未添加!", Toast.LENGTH_SHORT).show();
+			break;
+		case 12:
+			Toast.makeText(this, "功能尚未添加!", Toast.LENGTH_SHORT).show();
+			break;
+		case 13:
+			Toast.makeText(this, "功能尚未添加!", Toast.LENGTH_SHORT).show();
+			break;
+		case 14:
+			Toast.makeText(this, "功能尚未添加!", Toast.LENGTH_SHORT).show();
 			break;
 		default:
 			break;
@@ -568,6 +584,21 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 		}
 	});
 }*/
+	/**
+	 * 
+	* @Title: showDatePickerDialog 
+	* @Description: TODO(显示时间查询对话框) 
+	* @param     设定文件 
+	* @return void    返回类型 
+	* @throws
+	 */
+	public void showDatePickerDialog(){
+		LayoutInflater factory = LayoutInflater.from(this);
+	    View textEntryView = factory.inflate(R.layout.common_query_timedialog, null);
+	    Button startBut=(Button) textEntryView.findViewById(R.id.start_time_but);
+	    Button endBut=(Button) textEntryView.findViewById(R.id.end_time_but);
+	}
+	
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     	// TODO Auto-generated method stub

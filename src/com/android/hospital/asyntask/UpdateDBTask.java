@@ -189,7 +189,7 @@ public class UpdateDBTask extends AsyncTask<Object, Integer, Object>{
 			map.put("freq_desc", dataList2.get(i).get("freq_desc").trim());
 			map.put("freq_counter", dataList2.get(i).get("freq_counter").trim());
 			map.put("freq_interval", dataList2.get(i).get("freq_interval").trim());
-			map.put("freq_interval_unit", dataList2.get(i).get("freq_interval_units").trim());
+			map.put("freq_interval_units", dataList2.get(i).get("freq_interval_units").trim());
 			freqList.add(map);
 		}	
 	}

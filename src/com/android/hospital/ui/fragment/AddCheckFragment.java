@@ -341,5 +341,4 @@ public class AddCheckFragment extends BaseFragment implements OnItemSelectedList
 		}
 	}
 	
-	
 }
