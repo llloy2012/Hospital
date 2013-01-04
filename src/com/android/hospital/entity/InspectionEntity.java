@@ -104,7 +104,9 @@ public class InspectionEntity implements Serializable{
 					k++;
 			}
 		}
-		list_end.add(list.get(k-1));	
+		if (k!=0) {
+			list_end.add(list.get(k-1));	
+		}		
 		return list_end;
 	}
 }

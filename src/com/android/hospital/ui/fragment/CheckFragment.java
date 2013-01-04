@@ -62,18 +62,6 @@ public class CheckFragment extends ListFragment {
 		}
 	}
 	
-	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		// TODO Auto-generated method stub
-		super.onActivityResult(requestCode, resultCode, data);
-		DebugUtil.debug("resultCode---"+resultCode);
-		DebugUtil.debug("requestCode---"+requestCode);
-        if (resultCode==12) {
-			MainActivity mainActivity=(MainActivity) getActivity();
-			HospitalApp app=(HospitalApp) mainActivity.getApplication();
-			mainActivity.putCheckTask(app.getPatientEntity());
-		}
-	}
 	
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {

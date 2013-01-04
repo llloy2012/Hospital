@@ -17,6 +17,7 @@
             android:name=".StartActivity"
             android:label="@string/title_item_list" 
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:screenOrientation="landscape"
             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,17 +26,17 @@
             </intent-filter>
         </activity>
         
-        <activity android:name=".AddDcAdviceActivity"  android:label="@string/add_dcadvice" android:theme="@style/HospitalTheme"/>
-        <activity android:name=".LoginActivity"  android:label="@string/lgoin" android:theme="@style/HospitalTheme"/>
-        <activity android:name=".MainActivity" android:theme="@style/HospitalTheme"  />
-        <activity android:name=".InspectiondetailActivity" android:theme="@style/HospitalTheme" />
-        <activity android:name=".PrescriptiondetailActivity" android:theme="@style/HospitalTheme"/>
-        <activity android:name=".AddCheckActivity" android:theme="@style/HospitalTheme" android:label="@string/add_check" />
-        <activity android:name=".AddInspectionActivity" android:theme="@style/HospitalTheme" android:label="@string/add_inspection" />
-        <activity android:name=".AddPrescriptionActivity" android:theme="@style/HospitalTheme" android:label="@string/add_prescription" />
-        <activity android:name=".CheckdetailActivity" android:theme="@style/HospitalTheme"/>
-        <activity android:name=".CheckVersionActivity" android:theme="@style/HospitalTheme"/>
-        <activity android:name=".GroupDcAdviceActivity" android:theme="@style/HospitalTheme" android:label="@string/group_dcadvice" />
+        <activity android:name=".AddDcAdviceActivity"  android:label="@string/add_dcadvice" android:screenOrientation="landscape" android:theme="@style/HospitalTheme"/>
+        <activity android:name=".LoginActivity"  android:label="@string/lgoin" android:theme="@style/HospitalTheme" android:screenOrientation="landscape"/>
+        <activity android:name=".MainActivity" android:theme="@style/HospitalTheme" android:screenOrientation="landscape" />
+        <activity android:name=".InspectiondetailActivity" android:theme="@style/HospitalTheme" android:screenOrientation="landscape"/>
+        <activity android:name=".PrescriptiondetailActivity" android:theme="@style/HospitalTheme" android:screenOrientation="landscape"/>
+        <activity android:name=".AddCheckActivity" android:theme="@style/HospitalTheme" android:label="@string/add_check"  android:screenOrientation="landscape"/>
+        <activity android:name=".AddInspectionActivity" android:theme="@style/HospitalTheme" android:label="@string/add_inspection"  android:screenOrientation="landscape"/>
+        <activity android:name=".AddPrescriptionActivity" android:theme="@style/HospitalTheme" android:label="@string/add_prescription"  android:screenOrientation="landscape"/>
+        <activity android:name=".CheckdetailActivity" android:theme="@style/HospitalTheme" android:screenOrientation="landscape"/>
+        <activity android:name=".CheckVersionActivity" android:theme="@style/HospitalTheme" android:screenOrientation="landscape"/>
+        <activity android:name=".GroupDcAdviceActivity" android:theme="@style/HospitalTheme" android:label="@string/group_dcadvice" android:screenOrientation="landscape" />
         <service android:enabled="true" android:name="com.android.hospital.service.MyService" />
         <!-- #####################JUnit测试需要的权限标签 #####################-->
 		<uses-library android:name="android.test.runner" />

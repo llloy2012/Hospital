@@ -59,14 +59,4 @@ public class PrescriptionFragment extends ListFragment{
 		startActivity(intent);
 	}
 	
-	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		// TODO Auto-generated method stub
-		super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode==14) {
-			MainActivity mainActivity=(MainActivity) getActivity();
-			HospitalApp app=(HospitalApp) mainActivity.getApplication();
-			mainActivity.putPrescriptionTask(app.getPatientEntity());
-		}
-	}
 }
