@@ -240,7 +240,7 @@ public class LoginActivity extends Activity implements OnClickListener{
 	private void startGroupOrderTask(){
 		String sql = "select group_order_master.group_order_id ,group_order_master.title from group_order_master,group_order_selection" +
 				     " where group_order_master.group_order_id=group_order_selection.group_order_id" +
-				     " and group_order_selection.user_name='"+app.getLoginName()+"'";
+				     " and title is not null and group_order_selection.user_name='"+app.getLoginName()+"'";
 		ArrayList<DataEntity> dataList=WebServiceHelper.getWebServiceData(sql);
 		groupOrderList=new ArrayList<GroupOrderEntity>();
 		for (int i = 0; i < dataList.size(); i++) {

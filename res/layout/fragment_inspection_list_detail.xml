@@ -94,7 +94,7 @@
         android:textAppearance="?android:attr/textAppearanceListItemSmall" />
             
         </RelativeLayout>
-
+         <include layout="@layout/fragment_inspection_list_detail_item"  /> 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
