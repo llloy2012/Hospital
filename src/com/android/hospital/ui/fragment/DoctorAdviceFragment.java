@@ -157,7 +157,7 @@ public class DoctorAdviceFragment extends ListFragment {
 						}
 					}//for
 					for (int i = 0; i < list_update.size(); i++) {
-						String sql="UPDATE ORDERS  "+
+						String sql="UPDATE ORDERS "+
 		                         " SET STOP_DOCTOR= '"+app.getDoctor()+"',"+
 								 " STOP_DATE_TIME= TO_DATE('"+req_date_time+"','yyyy-MM-dd hh24:mi:ss'),"+
 	        		             " ORDER_STATUS='6',BILLING_ATTR='0',DRUG_BILLING_ATTR='0' "+
