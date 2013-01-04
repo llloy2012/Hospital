@@ -44,10 +44,12 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
@@ -582,6 +584,21 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 		}
 	});
 }*/
+	/**
+	 * 
+	* @Title: showDatePickerDialog 
+	* @Description: TODO(显示时间查询对话框) 
+	* @param     设定文件 
+	* @return void    返回类型 
+	* @throws
+	 */
+	public void showDatePickerDialog(){
+		LayoutInflater factory = LayoutInflater.from(this);
+	    View textEntryView = factory.inflate(R.layout.common_query_timedialog, null);
+	    Button startBut=(Button) textEntryView.findViewById(R.id.start_time_but);
+	    Button endBut=(Button) textEntryView.findViewById(R.id.end_time_but);
+	}
+	
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     	// TODO Auto-generated method stub
