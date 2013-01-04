@@ -119,11 +119,13 @@ public class AddPrescriptionFragment extends BaseFragment implements OnClickList
 			}
 			if (numNull()) {
 				return true;
+			}else {
+				Toast.makeText(getActivity(), "剂量和总量不能为空！", Toast.LENGTH_SHORT).show();
+				return false;
 			}
 		}else {
 			return true;
 		}
-		return false;
 	}
 
 	@Override
@@ -168,7 +170,6 @@ public class AddPrescriptionFragment extends BaseFragment implements OnClickList
 	* @throws
 	 */
 	public void clear(){
-		account();//测试
 		mAdapter.clear();
 		mClassSp.setSelection(0);
 		mDrugHouseTev.setText("");
@@ -480,21 +481,12 @@ public class AddPrescriptionFragment extends BaseFragment implements OnClickList
 		if (size!=0) {
 			for (int i = 0; i < size; i++) {
 				DrugEntity itemEntity=(DrugEntity) mAdapter.getItem(i);
-				View itemView=mListView.findViewWithTag(i);
-				EditText eachEditText=(EditText) itemView.findViewById(R.id.add_prescription_left_item_edit_4);
-				EditText totalEditText=(EditText) itemView.findViewById(R.id.add_prescription_left_item_edit_8);
-				Spinner spinner1=(Spinner) itemView.findViewById(R.id.add_prescription_left_item_spinner_6);
-				Spinner spinner2=(Spinner) itemView.findViewById(R.id.add_prescription_left_item_spinner_7);
-				if (totalEditText.getText().toString().equals("")||eachEditText.getText().toString().equals("")) {
-					return "";
-				}
-				itemEntity.dosage_each=eachEditText.getText().toString();//剂量,是否有一个eachEditText漏了，后面测试检查
-				itemEntity.quantity=totalEditText.getText().toString();//总量
-				itemEntity.administration=spinner1.getSelectedItem().toString();//途径
-				itemEntity.frequency=spinner2.getSelectedItem().toString();//频次
 				StringBuffer buffer=new StringBuffer();
 				buffer.append(itemEntity.dosage_each).append("/").append(itemEntity.package_units);//总量/单位
 				itemEntity.freq_detail=buffer.toString();
+				if (itemEntity.quantity==null) {
+					itemEntity.quantity="";
+				}
 				if (itemEntity.quantity.equals("")||itemEntity.quantity.equals("0")) {
 					itemEntity.quantity="1";
 				}
@@ -622,11 +614,11 @@ public class AddPrescriptionFragment extends BaseFragment implements OnClickList
 		int size=mAdapter.getCount();
 		if (size!=0) {
 			for (int i = 0; i < size; i++) {
-				View itemView=mListView.findViewWithTag(i);
-				EditText eachEditText=(EditText) itemView.findViewById(R.id.add_prescription_left_item_edit_4);
-				EditText totalEditText=(EditText) itemView.findViewById(R.id.add_prescription_left_item_edit_8);
-				if (eachEditText.getText().toString().equals("")||totalEditText.getText().toString().equals("")) {
-					Toast.makeText(getActivity(), "单次剂量或总量不能为空！", Toast.LENGTH_SHORT).show();
+				DrugEntity itemEntity=(DrugEntity) mAdapter.getItem(i);
+				if (itemEntity.dosage_each==null||itemEntity.dosage_each.equals("")) {
+					return false;
+				}
+				if (itemEntity.quantity==null||itemEntity.quantity.equals("")) {
 					return false;
 				}
 			}

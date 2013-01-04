@@ -43,26 +43,6 @@ public class CheckFragment extends ListFragment {
 		getActivity().findViewById(R.id.listview_common_titlebar).setVisibility(View.GONE);
 	}
 	
-	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		menu.addSubMenu(1, Menu.FIRST+5, 1, "按时间查询");
-	}
-	
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// TODO Auto-generated method stub
-		Intent intent;
-		DebugUtil.debug("itemid--->"+item.getItemId());
-		switch (item.getItemId()) {
-		case Menu.FIRST+5:
-			Toast.makeText(getActivity(), "功能尚未添加!", Toast.LENGTH_SHORT).show(); 
-			break;
-		default:
-			break;
-		}
-		return super.onOptionsItemSelected(item);
-	}
-	
 	/**
 	 * 
 	* @Title: clearAdapter 

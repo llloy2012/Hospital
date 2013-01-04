@@ -36,7 +36,7 @@ public class AddInspectionActivity extends Activity implements OnClickListener{
 
 	private AddInspectionFragment leftFm;
 	private SearchFragment searchFm;
-	private Button mCancleBut,mOkBut;
+	private Button mCancleBut,mOkBut,mClearBut;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -60,9 +60,11 @@ public class AddInspectionActivity extends Activity implements OnClickListener{
 	private void initView(){
 		mCancleBut=(Button) findViewById(R.id.common_but_cancle);
 		mOkBut=(Button) findViewById(R.id.common_but_ok);
+		mClearBut=(Button) findViewById(R.id.common_but_clear);
 		
 		mCancleBut.setOnClickListener(this);
 		mOkBut.setOnClickListener(this);
+		mClearBut.setOnClickListener(this);
 	}
 
 	@Override
@@ -96,7 +98,8 @@ public class AddInspectionActivity extends Activity implements OnClickListener{
             .create().show();
 			break;
 
-		default:
+		case R.id.common_but_clear:
+			leftFm.clear();
 			break;
 		}
 		

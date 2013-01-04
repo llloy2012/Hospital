@@ -102,29 +102,6 @@ public class DoctorAdviceFragment extends ListFragment {
 		menu.addSubMenu(1, 11, 1, "全部");
 		menu.addSubMenu(1, 12, 1, "长期");
 		menu.addSubMenu(1, 13, 1, "临时");
-		menu.addSubMenu(1, 14, 1, "按时间查询");
-	}
-	
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		Intent intent;
-		switch (item.getItemId()) {
-		case 11:
-			Toast.makeText(getActivity(), "功能尚未添加!", Toast.LENGTH_SHORT).show(); 
-		break;
-		case 12:			
-			Toast.makeText(getActivity(), "功能尚未添加!", Toast.LENGTH_SHORT).show(); 
-		break;
-		case 13:			
-			Toast.makeText(getActivity(), "功能尚未添加!", Toast.LENGTH_SHORT).show(); 
-		break;
-		case 14:			
-			Toast.makeText(getActivity(), "功能尚未添加!", Toast.LENGTH_SHORT).show(); 
-		break;
-		default:
-			break;
-		}
-		return super.onOptionsItemSelected(item);
 	}
 	
 	@Override
@@ -176,16 +153,7 @@ public class DoctorAdviceFragment extends ListFragment {
 		}
 		return false;
 	}		
-	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		// TODO Auto-generated method stub
-		super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode==11) {
-			MainActivity mainActivity=(MainActivity) getActivity();
-			HospitalApp app=(HospitalApp) mainActivity.getApplication();
-			mainActivity.putDcAdviceTask(app.getPatientEntity());
-		}
-	}
+
 	/**
 	 * 
 	* @Title: getArrayItem 

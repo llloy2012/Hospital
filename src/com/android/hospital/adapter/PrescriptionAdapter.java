@@ -55,8 +55,10 @@ public class PrescriptionAdapter extends BaseAdapter{
 	* @throws
 	 */
 	public void clearAdapter(){
-		mList.clear();
-	    notifyDataSetChanged();
+		if (mList!=null) {
+			mList.clear();
+			notifyDataSetChanged();
+		}	
 	}
 
 	@Override

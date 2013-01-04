@@ -172,6 +172,7 @@ public class LoginActivity extends Activity implements OnClickListener{
 		@Override
 		protected void onPreExecute() {
             mDialog=new MyProssDialog(LoginActivity.this, "µÇÂ¼", "ÕýÔÚµÇÂ¼£¬ÇëÉÔºò...");
+            mDialog.setCancelable();
 		}
 
 		@Override
