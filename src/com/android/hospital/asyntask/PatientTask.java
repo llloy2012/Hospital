@@ -67,6 +67,9 @@ public class PatientTask extends BaseAsyncTask{
 			fm.setListAdapter(adapter);
 			fm.getListView().setItemChecked(0, true);//Ä¬ÈÏÑ¡ÖÐ
 			mActivity.putDcAdviceTask((PatientEntity) adapter.getItem(0), "");
+			mActivity.putCheckTask((PatientEntity) adapter.getItem(0), "");
+			mActivity.putInspectionTask((PatientEntity) adapter.getItem(0), "");
+			mActivity.putPrescriptionTask((PatientEntity) adapter.getItem(0), "");
 			fm.getListView().setOnItemClickListener(new OnItemClickListener() {
 
 				@Override
