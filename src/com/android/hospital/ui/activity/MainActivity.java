@@ -198,7 +198,7 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 
 
 	@Override
-	public void getSingle(PatientEntity value) {//根据tab的选中id来进行任务
+	public void getSingle(PatientEntity value) {
 		// TODO Auto-generated method stub
 		DebugUtil.debug("测试getSingle"+value.name);
 		this.patientEntity=value;
@@ -445,44 +445,31 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 		DebugUtil.debug("id为"+item.getItemId());
 		switch (item.getItemId()) {
 		case Menu.FIRST:
-			if (AppConstant.isPatientChoose) {
 				intent=new Intent();
 				DoctorAdviceFragment fragment=(DoctorAdviceFragment) this.getFragmentManager().findFragmentByTag("dcadvice");
 				DcAdviceAdapter adapter=(DcAdviceAdapter) fragment.getListAdapter();		
 				DcAdviceEntity entity=(DcAdviceEntity) adapter.getItem(adapter.getCount()-1);
 				intent.putExtra("subentity", entity);
 				intent.setClass(this, AddDcAdviceActivity.class);
-				startActivityForResult(intent, 11);
-			}else {
-				Toast.makeText(this, "请先选择病人!", Toast.LENGTH_SHORT).show();//可根据左边病人listview是否有被选中判断
-			}			
+				startActivityForResult(intent, 11);	
 			break;
 		case Menu.FIRST+1:
-			if (AppConstant.isPatientChoose) {
+
 				intent=new Intent();
 				intent.setClass(this, AddCheckActivity.class);
 				startActivityForResult(intent, 12);
-			}else {
-				Toast.makeText(this, "请先选择病人!", Toast.LENGTH_SHORT).show();//可根据左边病人listview是否有被选中判断
-			}	
 			break;
 		case Menu.FIRST+2:
-			if (AppConstant.isPatientChoose) {
+			
 				intent=new Intent();
 				intent.setClass(this, AddInspectionActivity.class);
 				startActivityForResult(intent, 13);
-			}else {
-				Toast.makeText(this, "请先选择病人!", Toast.LENGTH_SHORT).show();//可根据左边病人listview是否有被选中判断
-			}		
+				
 			break;
 		case Menu.FIRST+3:
-			if (AppConstant.isPatientChoose) {
 				intent=new Intent();
 				intent.setClass(this, AddPrescriptionActivity.class);
 				startActivityForResult(intent, 14);
-			}else {
-				Toast.makeText(this, "请先选择病人!", Toast.LENGTH_SHORT).show();//可根据左边病人listview是否有被选中判断
-			}	
 			break;
 		case Menu.FIRST+4:
             showGroupDc();
@@ -497,11 +484,8 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 			Toast.makeText(this, "功能尚未添加!", Toast.LENGTH_SHORT).show();
 			break;
 		case 14:
-			if (AppConstant.isPatientChoose) {
-				showDatePickerDialog();
-			}else {
-				Toast.makeText(this, "请先选择病人!", Toast.LENGTH_SHORT).show();//可根据左边病人listview是否有被选中判断
-			}			
+			
+				showDatePickerDialog();		
 			break;
 		default:
 			break;
@@ -536,16 +520,13 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 
                 /* User clicked Yes so do some stuff */
             	DebugUtil.debug("positon--->"+whichButtonChoose);
-            	if (AppConstant.isPatientChoose) {
+            	
             		String id=app.getGroupOrderList().get(whichButtonChoose).group_order_id;
                 	Intent intent=new Intent();
                 	intent.putExtra("id", id);
                 	intent.setClass(MainActivity.this, GroupDcAdviceActivity.class);
                 	startActivityForResult(intent, 11);
                 	whichButtonChoose=0;//点击后，重置为零
-				}else {
-					Toast.makeText(MainActivity.this, "请先选择病人!", Toast.LENGTH_SHORT).show();//可根据左边病人listview是否有被选中判断
-				}
             	
             }
         })
