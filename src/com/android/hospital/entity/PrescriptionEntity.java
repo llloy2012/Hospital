@@ -12,13 +12,21 @@ import java.util.ArrayList;
 *
  */
 public class PrescriptionEntity implements Serializable{
+	
 	public String presc_no;//处方号
+	
 	public String presc_date;//申请日期
+	
 	public String prescribed_by;//开单医生
+	
 	public String presc_type;//处方类型 0 西药 1中药
+	
 	public String repetition;//剂数
+	
 	public String costs;//总花费
+	
 	public String presc_status;//处方状态 1发药 0未发药
+	
 	public String dept_name;//发药药房
 	
 	public PrescriptionEntity(){

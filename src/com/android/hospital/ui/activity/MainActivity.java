@@ -68,12 +68,19 @@ import android.widget.Toast;
 *
  */
 public class MainActivity extends Activity implements AsyncTaskCallback<PatientEntity>{	
+	
 	private LeftListFragment leftFm;
+	
 	private Spinner mSpinner;
+	
 	private TextView titleTev;
+	
 	private ActionBar actionBar;
+	
 	private List<AsyncTask> asyncTasks=null;
+	
 	private PatientEntity patientEntity;
+	
 	private HospitalApp app;
 	
 	@Override

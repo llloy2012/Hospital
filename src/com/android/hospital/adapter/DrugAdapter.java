@@ -28,11 +28,17 @@ import android.widget.TextView;
 public class DrugAdapter extends ArrayAdapter<DrugEntity> implements Filterable{
 
 	private Context mContext;
+	
 	private ArrayList<DrugEntity> mList;
+	
 	private LayoutInflater mInflater;
+	
 	private int resourceId;
+	
 	private ArrayFilter mFilter;
+	
 	private ArrayList<DrugEntity> mOriginalValues;
+	
     private final Object mLock = new Object();
 	
 	public DrugAdapter(Context context,int textViewResourceId,ArrayList<DrugEntity> arrayList){

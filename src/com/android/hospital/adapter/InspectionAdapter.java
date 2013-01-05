@@ -23,7 +23,9 @@ import android.widget.TextView;
 *
  */
 public class InspectionAdapter extends BaseAdapter{
+	
 	private ArrayList<InspectionEntity> mList;
+	
 	private Context mContext;
 	
 	public InspectionAdapter(Context context,ArrayList<InspectionEntity> entities){

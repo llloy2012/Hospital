@@ -29,11 +29,17 @@ import android.widget.TextView;
 public class PrescriptiondetailActivity extends Activity{
 
 	private ListView mListView;
+	
 	private TextView tev1,tev2,tev3,tev4;
+	
 	private PrescriptionEntity prescriptionEntity;//处方实体
+	
 	private HospitalApp app;
+	
 	private PatientEntity patientEntity;//病人实体
+	
 	private ArrayList<PrescriptiondetailEntity> arrayList;
+	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

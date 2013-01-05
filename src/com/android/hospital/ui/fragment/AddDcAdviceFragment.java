@@ -53,18 +53,31 @@ import android.widget.Toast;
 public class AddDcAdviceFragment extends Fragment implements OnClickListener,OnItemSelectedListener{
 
 	private View view;
+	
 	private RadioButton mDrugBut,mNonDrugBut,mLongTimeBut,mShortTimeBut;
+	
 	private TextView mDcAdViceTev,mDosageunitsTev,mTimeTev;
+	
 	private EditText mDosageEdit,mInstrutionEdit;
+	
 	private Spinner mWaySpinner,mFreqSpinner,mZiSpinner;
+	
 	private LinearLayout mHideLayout1,mHideLayout2;//需隐藏的布局
+	
 	private CheckBox mSubCheckBox;
+	
 	private HospitalApp app;
+	
 	private List<Map<String, String>> mFreqList;
+	
 	private List<Map<String, String>> mWayList;
+	
 	private String order_class="";
+	
 	private String order_code="";
+	
 	private String drug_spec="";//药品规格
+	
 	private DcAdviceEntity subEntity;//子医嘱
 	
 	@Override

@@ -32,10 +32,15 @@ import android.widget.ListView;
 public class PatientTask extends BaseAsyncTask{
 
 	private MainActivity mActivity;
+	
 	private String sql;
+	
 	private ArrayList<PatientEntity> arrayList;
+	
 	private AsyncTaskCallback<PatientEntity> mTaskCallback;
+	
 	private LeftListFragment fm;
+	
 	private HospitalApp app;
 	
 	public PatientTask(Activity activity,String sql){
@@ -66,10 +71,11 @@ public class PatientTask extends BaseAsyncTask{
 			final PatientAdapter adapter=new PatientAdapter(mActivity, arrayList);
 			fm.setListAdapter(adapter);
 			fm.getListView().setItemChecked(0, true);//Ä¬ÈÏÑ¡ÖÐ
-			mActivity.putDcAdviceTask((PatientEntity) adapter.getItem(0), "");
-			mActivity.putCheckTask((PatientEntity) adapter.getItem(0), "");
-			mActivity.putInspectionTask((PatientEntity) adapter.getItem(0), "");
-			mActivity.putPrescriptionTask((PatientEntity) adapter.getItem(0), "");
+			mActivity.putDcAdviceTask(arrayList.get(0), "");
+			mActivity.putCheckTask(arrayList.get(0), "");
+			mActivity.putInspectionTask(arrayList.get(0), "");
+			mActivity.putPrescriptionTask(arrayList.get(0), "");
+			app.setPatientEntity(arrayList.get(0));
 			fm.getListView().setOnItemClickListener(new OnItemClickListener() {
 
 				@Override

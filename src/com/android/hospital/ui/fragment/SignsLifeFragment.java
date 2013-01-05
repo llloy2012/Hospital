@@ -23,6 +23,7 @@ import android.widget.GridView;
 public class SignsLifeFragment extends Fragment{
 
 	private GridView mGridView=null;
+	
 	private GridButtonAdapter mAdapter=null;
 	
 	@Override

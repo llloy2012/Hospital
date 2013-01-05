@@ -23,20 +23,35 @@ import android.app.Application;
 public class HospitalApp extends Application{
 
 	private PatientEntity patientEntity;//单个病人实体
+	
 	private ArrayList<DrugEntity> drugList;//药品集合
+	
 	private ArrayList<DrugEntity> middleDrugList;//处方中药房药品集合
+	
 	private ArrayList<NonDrugEntity> nondrugList;//非药品集合
+	
 	private String maxNumber;//最大序号，每次点击新增按钮，值被改变
+	
 	private List<Map<String, String>> freqList;//途径集合
+	
 	private List<Map<String, String>> wayList;//频次集合
+	
 	private List<Map<String, String>> classList;//检查类别集合
+	
 	private List<Map<String, String>> deptList;//检查科室集合
+	
 	private List<Map<String, String>> inspecitonClassList;//检验类别集合
+	
 	private List<Map<String, String>> inspectionDeptList;//检验科室集合
+	
 	private String loginName="";//登录账号
+	
 	private String doctor="";//医生名
+	
 	private ArrayList<InspectionItemEntity> inspectionItemList;//检验项目集合
+	
 	private String nextval="";//触发器
+	
 	private ArrayList<GroupOrderEntity> groupOrderList;//套餐医嘱集合
 	
 	@Override

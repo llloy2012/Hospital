@@ -23,7 +23,9 @@ import com.android.hospital.ui.activity.R;
 *
  */
 public class DcAdviceAdapter extends BaseAdapter{
+	
 	private ArrayList<DcAdviceEntity> mList;
+	
 	private Context mContext;
 	
 	public DcAdviceAdapter(Context context,ArrayList<DcAdviceEntity> entities){

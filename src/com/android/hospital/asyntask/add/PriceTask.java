@@ -21,27 +21,49 @@ import com.android.hospital.webservice.WebServiceHelper;
 public class PriceTask extends BaseAsyncTask{
 
 	private Context mContext;
+	
 	private DcAdviceEntity mAdviceEntity;
+	
 	private int isDrug=0;//是否为药品，0为是，1为非药品
+	
 	private String item_name ;//计价项目名称。
+	
 	private String amount;//数量。
+	
 	private String units;//计价单位。
+	
 	private String item_code;//计价项目代码。
+	
 	private String item_class;//计价项目类别。
+	
 	private String item_no="1";//计价项目序号。
+	
 	private String costs;//本项目累计费用 
+	
 	private String item_spec;//计价项目规格 
+	
 	private String backbill_rule;//计价规则。
+	
 	private String price; //单价
+	
 	private String dose_per_unit;//单位剂量
+	
 	private String charge_item_class;//途径中的项目类别
+	
 	private String charge_item_code;//非药品中的项目代码
+	
 	private String charge_item_spec;//非药品中的项目规格
+	
 	private String charge_item_amount;//途径中的项目数量
+	
 	private String charge_item_name;//途径中的项目名称
+	
 	private String charge_units;//途径中的项目单位
+	
 	private HospitalApp app;
+	
 	private PatientEntity patientEntity;//单个病人实体
+	
 	
 	public PriceTask(Context context,DcAdviceEntity dcAdviceEntity,int isDrug){
 		this.mContext=context;

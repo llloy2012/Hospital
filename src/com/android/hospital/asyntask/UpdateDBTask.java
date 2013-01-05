@@ -34,20 +34,33 @@ import android.widget.Toast;
 public class UpdateDBTask extends AsyncTask<Object, Integer, Object>{
 
 	private LoginActivity mActivity;
+	
 	private HospitalApp app;
+	
 	private ArrayList<DrugEntity> drugList;//药品集合
+	
 	private ArrayList<NonDrugEntity> nondrugList;//非药品集合
+	
 	private List<Map<String, String>> wayList;//途径集合
+	
 	private List<Map<String, String>> freqList; //频次集合
+	
 	private List<Map<String, String>> classList;//检查类别
+	
 	private List<Map<String, String>> deptList;//发往科室
+	
 	private List<Map<String, String>> inspectionDeptList;//检验科室
+	
 	private List<Map<String, String>> inspectionClassList;//检验类别
+	
 	private ArrayList<InspectionItemEntity> inspectionItemList;//检验项目集合
 	
 	private ProgressDialog mProgressDialog;
+	
 	private static final int MAX_PROGRESS = 100;
+	
 	private int mProgress;
+	
     private Handler mProgressHandler;
 
 	

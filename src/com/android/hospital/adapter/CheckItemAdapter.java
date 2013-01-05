@@ -16,7 +16,9 @@ import android.widget.TextView;
 public class CheckItemAdapter extends BaseAdapter{
 
 	private Context mContext;
+	
 	private List<Map<String, String>> mList;
+	
 	private LayoutInflater mInflater;
 	
 	public CheckItemAdapter(Context context,List<Map<String, String>> list){

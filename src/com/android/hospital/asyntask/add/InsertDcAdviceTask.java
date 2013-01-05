@@ -15,8 +15,11 @@ import com.android.hospital.widgets.MyProssDialog;
 public class InsertDcAdviceTask extends BaseAsyncTask{
 
 	private Activity mActivity;
+	
 	private String sql;
+	
 	private MyProssDialog mDialog;
+	
 	
 	public InsertDcAdviceTask(Activity activity,String sql){
 		this.mActivity=activity;

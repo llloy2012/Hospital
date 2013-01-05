@@ -37,8 +37,11 @@ import android.widget.Toast;
 public class AddDcAdviceActivity extends Activity implements OnClickListener{
 
 	private AddDcAdviceFragment leftFm;
+	
 	private SearchAddDcAdviceFragment searchFm;
+	
 	private Button mCancleBut,mOkBut;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub

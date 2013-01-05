@@ -24,8 +24,11 @@ import com.android.hospital.webservice.WebServiceHelper;
 public class FreqAndWayTask extends BaseAsyncTask{
 	
 	private Context mContext;
+	
 	private String[] sqlArr;
+	
 	private List<Map<String, String>> wayList;
+	
 	private List<Map<String, String>> freqList;
 
 	public FreqAndWayTask(Context context,String[] sqlArr){

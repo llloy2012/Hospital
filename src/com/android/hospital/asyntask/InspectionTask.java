@@ -30,7 +30,9 @@ import com.android.hospital.webservice.WebServiceHelper;
 public class InspectionTask extends BaseAsyncTask{
 
 	private InspectionFragment fragment;
+	
 	private String sql;
+	
 	private ArrayList<InspectionEntity> arrayList;
 	
 	public InspectionTask(InspectionFragment fragment,String sql){

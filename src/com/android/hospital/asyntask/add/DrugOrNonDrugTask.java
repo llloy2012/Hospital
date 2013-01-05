@@ -33,9 +33,13 @@ import android.widget.Toast;
 public class DrugOrNonDrugTask extends BaseAsyncTask{
 
 	private Context mContext;
+	
 	private String drugSql;
+	
 	private String nondrugSql;
+	
 	private ArrayList<DrugEntity> drugList;
+	
 	private ArrayList<NonDrugEntity> nondrugList;
 	
 	public DrugOrNonDrugTask(Context context,String drugSql,String nondrugSql){

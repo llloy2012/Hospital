@@ -32,10 +32,15 @@ import android.widget.TextView;
 public class InspectiondetailActivity extends Activity{
 
 	private ListView mListView;
+	
 	private TextView tev1,tev2,tev3;
+	
 	private InspectionEntity inspectionEntity;//检验实体
+	
 	private HospitalApp app;
+	
 	private PatientEntity patientEntity;//病人实体
+	
 	private ArrayList<InspectiondetailEntity> arrayList;
 	
 	@Override
