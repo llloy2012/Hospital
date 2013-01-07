@@ -215,7 +215,7 @@ public class GroupDcAdviceActivity extends Activity implements OnClickListener{
 				if(entity.order_class.equals("A")){
 					butChoose(3, entity); //如果为长期药品，当为空时，应该是填充“日”
 				}else{
-					butChoose(2, entity); // 如果为长非药，清空单位，剂量，途径
+					butChoose(2, entity); //如果为长非药，清空单位，剂量，途径
 				}
 			}
 			if(entity.perform_schedule==null||entity.perform_schedule.equals("无")){
