@@ -281,6 +281,9 @@ public class AddDcAdviceFragment extends Fragment implements OnClickListener,OnI
 		entity.freq_counter=freqMap.get("freq_counter");// 频率次数
 		entity.freq_interval=freqMap.get("freq_interval");/// 频率间隔
 		entity.freq_interval_unit=freqMap.get("freq_interval_unit");// 频率间隔单位
+		if(null==entity.freq_interval_unit){
+			entity.freq_interval_unit="日";
+		}
 		if (null!=entity.freq_interval_unit&&entity.freq_interval_unit.equals("")) {
 			entity.freq_interval_unit="日";
 		}
