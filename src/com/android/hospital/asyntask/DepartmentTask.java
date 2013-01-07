@@ -77,6 +77,9 @@ public class DepartmentTask extends BaseAsyncTask implements OnItemSelectedListe
 			PatientAdapter adapter=(PatientAdapter) fm.getListAdapter();
 			if (null!=adapter&&adapter.getCount()!=0) {
 				adapter.clearAdapter();
+				if (fm.isAdded()) {
+					fm.setListShown(false);
+				}
 				DebugUtil.debug("spinner里病人集合--->"+fm.getListAdapter().getCount());//如果病人有，则清空,后期添加
 			}		
 		}

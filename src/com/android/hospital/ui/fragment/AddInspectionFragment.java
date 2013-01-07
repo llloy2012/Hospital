@@ -299,6 +299,7 @@ public class AddInspectionFragment extends BaseFragment implements OnItemSelecte
 		String priority_indicator="0";
 		String requested_date_time=Util.toSimpleDate();
 		String performed_by=getPerformed_by();//项目代码
+		String age=String.valueOf(Util.userBirthdayGetAge(app.getPatientEntity().date_of_birth));
 		if (mCheckBox.isChecked()) {
 			priority_indicator="1";
 		}	
@@ -314,7 +315,7 @@ public class AddInspectionFragment extends BaseFragment implements OnItemSelecte
 		inspectionBuffer.append("'"+app.getPatientEntity().visit_id).append("',");
 		inspectionBuffer.append("'"+app.getPatientEntity().name).append("',");
 		inspectionBuffer.append("'"+app.getPatientEntity().sex).append("',");
-		inspectionBuffer.append("'"+"").append("',");//需计算病人年龄
+		inspectionBuffer.append("'"+age).append("',");//需计算病人年龄
 		inspectionBuffer.append("'"+app.getPatientEntity().diagnosis).append("',");
 		inspectionBuffer.append("'"+mSpecimenSp.getSelectedItem().toString()).append("',");
 		inspectionBuffer.append("'"+mSpecimenEdit.getText().toString()).append("',");

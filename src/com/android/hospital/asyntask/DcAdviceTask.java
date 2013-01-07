@@ -50,6 +50,11 @@ public class DcAdviceTask extends BaseAsyncTask{
 				mFragment.setListShown(true);
 				mFragment.setSelection(adapter.getCount()-1);
 			}
+		}else {
+			if (mFragment.isAdded()) {
+				mFragment.setListShown(true);
+				mFragment.setEmptyText("未获取到数据!");
+			}
 		}
 	}
 }

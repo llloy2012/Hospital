@@ -70,6 +70,7 @@ public class PatientTask extends BaseAsyncTask{
 		if (arrayList.size()!=0) {
 			final PatientAdapter adapter=new PatientAdapter(mActivity, arrayList);
 			fm.setListAdapter(adapter);
+			fm.setListShown(true);
 			fm.getListView().setItemChecked(0, true);//默认选中
 			mActivity.putDcAdviceTask(arrayList.get(0), "");
 			mActivity.putCheckTask(arrayList.get(0), "");
@@ -86,6 +87,9 @@ public class PatientTask extends BaseAsyncTask{
 					mTaskCallback.getSingle(patientEntity);
 				}
 			});
+		}else {
+			fm.setListShown(true);
+			fm.setEmptyText("未获取到数据");
 		}
 	}
 }

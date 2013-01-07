@@ -313,11 +313,11 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 			String customWhere="WHERE (LAB_TEST_MASTER.TEST_NO= LAB_TEST_ITEMS.TEST_NO ) and "
 					+"( LAB_TEST_MASTER.PERFORMED_BY = DEPT_DICT.DEPT_CODE ) and "
 					+"( LAB_TEST_MASTER.PATIENT_ID = '"+value.patient_id +"' ) and "
-					+"(LAB_TEST_MASTER.VISIT_ID = '"+value.visit_id+"' )  "
-					+"order by LAB_TEST_ITEMS.TEST_NO,LAB_TEST_ITEMS.ITEM_NO  ";
-
+					+"(LAB_TEST_MASTER.VISIT_ID = '"+value.visit_id+"' )  ";
+					//+"order by LAB_TEST_ITEMS.TEST_NO,LAB_TEST_ITEMS.ITEM_NO  ";
+			String orderby = "order by LAB_TEST_ITEMS.TEST_NO,LAB_TEST_ITEMS.ITEM_NO  ";
 			String sql=ServerDao.getQueryCustom(tableName, paramArray1, customWhere);
-			sql=sql+query;
+			sql=sql+query+orderby;
 			putAsyncTask(new InspectionTask(fragment, sql).execute());
 		}
 		
@@ -347,9 +347,10 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 					                          "DOCT_DRUG_PRESC_MASTER.PRESCRIBED_BY","DEPT_DICT.DEPT_NAME","DOCT_DRUG_PRESC_MASTER.PRESC_TYPE","DOCT_DRUG_PRESC_MASTER.REPETITION",
 					                          "DOCT_DRUG_PRESC_MASTER.COSTS","DOCT_DRUG_PRESC_MASTER.PRESC_STATUS"};
 			String customWhere="WHERE DOCT_DRUG_PRESC_MASTER.Dispensary = dept_dict.dept_code  and (PRESC_STATUS not in (2, 3))  AND (DOCT_DRUG_PRESC_MASTER.PATIENT_ID = '"+value.patient_id+"') "
-					           +"AND (DOCT_DRUG_PRESC_MASTER.COSTS >= 0)  order by PRESC_DATE";
+					           +"AND (DOCT_DRUG_PRESC_MASTER.COSTS >= 0) ";
+			String orderby= "order by PRESC_DATE";
 			String sql=ServerDao.getQueryCustom(tableName, paramArray1, customWhere);
-			sql=sql+query;
+			sql=sql+query+orderby;
 			putAsyncTask(new PrescriptionTask(fragment,sql).execute());
 		}
 	}
@@ -684,26 +685,46 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 	* @throws
 	 */
     private void timeQueryTask(){
-		String sQueryAnd = " and TO_CHAR(start_date_time,'yyyy-MM-dd')>='"
+    	
+    	this.patientEntity=app.getPatientEntity();
+    	
+    	//医嘱----开始执行日期
+		String dcAdviceSql = " and TO_CHAR(start_date_time,'yyyy-MM-dd')>='"
 				+ startBut.getText().toString()
 				+ "' and TO_CHAR(start_date_time,'yyyy-MM-dd')<='"
 				+ endBut.getText().toString() + "' ";
+		//检查 ----项目申请日期
+		String checkSql=  " and TO_CHAR(req_date_time,'yyyy-MM-dd')>='"
+				+ startBut.getText().toString()
+				+ "' and TO_CHAR(req_date_time,'yyyy-MM-dd')<='"
+				+ endBut.getText().toString() + "' ";
+		//检验----检验日期
+		String inspectionSql = " and TO_CHAR(requested_date_time,'yyyy-MM-dd')>='"
+				+ startBut.getText().toString()
+				+ "' and TO_CHAR(requested_date_time,'yyyy-MM-dd')<='"
+				+ endBut.getText().toString() + "' ";
+		//处方----处方日期
+		String prescriptionSql = " and TO_CHAR(presc_date,'yyyy-MM-dd')>='"
+				+ startBut.getText().toString()
+				+ "' and TO_CHAR(presc_date,'yyyy-MM-dd')<='"
+				+ endBut.getText().toString() + "' ";
+		
 								
 		switch (getActionBar().getSelectedNavigationIndex()) {
 		case 0:
-			putDcAdviceTask(patientEntity, sQueryAnd);
+			putDcAdviceTask(patientEntity, dcAdviceSql);
 			DebugUtil.debug("actionbar--->id00000");
 			break;
 		case 1:
-			putCheckTask(patientEntity, sQueryAnd);
+			putCheckTask(patientEntity, checkSql);
 			DebugUtil.debug("actionbar--->id111111");
 			break;
 		case 2:
-			putInspectionTask(patientEntity, sQueryAnd);
+			putInspectionTask(patientEntity, inspectionSql);
 			DebugUtil.debug("actionbar--->id222222");
 			break;
 		case 3:
-			putPrescriptionTask(patientEntity, sQueryAnd);
+			putPrescriptionTask(patientEntity, prescriptionSql);
 			DebugUtil.debug("actionbar--->id333333");
 			break;
 		default:

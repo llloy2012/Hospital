@@ -1,4 +1,4 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -6,8 +6,20 @@
 
 	<ListView 
 	    android:id="@+id/lvPath"
-	    android:layout_width="fill_parent"
-	    android:layout_height="fill_parent">
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent">
 	</ListView>
+	
+	<TextView
+        android:id="@+id/empty"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center"
+        android:minHeight="?android:attr/listPreferredItemHeightSmall"
+        android:paddingLeft="?android:attr/listPreferredItemPaddingLeft"
+        android:paddingRight="?android:attr/listPreferredItemPaddingRight"
+        android:text="没有数据"
+        android:textAppearance="?android:attr/textAppearanceListItemSmall"
+        android:textColor="@color/black" />
 
-</RelativeLayout>
+</LinearLayout>

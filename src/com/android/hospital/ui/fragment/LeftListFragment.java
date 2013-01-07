@@ -63,4 +63,14 @@ public class LeftListFragment extends ListFragment{
 		//PatientAdapter adapter=(PatientAdapter) l.getAdapter();
 		//adapter.setSelectItem(position);
 	}
+	
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onActivityCreated(savedInstanceState);
+		
+		if (getListAdapter()==null) {
+			setEmptyText("未获取到病人信息");
+		}
+	}
 }

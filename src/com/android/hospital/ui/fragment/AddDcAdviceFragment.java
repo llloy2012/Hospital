@@ -345,6 +345,9 @@ public class AddDcAdviceFragment extends Fragment implements OnClickListener,OnI
 		if (mLongTimeBut.isChecked() && mNonDrugBut.isChecked()) {// 如果为长非药，清空单位，剂量，途径
 			butChoose(2, entity);
 		}
+		if(mLongTimeBut.isChecked()&& mDrugBut.isChecked()){ //如果为长期药品
+			butChoose(3, entity);
+		}
 		
 		if (mSubCheckBox.isChecked()) {//设置子医嘱
 			setSubOrders(entity);
@@ -391,6 +394,8 @@ public class AddDcAdviceFragment extends Fragment implements OnClickListener,OnI
 			entity.dosage_units = "";
 			entity.administration = "";
 			break;
+		case 3:
+			entity.freq_interval_unit = "日";
 		default:
 			break;
 		}

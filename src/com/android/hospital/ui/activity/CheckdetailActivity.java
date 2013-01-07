@@ -39,6 +39,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 /**
@@ -425,7 +426,12 @@ public class CheckdetailActivity extends Activity{
 		@Override
 		protected void onPostExecute(String result) {
 			// TODO Auto-generated method stub
-			listView.setAdapter(new ArrayAdapter<String>(CheckdetailActivity.this, android.R.layout.simple_expandable_list_item_1,data));
+			if (data.size()==0) {
+				TextView emptyView=(TextView) CheckdetailActivity.this.findViewById(R.id.empty);
+				listView.setEmptyView(emptyView);
+			}else {
+				listView.setAdapter(new ArrayAdapter<String>(CheckdetailActivity.this, android.R.layout.simple_expandable_list_item_1,data));
+			}
 		}
 	}
 }

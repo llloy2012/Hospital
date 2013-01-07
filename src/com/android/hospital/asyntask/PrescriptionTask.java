@@ -47,6 +47,11 @@ public class PrescriptionTask extends  BaseAsyncTask{
 				fragment.setListShown(true);
 				fragment.setSelection(adapter.getCount()-1);
 			}
+		}else {
+			if (fragment.isAdded()) {
+				fragment.setListShown(true);
+				fragment.setEmptyText("未获取到数据!");
+			}
 		}
 	}
 }
