@@ -38,6 +38,7 @@ public class PrescriptionFragment extends ListFragment{
 		setHasOptionsMenu(true);
 		getListView().setFastScrollEnabled(true);
 		getActivity().findViewById(R.id.listview_common_titlebar).setVisibility(View.GONE);
+		setEmptyText("未获取到数据");
 	}
 			
 	/**

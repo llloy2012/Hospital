@@ -94,6 +94,7 @@ public class DoctorAdviceFragment extends ListFragment {
 			}
 		});
 		getActivity().findViewById(R.id.listview_common_titlebar).setVisibility(View.VISIBLE);
+		setEmptyText("未获取到数据");
 	}
 		
 	@Override

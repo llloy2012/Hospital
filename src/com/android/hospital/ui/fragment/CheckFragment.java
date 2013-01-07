@@ -49,13 +49,7 @@ public class CheckFragment extends ListFragment {
 			getListView().setAdapter(getListAdapter());
 >>>>>>> refs/heads/hospitalbeta
 		}*/
-		if (getListAdapter()==null||getListAdapter().getCount()==0) {
-			setListShown(false);
-			setEmptyText("未获取到数据");
-		}else {
-			setEmptyText("");
-			setListShown(true);
-		}
+		setEmptyText("未获取到数据");
 	}
 	
 	/**
