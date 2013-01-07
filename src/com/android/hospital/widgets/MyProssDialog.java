@@ -11,6 +11,7 @@ import android.content.Context;
 *
  */
 public class MyProssDialog {
+	
 	ProgressDialog mDialog;
 	
 	

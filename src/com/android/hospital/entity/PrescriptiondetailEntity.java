@@ -13,18 +13,31 @@ import java.util.ArrayList;
 public class PrescriptiondetailEntity {
 
 	public String PRESC_DATE;//处方日期
+	
 	public String PRESC_NO;//处方号
+	
 	public String ITEM_NO;//序号
+	
 	public String DRUG_NAME;//药品名称
+	
 	public String PACKAGE_SPEC;//规格
+	
 	public String FIRM_ID;//厂商
+	
 	public String DOSAGE_EACH;//单次计量
+	
 	public String DOSAGE_UNITS;//单位
+	
 	public String ADMINISTRATION;//途径
+	
 	public String FREQUENCY;//频次
+	
 	public String FREQ_DETAIL;//医生说明
+	
 	public String QUANTITY;//总量
+	
 	public String PACKAGE_UNITS;//单位
+	
 	public String COSTS;//计价
 	
 	

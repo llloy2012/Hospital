@@ -29,11 +29,17 @@ import android.widget.TextView;
 public class InspectionItemAdapter extends ArrayAdapter<InspectionItemEntity> implements Filterable{
 
 	private Context mContext;
+	
 	private ArrayList<InspectionItemEntity> mList;
+	
 	private LayoutInflater mInflater;
+	
 	private int resourceId;
+	
 	private ArrayFilter mFilter;
+	
 	private ArrayList<InspectionItemEntity> mOriginalValues;
+	
     private final Object mLock = new Object();
 	
 	public InspectionItemAdapter(Context context,int textViewResourceId,ArrayList<InspectionItemEntity> arrayList){

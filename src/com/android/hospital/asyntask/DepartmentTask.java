@@ -30,7 +30,9 @@ import android.widget.Spinner;
 public class DepartmentTask extends BaseAsyncTask implements OnItemSelectedListener{
 	
 	private Activity mActivity;
+	
 	private String sql;
+	
 	private ArrayList<String> codeArrayList;//部门代码，通过部门代码获取病人列表
 
 	public DepartmentTask(Activity activity,String sql){

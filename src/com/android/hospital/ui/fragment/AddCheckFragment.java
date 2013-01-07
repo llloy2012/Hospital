@@ -46,15 +46,25 @@ import android.widget.Toast;
 public class AddCheckFragment extends BaseFragment implements OnItemSelectedListener{
 
     private View view;
+    
     private Spinner mClassSp,mSubClassSp,mDeptSp;//类别，子类别，发往科室
+    
     private TextView mTempJudgeTev;//临床诊断
+    
     private EditText mSymptomEdit,mSignsEdit;//症状，体征
+    
     private ListView mListView;
+    
     private HospitalApp app;
+    
 	private List<Map<String, String>> mClassList;//类别集合
+	
 	private List<Map<String, String>> mDeptList;//科室集合
+	
 	private SeachCheckFragment fm;//搜索界面
+	
 	private CheckLeftItemAdapter adapter;
+	
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {

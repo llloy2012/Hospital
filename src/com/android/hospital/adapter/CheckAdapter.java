@@ -22,6 +22,7 @@ import android.widget.TextView;
 public class CheckAdapter extends BaseAdapter{
 	
 	private Context mContext;
+	
 	private ArrayList<CheckEntity> mList;
 
 	public CheckAdapter(Context context,ArrayList<CheckEntity> arrayList){

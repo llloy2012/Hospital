@@ -8,11 +8,18 @@ package com.android.hospital.entity;
 *
  */
 public class GroupOrderEntity {
+	
 	public String group_order_id;//医嘱模板标识（唯一）
+	
 	public String title;//模板名称	
+	
 	public String dept_code;//所属科室
+	
 	public String creator_id;//建立者代码
+	
 	public String last_mondify_date_time;//最后修改日期
+	
 	public String permission;//级别
+	
 	public String input_code;//输入码
 }

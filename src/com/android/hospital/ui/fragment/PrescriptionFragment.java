@@ -38,6 +38,7 @@ public class PrescriptionFragment extends ListFragment{
 		setHasOptionsMenu(true);
 		getListView().setFastScrollEnabled(true);
 		getActivity().findViewById(R.id.listview_common_titlebar).setVisibility(View.GONE);
+		setEmptyText("未获取到数据");
 	}
 			
 	/**
@@ -59,14 +60,4 @@ public class PrescriptionFragment extends ListFragment{
 		startActivity(intent);
 	}
 	
-	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		// TODO Auto-generated method stub
-		super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode==14) {
-			MainActivity mainActivity=(MainActivity) getActivity();
-			HospitalApp app=(HospitalApp) mainActivity.getApplication();
-			mainActivity.putPrescriptionTask(app.getPatientEntity());
-		}
-	}
 }

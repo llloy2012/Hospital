@@ -32,12 +32,19 @@ import android.widget.SearchView;
 public class SearchAddDcAdviceFragment extends Fragment implements SearchView.OnQueryTextListener,OnItemClickListener{
 
 	private ListView mListView;
+	
 	private SearchView mSearchView;
+	
 	private HospitalApp app;
+	
 	private DrugAdapter drugAdapter;
+	
 	private NonDrugAdapter nonDrugAdapter;
+	
 	private boolean isDrugOrNonDrug=true;//显示的为药品还是非药品标记
+	
 	private AddDcAdviceFragment addDcAdviceFm;//左边的fragment
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub

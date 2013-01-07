@@ -17,9 +17,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical" 
+    android:padding="20dp"
+    >
 
-    <TextView
+<!--     <TextView
                 android:id="@+id/main_patient_info_tev"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -28,9 +30,9 @@
                 android:paddingLeft="?android:attr/listPreferredItemPaddingLeft"
                 android:paddingRight="?android:attr/listPreferredItemPaddingRight"
                 android:text="功能尚未添加"
-                android:textAppearance="?android:attr/textAppearanceListItemSmall" />
+                android:textAppearance="?android:attr/textAppearanceListItemSmall" /> -->
     
-    <!-- 
+    
     <GridView
         android:id="@+id/signslife_gridview"
         android:layout_width="match_parent"
@@ -43,7 +45,7 @@
         android:scrollbars="none" 
         >
     </GridView>
-     -->
+    
     
 
 </LinearLayout>

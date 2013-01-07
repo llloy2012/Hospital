@@ -13,8 +13,11 @@ import java.util.ArrayList;
 public class NonDrugEntity {
 
 	public String item_name;//别名
+	
 	public String input_code;//输入码，检索用
+	
 	public String item_code;//药品代码
+	
     public String item_class;//类别
     
     public NonDrugEntity(){}

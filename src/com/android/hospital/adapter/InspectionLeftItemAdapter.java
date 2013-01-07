@@ -21,7 +21,9 @@ import android.widget.Toast;
 public class InspectionLeftItemAdapter extends BaseAdapter{
 
 	private Context mContext;
+	
 	private ArrayList<InspectionItemEntity> mList;
+	
 	private LayoutInflater mInflater;
 	
 	public InspectionLeftItemAdapter(Context context,ArrayList<InspectionItemEntity> list){

@@ -23,6 +23,7 @@ import android.widget.GridView;
 public class SignsLifeFragment extends Fragment{
 
 	private GridView mGridView=null;
+	
 	private GridButtonAdapter mAdapter=null;
 	
 	@Override
@@ -37,8 +38,7 @@ public class SignsLifeFragment extends Fragment{
 			Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		View view=inflater.inflate(R.layout.fragment_signslife, null);
-		//mGridView=(GridView) view.findViewById(R.id.signslife_gridview);
-		//mGridView.setAdapter(mAdapter);	
+		mGridView=(GridView) view.findViewById(R.id.signslife_gridview);	
 		return view;
 	}	
 	
@@ -47,5 +47,6 @@ public class SignsLifeFragment extends Fragment{
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
 		getActivity().findViewById(R.id.listview_common_titlebar).setVisibility(View.GONE);
+		mGridView.setAdapter(mAdapter);	
 	}
 }

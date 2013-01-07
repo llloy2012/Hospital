@@ -211,6 +211,10 @@ public class GroupDcAdviceAdapter extends BaseAdapter{
        LayoutInflater factory = LayoutInflater.from(mContext);
        final View textEntryView = factory.inflate(R.layout.activity_group_editdialog, null);
        final EditText editText=(EditText) textEntryView.findViewById(R.id.activity_group_editdialog_edit);
+       final DcAdviceEntity item=(DcAdviceEntity) getItem(position);
+       if (item.dosage!=null) {
+		  editText.setText(item.dosage);
+	   }
        new AlertDialog.Builder(mContext)
            .setIconAttribute(android.R.attr.alertDialogIcon)
            .setTitle("请编辑")
@@ -219,7 +223,6 @@ public class GroupDcAdviceAdapter extends BaseAdapter{
                public void onClick(DialogInterface dialog, int whichButton) {
 
                    /* User clicked OK so do some stuff */
-            	   DcAdviceEntity item=(DcAdviceEntity) getItem(position);
             	   item.dosage=editText.getText().toString();
             	   mList.set(position, item);
             	   notifyDataSetChanged();
@@ -247,7 +250,7 @@ public class GroupDcAdviceAdapter extends BaseAdapter{
 	   new AlertDialog.Builder(mContext)
        .setIconAttribute(android.R.attr.alertDialogIcon)
        .setTitle("请选择")
-       .setSingleChoiceItems(array, 0, new DialogInterface.OnClickListener() {
+       .setSingleChoiceItems(array, whichChoose, new DialogInterface.OnClickListener() {
            public void onClick(DialogInterface dialog, int whichButton) {
 
                /* User clicked on a radio button do some stuff */
@@ -269,7 +272,6 @@ public class GroupDcAdviceAdapter extends BaseAdapter{
 				   DebugUtil.debug("频次中的值--->"+mFreqList.get(whichChoose).get("freq_interval_unit"));
 			   }
         	   setPerform_schedule(item, position);
-        	   whichChoose=0;
            }
        })
        .setNegativeButton("取消", new DialogInterface.OnClickListener() {

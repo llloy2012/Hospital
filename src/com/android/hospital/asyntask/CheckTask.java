@@ -20,7 +20,9 @@ import com.android.hospital.webservice.WebServiceHelper;
 public class CheckTask extends BaseAsyncTask{
 
 	private CheckFragment mFragment;
+	
 	private String sql;
+	
 	private ArrayList<CheckEntity> arrayList;
 	
 	public CheckTask(CheckFragment fragment,String sql){

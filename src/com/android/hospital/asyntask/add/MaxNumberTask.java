@@ -22,7 +22,9 @@ import com.android.hospital.webservice.WebServiceHelper;
 public class MaxNumberTask extends AsyncTask<String, Void, String>{
 
 	private Context mContext;
+	
 	private HospitalApp app;
+	
 	private String nextval="";//´¥·¢Æ÷
 	
 	public MaxNumberTask(Context context){

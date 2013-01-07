@@ -14,21 +14,37 @@ import com.android.hospital.util.DebugUtil;
 public class PatientEntity {
 
 	public String dept_code;//病人所在科室
+	
 	public String bed_no;//床号
+	
 	public String diagnosis;//病人诊断（C）
+	
 	public String doctor_in_charge;//主治医生（C）
+	
 	public String patient_id;//病人ID
+	
 	public String visit_id;//住院次数
+	
 	public String prepayments;//预交金余额
+	
     public String name;//病人名称
+    
     public String sex;//性别
+    
     public String name_phonetic;//姓名全拼（c）
+    
 	public String date_of_birth;//出生年月 (date)
+	
 	public String birth_place;//出生地（c）
+	
 	public String identity;//身份（c）
+	
 	public String mailing_address;//地址 （c）
+	
 	public String zip_code;//邮政编码（c）
+	
 	public String phone_number_home;//家庭电话号码（c）
+	
 	public String charge_type;//费别 (c)
     
 	public PatientEntity(){

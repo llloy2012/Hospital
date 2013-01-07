@@ -31,12 +31,19 @@ import android.widget.Toast;
 public class PrescriptionLeftItemAdapter extends BaseAdapter {
 
 	private Context mContext;
+	
 	private ArrayList<DrugEntity> mList;
+	
 	private LayoutInflater mInflater;
+	
 	private HospitalApp app;
+	
 	private List<Map<String, String>> mFreqList;//Æµ´Îlist
+	
 	private List<Map<String, String>> mWayList;//Í¾¾¶list
+	
 	private ArrayAdapter<String> freqAdapter;
+	
 	private ArrayAdapter<String> wayAdapter;
 	
 	public PrescriptionLeftItemAdapter(Context context,ArrayList<DrugEntity> list){
@@ -186,6 +193,12 @@ public class PrescriptionLeftItemAdapter extends BaseAdapter {
 	       LayoutInflater factory = LayoutInflater.from(mContext);
 	       final View textEntryView = factory.inflate(R.layout.activity_group_editdialog, null);
 	       final EditText editText=(EditText) textEntryView.findViewById(R.id.activity_group_editdialog_edit);
+	       final DrugEntity item=(DrugEntity) getItem(position);
+	       if (which==0&&item.dosage_each!=null) {
+			  editText.setText(item.dosage_each);
+		   }else if(item.quantity!=null){
+			  editText.setText(item.quantity);
+		   }
 	       new AlertDialog.Builder(mContext)
 	           .setIconAttribute(android.R.attr.alertDialogIcon)
 	           .setTitle("Çë±à¼­")
@@ -194,7 +207,6 @@ public class PrescriptionLeftItemAdapter extends BaseAdapter {
 	               public void onClick(DialogInterface dialog, int whichButton) {
 
 	                   /* User clicked OK so do some stuff */
-	            	   DrugEntity item=(DrugEntity) getItem(position);
 	            	   if (which==0) {
 	            		   item.dosage_each=editText.getText().toString();//¼ÁÁ¿
 					   }else {
@@ -226,7 +238,7 @@ public class PrescriptionLeftItemAdapter extends BaseAdapter {
 		   new AlertDialog.Builder(mContext)
 	       .setIconAttribute(android.R.attr.alertDialogIcon)
 	       .setTitle("ÇëÑ¡Ôñ")
-	       .setSingleChoiceItems(array, 0, new DialogInterface.OnClickListener() {
+	       .setSingleChoiceItems(array, whichChoose, new DialogInterface.OnClickListener() {
 	           public void onClick(DialogInterface dialog, int whichButton) {
 
 	               /* User clicked on a radio button do some stuff */
@@ -244,7 +256,6 @@ public class PrescriptionLeftItemAdapter extends BaseAdapter {
 					   item.frequency=array[whichChoose];
 				   }
 	        	   mList.set(position, item);
-	        	   whichChoose=0;
 	        	   notifyDataSetChanged();
 	           }
 	       })

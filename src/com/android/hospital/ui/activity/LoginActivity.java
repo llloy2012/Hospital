@@ -45,10 +45,15 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 public class LoginActivity extends Activity implements OnClickListener{
 
 	private SharedPreferences sp;
+	
 	private EditText mUserEditText,mPwdEditText;
+	
 	private CheckBox mCheckBox;
+	
 	private Button mOkBut,mCancleBut;
+	
 	private ArrayList<GroupOrderEntity> groupOrderList;//Ì×²ÍÒ½Öö¼¯ºÏ
+	
 	private HospitalApp app;
 	
 	@Override

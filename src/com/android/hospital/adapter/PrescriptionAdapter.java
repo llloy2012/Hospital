@@ -21,8 +21,11 @@ import android.widget.TextView;
 *
  */
 public class PrescriptionAdapter extends BaseAdapter{
+	
 	private ArrayList<PrescriptionEntity> mList;
+	
 	private Context mContext;
+	
 	public PrescriptionAdapter(Context context,ArrayList<PrescriptionEntity> entities){
 		this.mContext=context;
 		this.mList=entities;

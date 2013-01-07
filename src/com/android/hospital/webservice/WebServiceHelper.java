@@ -28,8 +28,11 @@ import android.os.PowerManager.WakeLock;
 public class WebServiceHelper {
 
 	private static final String METHOD_NAME = "getObjByDefaultDBSql";
+	
 	private static final String NAMESPACE = "http://service.com";
+	
 	private static final String SERVERURL="http://192.168.0.40:8888/WebServiceServer/services/GeneralOpSQL";
+	
 	private static WakeLock wl;
 	/**
      * ºÏ≤‚Õ¯¬Á «∑Òø…”√

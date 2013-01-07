@@ -22,7 +22,9 @@ import android.app.Fragment;
 public class DcAdviceTask extends BaseAsyncTask{
 
 	private DoctorAdviceFragment mFragment;
+	
 	private String sql;
+	
 	private ArrayList<DcAdviceEntity> arrayList;
 	
 	public DcAdviceTask(DoctorAdviceFragment fragment,String sql){

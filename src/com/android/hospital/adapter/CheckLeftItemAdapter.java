@@ -20,7 +20,9 @@ import android.widget.Toast;
 public class CheckLeftItemAdapter extends BaseAdapter{
 
 	private Context mContext;
+	
 	private List<Map<String, String>> mList;
+	
 	private LayoutInflater mInflater;
 	
 	public CheckLeftItemAdapter(Context context,List<Map<String, String>> list){

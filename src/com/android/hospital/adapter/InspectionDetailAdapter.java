@@ -17,6 +17,7 @@ import android.widget.TextView;
 public class InspectionDetailAdapter extends BaseAdapter{
 	
 	private Context mContext;
+	
 	private ArrayList<InspectiondetailEntity> mList;
 
 	public InspectionDetailAdapter(Context context,ArrayList<InspectiondetailEntity> arrayList){

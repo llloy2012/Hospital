@@ -21,25 +21,45 @@ public class InspectionEntity implements Serializable{
 	* @user - @date 
 	*/
 	private static final long serialVersionUID = -611386808382331665L;
+	
 	public String item_no;//项目序号
+	
 	public String item_name;//项目名称
+	
 	public String specimen;//标本
+	
 	public String item_code;//项目代码
+	
 	public String test_no;//申请序号
+	
 	public String dept_name;//科室名称
+	
 	public String result_status;//结果状态
+	
 	public String requested_date_time;//申请日期及时间
+	
 	public String billing_indicator;//计价标志
+	
 	public String priority_indicator;//优先标志
+	
 	public String charge_type;//费别
+	
 	public String notes_for_spcm;//标本说明
+	
 	public String performed_by;//执行科室
+	
 	public String relevant_clinic_diag;//临床诊断
+	
 	public String name;//姓名
+	
 	public String sex;//性别
+	
 	public String age;//年龄
+	
 	public String ordering_dept;//申请科室
+	
 	public String patient_id;//病人标识号
+	
 	public String prdering_provider;//申请医生
 	
 	public InspectionEntity() {
@@ -104,7 +124,9 @@ public class InspectionEntity implements Serializable{
 					k++;
 			}
 		}
-		list_end.add(list.get(k-1));	
+		if (k!=0) {
+			list_end.add(list.get(k-1));	
+		}		
 		return list_end;
 	}
 }

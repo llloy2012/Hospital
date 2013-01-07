@@ -33,7 +33,9 @@ import android.widget.SearchView;
 public abstract class SearchFragment extends Fragment implements SearchView.OnQueryTextListener{
 
 	private ListView mListView;
+	
 	private SearchView mSearchView;
+	
 	private HospitalApp app;
 
 	@Override

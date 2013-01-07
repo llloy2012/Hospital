@@ -24,8 +24,11 @@ import android.widget.TextView;
 public class FreqSpinnerAdapter extends ArrayAdapter<Map<String, String>> {
 
 	private Context mContext;
+	
 	private List<Map<String, String>> mList;
+	
 	private int mFieldId=android.R.layout.simple_spinner_item;
+	
 	private LayoutInflater mInflater;
 
 	public FreqSpinnerAdapter(Context context,int textViewResourceId,List<Map<String, String>> aList){

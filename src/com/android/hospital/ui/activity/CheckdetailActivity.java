@@ -52,8 +52,11 @@ import android.widget.Toast;
 public class CheckdetailActivity extends Activity{
 
 	public String sFilePath = "";
+	
 	public String sFileName = "";
+	
 	private String exam_no="";//ºÏ≤È–Ú∫≈
+	
 	
 	static class MyHandler extends Handler{
 		WeakReference<CheckdetailActivity> mActivity;

@@ -40,15 +40,25 @@ import android.widget.Toast;
 public class AddInspectionFragment extends BaseFragment implements OnItemSelectedListener{
 
     private View view;
+    
 	private Spinner mInspectionDeptSp,mClassSp,mSpecimenSp;//检验科室，类别，标本
+	
 	private EditText mSpecimenEdit;//标本说明
+	
 	private TextView mTempJudgeTev,mDoctorTev,mTimeTev;//临床诊断，送检医生，申请时间
+	
 	private CheckBox mCheckBox;//急诊
+	
 	private List<Map<String, String>> mDeptList;//检验科室
+	
 	private List<Map<String, String>> mClassList;//检验类别
+	
 	private HospitalApp app;
+	
 	private InspectionItemEntity inspectionItemEntity;
+	
 	private InspectionLeftItemAdapter mAdapter;
+	
 	private ListView mListView;
 	
 	@Override

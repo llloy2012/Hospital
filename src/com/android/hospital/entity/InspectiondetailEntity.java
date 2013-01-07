@@ -13,10 +13,15 @@ import java.util.ArrayList;
 public class InspectiondetailEntity {
 
 	public String result_date_time;//检验日期
+	
 	public String report_item_name;//检验项目
+	
 	public String result;//检验结果值
+	
 	public String units;//单位
+	
 	public String print_context;//参考范围
+	
 	public String abnormal_indicator;//检验结果
 	
 	

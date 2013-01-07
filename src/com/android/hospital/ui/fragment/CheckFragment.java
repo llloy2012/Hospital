@@ -41,6 +41,15 @@ public class CheckFragment extends ListFragment {
 		setHasOptionsMenu(true);
 		getListView().setFastScrollEnabled(true);
 		getActivity().findViewById(R.id.listview_common_titlebar).setVisibility(View.GONE);
+/*<<<<<<< HEAD
+		if (isAdded()) {
+			DebugUtil.debug("fragment被added");
+=======
+		if (isAdded()&&getListAdapter()!=null) {
+			getListView().setAdapter(getListAdapter());
+>>>>>>> refs/heads/hospitalbeta
+		}*/
+		setEmptyText("未获取到数据");
 	}
 	
 	/**
@@ -62,18 +71,6 @@ public class CheckFragment extends ListFragment {
 		}
 	}
 	
-	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		// TODO Auto-generated method stub
-		super.onActivityResult(requestCode, resultCode, data);
-		DebugUtil.debug("resultCode---"+resultCode);
-		DebugUtil.debug("requestCode---"+requestCode);
-        if (resultCode==12) {
-			MainActivity mainActivity=(MainActivity) getActivity();
-			HospitalApp app=(HospitalApp) mainActivity.getApplication();
-			mainActivity.putCheckTask(app.getPatientEntity());
-		}
-	}
 	
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {

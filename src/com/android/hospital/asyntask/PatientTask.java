@@ -8,6 +8,8 @@ import com.android.hospital.constant.AppConstant;
 import com.android.hospital.db.ServerDao;
 import com.android.hospital.entity.DataEntity;
 import com.android.hospital.entity.PatientEntity;
+import com.android.hospital.ui.activity.MainActivity;
+import com.android.hospital.ui.fragment.DoctorAdviceFragment;
 import com.android.hospital.ui.fragment.LeftListFragment;
 import com.android.hospital.util.DebugUtil;
 import com.android.hospital.webservice.WebServiceHelper;
@@ -29,15 +31,22 @@ import android.widget.ListView;
  */
 public class PatientTask extends BaseAsyncTask{
 
-	private Activity mActivity;
+	private MainActivity mActivity;
+	
 	private String sql;
+	
 	private ArrayList<PatientEntity> arrayList;
+	
 	private AsyncTaskCallback<PatientEntity> mTaskCallback;
+	
 	private LeftListFragment fm;
 	
+	private HospitalApp app;
+	
 	public PatientTask(Activity activity,String sql){
-		this.mActivity=activity;
+		this.mActivity=(MainActivity) activity;
 		this.sql=sql;
+		app=(HospitalApp) mActivity.getApplication();
 	}
 	
 	@Override
@@ -59,18 +68,19 @@ public class PatientTask extends BaseAsyncTask{
 		mTaskCallback=(AsyncTaskCallback<PatientEntity>) mActivity;
 		fm=(LeftListFragment) mActivity.getFragmentManager().findFragmentByTag("leftfm");
 		if (arrayList.size()!=0) {
-			DebugUtil.debug("listsiize"+arrayList.size());			
-			;
 			final PatientAdapter adapter=new PatientAdapter(mActivity, arrayList);
 			fm.setListAdapter(adapter);
-			//fm.getListView().setItemChecked(0, true);//默认选中
+			fm.getListView().setItemChecked(0, true);//默认选中
+			mActivity.putDcAdviceTask(arrayList.get(0), "");
+			mActivity.putCheckTask(arrayList.get(0), "");
+			mActivity.putInspectionTask(arrayList.get(0), "");
+			mActivity.putPrescriptionTask(arrayList.get(0), "");
+			app.setPatientEntity(arrayList.get(0));
 			fm.getListView().setOnItemClickListener(new OnItemClickListener() {
 
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view,
 						int position, long id) {
-					AppConstant.isPatientChoose=true;//是否有病人被选中
-					HospitalApp app=(HospitalApp) mActivity.getApplication();//设置选中病人为全局变量
 					PatientEntity patientEntity=(PatientEntity) adapter.getItem(position);
 					app.setPatientEntity(patientEntity);
 					mTaskCallback.getSingle(patientEntity);
@@ -78,5 +88,4 @@ public class PatientTask extends BaseAsyncTask{
 			});
 		}
 	}
-	
 }

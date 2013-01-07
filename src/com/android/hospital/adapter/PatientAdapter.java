@@ -24,6 +24,7 @@ import android.widget.TextView;
 public class PatientAdapter extends BaseAdapter{
 
 	private ArrayList<PatientEntity> mList;
+	
 	private Context mContext;
 	
 	public PatientAdapter(Context context,ArrayList<PatientEntity> arrayList){

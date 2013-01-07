@@ -20,8 +20,11 @@ import com.android.hospital.webservice.WebServiceHelper;
 *
  */
 public class PrescriptionTask extends  BaseAsyncTask{
+	
 	private PrescriptionFragment fragment;
+	
 	private String sql;
+	
 	private ArrayList<PrescriptionEntity> arrayList;
 	
 	public PrescriptionTask(PrescriptionFragment fragment,String sql){

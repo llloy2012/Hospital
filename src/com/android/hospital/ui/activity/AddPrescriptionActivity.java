@@ -35,8 +35,11 @@ import android.widget.Button;
 public class AddPrescriptionActivity extends Activity implements OnClickListener{
 
 	private AddPrescriptionFragment leftFm;
+	
 	private SearchFragment searchFm;
+	
 	private Button mCancleBut,mOkBut,mClearBut;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub

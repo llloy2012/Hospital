@@ -22,6 +22,7 @@ import android.widget.TextView;
 public class WaySpinnerAdapter extends ArrayAdapter<Map<String, String>> {
 
 	private Context mContext;
+	
 	private List<Map<String, String>> mList;
 
 	public WaySpinnerAdapter(Context context,int textViewResourceId,List<Map<String, String>> aList){

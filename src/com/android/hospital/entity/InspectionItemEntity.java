@@ -5,14 +5,23 @@ import java.util.ArrayList;
 public class InspectionItemEntity {
 
 	public String item_class;//项目类别
+	
 	public String item_name;  //项目名称
+	
 	public String item_code; //项目编码
+	
 	public String std_indicator;  // 0或1
+	
 	public String input_code;//输入码
+	
 	public String input_code_wb;  //
+	
 	public String performed_by;  //检验科室代码？
+	
 	public String expand1; //标本
+	
 	public String expand2; //类别
+	
 	public String expand3;  //科室代码
 	
 	

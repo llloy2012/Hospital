@@ -41,11 +41,17 @@ import android.widget.Toast;
 public class GroupDcAdviceActivity extends Activity implements OnClickListener{
 
 	private ListView mListView;
+	
 	private Button mCancleBut,mOkBut;
+	
 	private String group_order_id;//套餐医嘱id
+	
 	private ArrayList<DcAdviceEntity> groupAdviceList;//套餐医嘱明细集合
+	
 	private GroupDcAdviceAdapter adapter;
+	
 	private LinearLayout prossbarLayout;
+	
 	private HospitalApp app;
 	
 	@Override

@@ -94,7 +94,7 @@ public class DoctorAdviceFragment extends ListFragment {
 			}
 		});
 		getActivity().findViewById(R.id.listview_common_titlebar).setVisibility(View.VISIBLE);
-		notChoosePatient();
+		setEmptyText("未获取到数据");
 	}
 		
 	@Override
@@ -169,21 +169,6 @@ public class DoctorAdviceFragment extends ListFragment {
 			arr[i]=app.getGroupOrderList().get(i).title;
 		}
 		return arr;
-	}
-	
-	/**
-	 * 
-	* @Title: notChoosePatient 
-	* @Description: TODO(第一次进入，未选中病人时) 
-	* @param     设定文件 
-	* @return void    返回类型 
-	* @throws
-	 */
-	public void notChoosePatient(){
-		if (getListAdapter()==null) {
-			setListShown(true);
-			setEmptyText("请选择病人");
-		}
 	}
 }
 

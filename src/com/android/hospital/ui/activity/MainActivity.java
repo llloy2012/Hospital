@@ -2,6 +2,7 @@ package com.android.hospital.ui.activity;
 
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
@@ -29,6 +30,7 @@ import com.android.hospital.ui.fragment.LeftListFragment;
 import com.android.hospital.ui.fragment.PrescriptionFragment;
 import com.android.hospital.ui.fragment.SignsLifeFragment;
 import com.android.hospital.util.DebugUtil;
+import com.android.hospital.util.Util;
 
 import android.app.ActionBar;
 import android.app.ActionBar.LayoutParams;
@@ -36,6 +38,7 @@ import android.app.ActionBar.OnNavigationListener;
 import android.app.ActionBar.Tab;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -48,8 +51,10 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
@@ -63,12 +68,19 @@ import android.widget.Toast;
 *
  */
 public class MainActivity extends Activity implements AsyncTaskCallback<PatientEntity>{	
+	
 	private LeftListFragment leftFm;
+	
 	private Spinner mSpinner;
+	
 	private TextView titleTev;
+	
 	private ActionBar actionBar;
+	
 	private List<AsyncTask> asyncTasks=null;
+	
 	private PatientEntity patientEntity;
+	
 	private HospitalApp app;
 	
 	@Override
@@ -199,10 +211,10 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 		this.patientEntity=value;
 		setTitleTev(value);
 		cancleAsyncTask();
-		putDcAdviceTask(value);
-		putCheckTask(value);
-		putInspectionTask(value);
-		putPrescriptionTask(value);
+		putDcAdviceTask(value,"");
+		putCheckTask(value,"");
+		putInspectionTask(value,"");
+		putPrescriptionTask(value,"");
 	}
 
 
@@ -221,7 +233,7 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 	* @return void    返回类型 
 	* @throws
 	 */
-	public void putDcAdviceTask(PatientEntity value){
+	public void putDcAdviceTask(PatientEntity value,String query){
 		DebugUtil.debug("测试put");
 		DoctorAdviceFragment fragment=(DoctorAdviceFragment) getFragmentManager().findFragmentByTag("dcadvice");
 		if (fragment!=null) {
@@ -242,6 +254,7 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 			String[] whereArr=new String[]{"patient_id","visit_id"};
 			String[] paramArray2=new String[]{value.patient_id,value.visit_id};
 			String sql=ServerDao.getQuery(tableName, paramArray1, whereArr, paramArray2);
+			sql=sql+query;
 			putAsyncTask(new DcAdviceTask(fragment, sql).execute());
 		}
 		
@@ -255,7 +268,7 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 	* @return void    返回类型 
 	* @throws
 	 */
-	public void putCheckTask(PatientEntity value){
+	public void putCheckTask(PatientEntity value,String query){
 		CheckFragment fragment=(CheckFragment) getFragmentManager().findFragmentByTag("check");
 		if (fragment!=null) {
             fragment.clearAdapter();
@@ -268,6 +281,7 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 			String customWhere="where a.exam_no = b.exam_no and a.exam_no = c.exam_no and a.patient_id = '"+value.patient_id+"' "
 					           +"and a.visit_id = '"+value.visit_id+"'";
 			String sql=ServerDao.getQueryCustom(tableName, paramArray1, customWhere);
+			sql=sql+query;
 			putAsyncTask(new CheckTask(fragment, sql).execute());
 		}
 		
@@ -280,7 +294,7 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 	* @return void    返回类型 
 	* @throws
 	 */
-	public void putInspectionTask(PatientEntity value){
+	public void putInspectionTask(PatientEntity value,String query){
 		InspectionFragment fragment=(InspectionFragment) getFragmentManager().findFragmentByTag("inspection");
 		if(fragment!=null){
 			InspectionAdapter adapter=(InspectionAdapter) fragment.getListAdapter();
@@ -303,6 +317,7 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 					+"order by LAB_TEST_ITEMS.TEST_NO,LAB_TEST_ITEMS.ITEM_NO  ";
 
 			String sql=ServerDao.getQueryCustom(tableName, paramArray1, customWhere);
+			sql=sql+query;
 			putAsyncTask(new InspectionTask(fragment, sql).execute());
 		}
 		
@@ -317,7 +332,7 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 	* @return void    返回类型 
 	* @throws
 	 */
-	public void putPrescriptionTask(PatientEntity value){
+	public void putPrescriptionTask(PatientEntity value,String query){
 		PrescriptionFragment fragment=(PrescriptionFragment) getFragmentManager().findFragmentByTag("prescription");
 		if (fragment!=null) {
 			PrescriptionAdapter adapter=(PrescriptionAdapter) fragment.getListAdapter();
@@ -334,6 +349,7 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 			String customWhere="WHERE DOCT_DRUG_PRESC_MASTER.Dispensary = dept_dict.dept_code  and (PRESC_STATUS not in (2, 3))  AND (DOCT_DRUG_PRESC_MASTER.PATIENT_ID = '"+value.patient_id+"') "
 					           +"AND (DOCT_DRUG_PRESC_MASTER.COSTS >= 0)  order by PRESC_DATE";
 			String sql=ServerDao.getQueryCustom(tableName, paramArray1, customWhere);
+			sql=sql+query;
 			putAsyncTask(new PrescriptionTask(fragment,sql).execute());
 		}
 	}
@@ -436,44 +452,31 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 		DebugUtil.debug("id为"+item.getItemId());
 		switch (item.getItemId()) {
 		case Menu.FIRST:
-			if (AppConstant.isPatientChoose) {
 				intent=new Intent();
 				DoctorAdviceFragment fragment=(DoctorAdviceFragment) this.getFragmentManager().findFragmentByTag("dcadvice");
 				DcAdviceAdapter adapter=(DcAdviceAdapter) fragment.getListAdapter();		
 				DcAdviceEntity entity=(DcAdviceEntity) adapter.getItem(adapter.getCount()-1);
 				intent.putExtra("subentity", entity);
 				intent.setClass(this, AddDcAdviceActivity.class);
-				startActivityForResult(intent, 11);
-			}else {
-				Toast.makeText(this, "请先选择病人!", Toast.LENGTH_SHORT).show();//可根据左边病人listview是否有被选中判断
-			}			
+				startActivityForResult(intent, 11);	
 			break;
 		case Menu.FIRST+1:
-			if (AppConstant.isPatientChoose) {
+
 				intent=new Intent();
 				intent.setClass(this, AddCheckActivity.class);
 				startActivityForResult(intent, 12);
-			}else {
-				Toast.makeText(this, "请先选择病人!", Toast.LENGTH_SHORT).show();//可根据左边病人listview是否有被选中判断
-			}	
 			break;
 		case Menu.FIRST+2:
-			if (AppConstant.isPatientChoose) {
+			
 				intent=new Intent();
 				intent.setClass(this, AddInspectionActivity.class);
 				startActivityForResult(intent, 13);
-			}else {
-				Toast.makeText(this, "请先选择病人!", Toast.LENGTH_SHORT).show();//可根据左边病人listview是否有被选中判断
-			}		
+				
 			break;
 		case Menu.FIRST+3:
-			if (AppConstant.isPatientChoose) {
 				intent=new Intent();
 				intent.setClass(this, AddPrescriptionActivity.class);
 				startActivityForResult(intent, 14);
-			}else {
-				Toast.makeText(this, "请先选择病人!", Toast.LENGTH_SHORT).show();//可根据左边病人listview是否有被选中判断
-			}	
 			break;
 		case Menu.FIRST+4:
             showGroupDc();
@@ -488,7 +491,8 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 			Toast.makeText(this, "功能尚未添加!", Toast.LENGTH_SHORT).show();
 			break;
 		case 14:
-			Toast.makeText(this, "功能尚未添加!", Toast.LENGTH_SHORT).show();
+			
+				showDatePickerDialog();		
 			break;
 		default:
 			break;
@@ -523,16 +527,13 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 
                 /* User clicked Yes so do some stuff */
             	DebugUtil.debug("positon--->"+whichButtonChoose);
-            	if (AppConstant.isPatientChoose) {
+            	
             		String id=app.getGroupOrderList().get(whichButtonChoose).group_order_id;
                 	Intent intent=new Intent();
                 	intent.putExtra("id", id);
                 	intent.setClass(MainActivity.this, GroupDcAdviceActivity.class);
                 	startActivityForResult(intent, 11);
                 	whichButtonChoose=0;//点击后，重置为零
-				}else {
-					Toast.makeText(MainActivity.this, "请先选择病人!", Toast.LENGTH_SHORT).show();//可根据左边病人listview是否有被选中判断
-				}
             	
             }
         })
@@ -584,6 +585,10 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 		}
 	});
 }*/
+	
+    // date and time
+    private Button startBut;
+    private Button endBut;
 	/**
 	 * 
 	* @Title: showDatePickerDialog 
@@ -593,35 +598,141 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 	* @throws
 	 */
 	public void showDatePickerDialog(){
+		final Calendar c = Calendar.getInstance();
+        final int mYear = c.get(Calendar.YEAR);
+        final int mMonth = c.get(Calendar.MONTH);
+        final int mDay = c.get(Calendar.DAY_OF_MONTH);
 		LayoutInflater factory = LayoutInflater.from(this);
 	    View textEntryView = factory.inflate(R.layout.common_query_timedialog, null);
-	    Button startBut=(Button) textEntryView.findViewById(R.id.start_time_but);
-	    Button endBut=(Button) textEntryView.findViewById(R.id.end_time_but);
+	    startBut=(Button) textEntryView.findViewById(R.id.start_time_but);
+	    endBut=(Button) textEntryView.findViewById(R.id.end_time_but);
+	    startBut.setText(new StringBuilder().append(mYear).append("-")
+                // Month is 0 based so add 1
+                .append(Util.toQueryTime(mMonth + 1)).append("-")
+                .append(Util.toQueryTime(mDay)));
+	    endBut.setText(new StringBuilder().append(mYear).append("-")
+                // Month is 0 based so add 1
+	    		.append(Util.toQueryTime(mMonth + 1)).append("-")
+                .append(Util.toQueryTime(mDay)));
+	    startBut.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				new DatePickerDialog(MainActivity.this, mStartDateSetListener, mYear, mMonth, mDay).show();
+			}
+		});
+	    endBut.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				new DatePickerDialog(MainActivity.this, mEndDateSetListener, mYear, mMonth, mDay).show();
+			}
+		});
+	    new AlertDialog.Builder(this)
+        .setIconAttribute(android.R.attr.alertDialogIcon)
+        .setTitle("按时间查询")
+        .setView(textEntryView)
+        .setPositiveButton("确认", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+
+                /* User clicked OK so do some stuff */
+            	timeQueryTask();
+            }
+        })
+        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+
+                /* User clicked cancel so do some stuff */
+            }
+        }).create().show();
 	}
 	
+	private DatePickerDialog.OnDateSetListener mStartDateSetListener =
+            new DatePickerDialog.OnDateSetListener() {
+
+                public void onDateSet(DatePicker view, int year, int monthOfYear,
+                        int dayOfMonth) {
+                	startBut.setText(
+                            new StringBuilder().append(year).append("-")
+                                    // Month is 0 based so add 1
+                                    .append(Util.toQueryTime(monthOfYear + 1)).append("-")
+                                    .append(Util.toQueryTime(dayOfMonth))
+                                    );
+                }
+            };
+    private DatePickerDialog.OnDateSetListener mEndDateSetListener =
+                    new DatePickerDialog.OnDateSetListener() {
+
+                        public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                int dayOfMonth) {
+                        	endBut.setText(
+                                    new StringBuilder().append(year).append("-")
+                                            // Month is 0 based so add 1
+                                    .append(Util.toQueryTime(monthOfYear + 1)).append("-")
+                                    .append(Util.toQueryTime(dayOfMonth))
+                                    );
+                        }
+                    };
+	/**
+	 * 
+	* @Title: timeQueryTask 
+	* @Description: TODO(根据时间查询) 
+	* @param     设定文件 
+	* @return void    返回类型 
+	* @throws
+	 */
+    private void timeQueryTask(){
+		String sQueryAnd = " and TO_CHAR(start_date_time,'yyyy-MM-dd')>='"
+				+ startBut.getText().toString()
+				+ "' and TO_CHAR(start_date_time,'yyyy-MM-dd')<='"
+				+ endBut.getText().toString() + "' ";
+								
+		switch (getActionBar().getSelectedNavigationIndex()) {
+		case 0:
+			putDcAdviceTask(patientEntity, sQueryAnd);
+			DebugUtil.debug("actionbar--->id00000");
+			break;
+		case 1:
+			putCheckTask(patientEntity, sQueryAnd);
+			DebugUtil.debug("actionbar--->id111111");
+			break;
+		case 2:
+			putInspectionTask(patientEntity, sQueryAnd);
+			DebugUtil.debug("actionbar--->id222222");
+			break;
+		case 3:
+			putPrescriptionTask(patientEntity, sQueryAnd);
+			DebugUtil.debug("actionbar--->id333333");
+			break;
+		default:
+			break;
+		}
+    }           
+    
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     	// TODO Auto-generated method stub
     	switch (resultCode) {
 		case 11:
-			putDcAdviceTask(app.getPatientEntity());
+			putDcAdviceTask(app.getPatientEntity(),"");
 			break;
 		case 12:
-			putCheckTask(app.getPatientEntity());
-			putDcAdviceTask(app.getPatientEntity());
+			putCheckTask(app.getPatientEntity(),"");
+			putDcAdviceTask(app.getPatientEntity(),"");
 			break;
 		case 13:
-			putInspectionTask(app.getPatientEntity());
-			putDcAdviceTask(app.getPatientEntity());
+			putInspectionTask(app.getPatientEntity(),"");
+			putDcAdviceTask(app.getPatientEntity(),"");
 			break;
 		case 14:
-			putPrescriptionTask(app.getPatientEntity());
-			putDcAdviceTask(app.getPatientEntity());
+			putPrescriptionTask(app.getPatientEntity(),"");
+			putDcAdviceTask(app.getPatientEntity(),"");
 			break;
 		default:
 			break;
-		}
-    	
+		}   	
     	super.onActivityResult(requestCode, resultCode, data);
     }
 }

@@ -13,33 +13,57 @@ import java.util.ArrayList;
 public class DrugEntity {
 
 	public String drug_name;//别名
+	
 	public String package_units;//包装单位
+	
 	public String drug_spec;//规格
+	
 	public String storage;//库存
+	
 	public String storage_name;//库房
+	
 	public String dose_per_unit;//单次剂量
+	
 	public String dose_units;//单位 
+	
 	public String input_code;//输入码，检索用
+	
 	public String drug_code;//药品代码
+	
 	public String is_basic;//是否基药
+	
 	public String drug_indicator;//医嘱类别
+	
 	public String purchase_price;//卖出价格
 	
 	
 	//处方新增所需的额外属性
 	public String dosage_each;
+	
 	public String total_dose_per;//总量
+	
 	public String freq_detail;//
+	
 	public String quantity;//
+	
 	public String administration;
+	
 	public String frequency;
+	
 	public String single_price;//单个价格
+	
 	public String total_price;//总的价格
+	
 	public String firm_id;
+	
 	public String package_spec;
+	
 	public String amount_per_package;
+	
 	public String dosage;
+	
 	public String min_spec;
+	
 	
 	public DrugEntity(){
 		
