@@ -41,9 +41,9 @@ public class GridButtonAdapter extends BaseAdapter{
 	private View detaillayout;
 	
 	
-	private String[] textArr = { "体温", "血压", "呼吸", "脉搏", "大便次数", "体重",
+	private String[] textArr = { "腋下体温", "血压", "呼吸", "脉搏", "大便次数", "体重",
 			"血糖", "心率", "尿量", "降温", "痰量", "入院", "转入", "入量", "引流量",
-			"死亡", "分娩", "呼吸", "请假", "摄入液量","总量","腋下体温","呕吐量",
+			"死亡", "分娩", "呼吸", "请假", "摄入液量","总量","呕吐量",
 			"出院","手术","口入量"};
 	
 	
