@@ -72,6 +72,7 @@ public class PatientTask extends BaseAsyncTask{
 			fm.setListAdapter(adapter);
 			fm.setListShown(true);
 			fm.getListView().setItemChecked(0, true);//Ä¬ÈÏÑ¡ÖÐ
+			mActivity.setTitleTev(arrayList.get(0));
 			mActivity.putDcAdviceTask(arrayList.get(0), "");
 			mActivity.putCheckTask(arrayList.get(0), "");
 			mActivity.putInspectionTask(arrayList.get(0), "");

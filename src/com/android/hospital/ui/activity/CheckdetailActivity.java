@@ -15,6 +15,7 @@ import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 import org.xmlpull.v1.XmlPullParserException;
 
+import com.android.hospital.adapter.CheckImageAdapter;
 import com.android.hospital.entity.CheckEntity;
 import com.android.hospital.entity.DataEntity;
 import com.android.hospital.util.DebugUtil;
@@ -103,6 +104,7 @@ public class CheckdetailActivity extends Activity{
 	
 	List<String> data = new ArrayList<String>();
 	private ListView listView;
+	private View mProcessView;
 	
 	private List<String> getData(){
 		data.add("C:\\dcm\\agfacr\\1335805255\\1335805259_0.DCM");
@@ -126,7 +128,9 @@ public class CheckdetailActivity extends Activity{
 			file.mkdir();
 		}
 		listView = (ListView)findViewById(R.id.lvPath);
+		mProcessView=findViewById(R.id.progressContainer);
 		//listView.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1,getData()));
+		mProcessView.setVisibility(View.VISIBLE);
 		new FilePathTask().execute("");//获取文件路径
 		listView.setOnItemClickListener(new OnItemClickListener() {
 
@@ -140,7 +144,12 @@ public class CheckdetailActivity extends Activity{
 				final AlertDialog.Builder builder = new AlertDialog.Builder(CheckdetailActivity.this);
 				sFilePath = data.get(position);
 				sFileName = sFilePath.substring(sFilePath.lastIndexOf("\\")+1); 
-				builder.setTitle("请选择操作项").setItems(items, new DialogInterface.OnClickListener() {
+				myDialog = ProgressDialog.show(CheckdetailActivity.this, "获取图片",
+						"正在获取图片，请稍候！");
+				myDialog.setCancelable(true);
+				Thread thread = new Thread(new getDcm2JpgThread());
+				thread.start();
+				/*builder.setTitle("请选择操作项").setItems(items, new DialogInterface.OnClickListener() {
 					
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
@@ -173,7 +182,7 @@ public class CheckdetailActivity extends Activity{
 					}
 				});
 				AlertDialog ad = builder.create();
-				ad.show();
+				ad.show();*/
 			}
 		});
 	}
@@ -190,7 +199,7 @@ public class CheckdetailActivity extends Activity{
 		public void run(){
 			int what = -1;
 			try {
-				String URL = "http://192.168.0.10:8888/DCMConvertService/DCMPort?wsdl";
+				String URL = "http://192.168.0.3:8888/DCMConvertService/DCMPort?wsdl";
 				String NAMESPACE = "http://webservice.lemax.com/";
 				String METHOD_NAME = "getDcmTxt";
 				
@@ -240,14 +249,14 @@ public class CheckdetailActivity extends Activity{
 		public void run(){
 			int what = -1;
 			try {
-				String URL = "http://192.168.0.10:8888/DCMConvertService/DCMPort?wsdl";
+				String URL = "http://192.168.0.3:8888/DCMConvertService/DCMPort?wsdl";
 				String NAMESPACE = "http://webservice.lemax.com/";
 				String METHOD_NAME = "getDcmJpg";
 				SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
 				DebugUtil.debug("路径--->"+sFilePath);
 				//request.addProperty("arg0", sFilePath);
 				//request.addProperty("arg0", "C:\\dcm\\agfacr\\1335805255\\1335805259_0.DCM");
-				request.addProperty("arg0", "Z:\\Dcmtemp\\Gect\\20121016\\1350356006\\1350356015_0.DCM");
+				request.addProperty("arg0", sFilePath);
 				SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
 						SoapEnvelope.VER11);
 				envelope.setOutputSoapObject(request);
@@ -410,14 +419,15 @@ public class CheckdetailActivity extends Activity{
 	*
 	 */
 	private class FilePathTask extends AsyncTask<String, Void, String>{
-
+		
 		@Override
 		protected String doInBackground(String... params) {
 			// TODO Auto-generated method stub
-			String sql="select filename from dicomtemp@pacs10 where examno='"+exam_no+"'";
+			String sql="select filename from dicomtemp@pacsdbserver where examno='"+exam_no+"'";
 			ArrayList<DataEntity> dataList=WebServiceHelper.getWebServiceData(sql);
 			for (int i = 0; i < dataList.size(); i++) {
-				String path=dataList.get(i).get("filename").replace("\\Dcmtemp", "");
+				//String path=dataList.get(i).get("filename").replace("\\Dcmtemp", "");
+				String path=dataList.get(i).get("filename");
 				data.add(path);
 			}
 			return null;
@@ -426,11 +436,14 @@ public class CheckdetailActivity extends Activity{
 		@Override
 		protected void onPostExecute(String result) {
 			// TODO Auto-generated method stub
+			mProcessView.setVisibility(View.GONE);
 			if (data.size()==0) {
 				TextView emptyView=(TextView) CheckdetailActivity.this.findViewById(R.id.empty);
 				listView.setEmptyView(emptyView);
 			}else {
-				listView.setAdapter(new ArrayAdapter<String>(CheckdetailActivity.this, android.R.layout.simple_expandable_list_item_1,data));
+				CheckImageAdapter adapter=new CheckImageAdapter(CheckdetailActivity.this, data);
+//				listView.setAdapter(new ArrayAdapter<String>(CheckdetailActivity.this, android.R.layout.simple_expandable_list_item_1,data));
+				listView.setAdapter(adapter);
 			}
 		}
 	}

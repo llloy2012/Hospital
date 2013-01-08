@@ -1,8 +1,12 @@
 package com.android.hospital.webservice;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 
+import org.kobjects.base64.Base64;
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
@@ -14,9 +18,15 @@ import com.android.hospital.util.DebugUtil;
 
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
+import android.os.Environment;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
+import android.util.Log;
 /**
  * 
 * @ClassName: WebServiceHelper 
@@ -34,6 +44,9 @@ public class WebServiceHelper {
 	private static final String SERVERURL="http://192.168.0.40:8888/WebServiceServer/services/GeneralOpSQL";
 	
 	private static WakeLock wl;
+	
+	private static String SDPATH = Environment.getExternalStorageDirectory() + "/HisTemp/";
+	
 	/**
      * 检测网络是否可用
      * @param context
@@ -199,6 +212,60 @@ public class WebServiceHelper {
    		}
        	return false;
        }
+    
+	/**
+	 * 
+	* @Title: getWebService 
+	* @Description: TODO(通过webservice获取图片) 
+	* @param @return
+	* @param @throws Exception    设定文件 
+	* @return OutputStream    返回类型 
+	* @throws
+	 */
+	public static Drawable getWebServiceImage(String arg0, String sfilename) throws Exception{
+		String URL = "http://192.168.0.3:8888/DCMConvertService/DCMPort?wsdl";
+		String NAMESPACE = "http://webservice.lemax.com/";
+		String METHOD_NAME = "getDcmJpg";
+		sfilename=arg0.substring(arg0.lastIndexOf("\\")+1); 
+		SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+		request.addProperty("arg0", arg0);
+		SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
+				SoapEnvelope.VER11);
+		envelope.setOutputSoapObject(request);
+		HttpTransportSE ht = new HttpTransportSE(URL);
+		ht.debug = true;
+		try {
+			ht.call("http://webservice.lemax.com/getDcmJpg", envelope);
+			if (envelope.getResponse() != null) {
+				DebugUtil.debug("测试");
+				Object ret = (Object)envelope.getResponse();
+				String retString = String.valueOf(ret);
+				DebugUtil.debug("retString--->"+retString);
+				Log.e("retString", retString);
+				byte[] retByte = (byte[]) Base64.decode(retString);
+				File jpgFile = new File(SDPATH + sfilename + ".jpg");
+				if (jpgFile.exists()){
+					jpgFile.delete();
+				}
+				jpgFile.createNewFile();
+				OutputStream output = new FileOutputStream(jpgFile);
+				output.write(retByte,0,retByte.length);
+				output.flush();
+				output.close();
+                Bitmap bitmap=BitmapFactory.decodeFile(SDPATH + sfilename + ".jpg");
+                DebugUtil.debug("测试到这一步");
+                Drawable drawable=new BitmapDrawable(bitmap);
+				return drawable;
+			} else {
+				return null;
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			DebugUtil.debug("异常--->"+e);
+		}
+		
+		return null;
+	}
     
     /** 
      * 保持屏幕唤醒状态（即背景灯不熄灭） 

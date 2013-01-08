@@ -31,6 +31,7 @@ import com.android.hospital.ui.fragment.PrescriptionFragment;
 import com.android.hospital.ui.fragment.SignsLifeFragment;
 import com.android.hospital.util.DebugUtil;
 import com.android.hospital.util.Util;
+import com.android.hospital.webservice.WebServiceHelper;
 
 import android.app.ActionBar;
 import android.app.ActionBar.LayoutParams;
@@ -483,7 +484,13 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
             showGroupDc();
 			break;
 		case 11:
-			Toast.makeText(this, "功能尚未添加!", Toast.LENGTH_SHORT).show();
+			String update = "update orders  set stop_doctor= '田晓', stop_date_time= to_date('2013-01-07 15:25:12','yyyy-mm-dd hh24:mi:ss'), order_status='6',billing_attr='0',drug_billing_attr='0'  where patient_id  = '1000063045' and visit_id = '1' and order_no = '23' and order_sub_no = '1'";
+			String updateTwo=update.toUpperCase();
+			if (WebServiceHelper.insertWebServiceData(updateTwo)) {
+				Toast.makeText(this, "更新成功!", Toast.LENGTH_SHORT).show();
+			}else {
+				Toast.makeText(this, "更新失败!", Toast.LENGTH_SHORT).show();
+			}
 			break;
 		case 12:
 			Toast.makeText(this, "功能尚未添加!", Toast.LENGTH_SHORT).show();
