@@ -152,7 +152,7 @@
             <EditText android:id="@+id/add_dcadvice_edit_dosage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="number"
+                android:inputType="numberDecimal"
                 android:textAppearance="?android:attr/textAppearanceListItemSmall"
                 android:minHeight="?android:attr/listPreferredItemHeightSmall"
             />

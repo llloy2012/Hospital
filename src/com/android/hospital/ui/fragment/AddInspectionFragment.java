@@ -320,7 +320,8 @@ public class AddInspectionFragment extends BaseFragment implements OnItemSelecte
 		inspectionBuffer.append("'"+mSpecimenEdit.getText().toString()).append("',");
 		inspectionBuffer.append("TO_DATE('"+requested_date_time).append("','yyyy-MM-dd hh24:mi:ss'),");
 		inspectionBuffer.append("'"+app.getPatientEntity().dept_code).append("',");
-		inspectionBuffer.append("'"+app.getDoctor()).append("',");
+//		inspectionBuffer.append("'"+app.getDoctor()).append("',");
+		inspectionBuffer.append("'"+app.getLoginName()).append("',"); //保存医生的用户名
 		inspectionBuffer.append("'"+performed_by).append("',");
 		inspectionBuffer.append("'"+app.getPatientEntity().name_phonetic).append("',");
 		inspectionBuffer.append("'"+app.getPatientEntity().charge_type).append("',");
@@ -357,7 +358,7 @@ public class AddInspectionFragment extends BaseFragment implements OnItemSelecte
 			orderBuffer.append("'"+"0").append("',");
 			orderBuffer.append("'"+"C").append("',");
 			orderBuffer.append("'"+itemEntity.item_name).append("',");
-			orderBuffer.append("'"+performed_by).append("',");
+			orderBuffer.append("'"+itemEntity.item_code).append("',");
 			orderBuffer.append("'"+"6").append("',");
 			orderBuffer.append("'"+app.getPatientEntity().dept_code).append("',");
 			orderBuffer.append("'"+app.getDoctor()).append("',");

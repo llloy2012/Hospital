@@ -3,6 +3,8 @@ package com.android.hospital.entity;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import com.android.hospital.HospitalApp;
+
 import android.util.Log;
 
 
@@ -62,6 +64,7 @@ public class InspectionEntity implements Serializable{
 	
 	public String prdering_provider;//申请医生
 	
+	
 	public InspectionEntity() {
 		
 	}
@@ -97,7 +100,8 @@ public class InspectionEntity implements Serializable{
 			entity.age=arrayList.get(i).get("age");
 			entity.ordering_dept=arrayList.get(i).get("ordering_dept");
 			entity.patient_id=arrayList.get(i).get("patient_id");
-			entity.prdering_provider=arrayList.get(i).get("prdering_provider");
+			//entity.prdering_provider=arrayList.get(i).get("prdering_provider");
+			entity.prdering_provider=arrayList.get(i).get("ordering_provider");
 			list.add(entity);	
 		}
 		//将申请序号相同的项目名称合并在一起

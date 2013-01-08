@@ -95,6 +95,7 @@ public class DcAdviceEntity implements Serializable{
 			entity.order_class=dataList.get(i).get("order_class").trim();
 			entity.repeat_indicator=dataList.get(i).get("repeat_indicator").trim();
 			entity.start_date_time=dataList.get(i).get("start_date_time").trim();
+			entity.enter_date_time=dataList.get(i).get("enter_date_time").trim();
 			entity.order_text=dataList.get(i).get("order_text").trim();
 			entity.dosage=dataList.get(i).get("dosage").trim();
 			entity.dosage_units=dataList.get(i).get("dosage_units").trim();
