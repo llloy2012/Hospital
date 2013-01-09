@@ -33,6 +33,10 @@ public class InspectiondetailActivity extends Activity{
 
 	private ListView mListView;
 	
+	private View mProcessView;
+	
+	private TextView mEmptyView;
+	
 	private TextView tev1,tev2,tev3;
 	
 	private InspectionEntity inspectionEntity;//检验实体
@@ -66,6 +70,8 @@ public class InspectiondetailActivity extends Activity{
 	 */
 	private void initView() {
 		mListView=(ListView) findViewById(R.id.inspection_detail_listview);
+		mProcessView=findViewById(R.id.progressContainer);
+		mEmptyView=(TextView) findViewById(R.id.inspection_empty);
 		tev1=(TextView) findViewById(R.id.patient_information_item1);
 		tev2=(TextView) findViewById(R.id.patient_information_item2);
 		tev3=(TextView) findViewById(R.id.patient_information_item3);
@@ -74,6 +80,10 @@ public class InspectiondetailActivity extends Activity{
 				       +"   病人ID："+patientEntity.patient_id+"   剩余预交金："+patientEntity.prepayments+"   费别："+patientEntity.charge_type);
 		tev2.setText("临床诊断："+patientEntity.diagnosis+"   检验科室："+inspectionEntity.dept_name+"   标本："+inspectionEntity.specimen);
 		tev3.setText(inspectionEntity.item_name);
+		
+		mListView.setVisibility(View.INVISIBLE);
+		mProcessView.setVisibility(View.VISIBLE);
+		mEmptyView.setVisibility(View.INVISIBLE);
 	}
 	
 	/**
@@ -97,11 +107,13 @@ public class InspectiondetailActivity extends Activity{
 		@Override
 		protected void onPostExecute(Object result) {
 			// TODO Auto-generated method stub
+			mProcessView.setVisibility(View.GONE);
 			if (arrayList.size()!=0) {
+				mListView.setVisibility(View.VISIBLE);
 				InspectionDetailAdapter adapter=new InspectionDetailAdapter(InspectiondetailActivity.this, arrayList);
 				mListView.setAdapter(adapter);
 			}else {
-				mListView.setEmptyView(InspectiondetailActivity.this.findViewById(R.id.main_patient_info_tev));
+				mEmptyView.setVisibility(View.VISIBLE);
 			}
 		}
 	}

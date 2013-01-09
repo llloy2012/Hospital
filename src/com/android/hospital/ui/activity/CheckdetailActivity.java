@@ -39,6 +39,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -105,6 +106,7 @@ public class CheckdetailActivity extends Activity{
 	List<String> data = new ArrayList<String>();
 	private ListView listView;
 	private View mProcessView;
+	private TextView emptyView;
 	
 	private List<String> getData(){
 		data.add("C:\\dcm\\agfacr\\1335805255\\1335805259_0.DCM");
@@ -129,8 +131,11 @@ public class CheckdetailActivity extends Activity{
 		}
 		listView = (ListView)findViewById(R.id.lvPath);
 		mProcessView=findViewById(R.id.progressContainer);
+		emptyView=(TextView)findViewById(R.id.my_empty);
 		//listView.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1,getData()));
 		mProcessView.setVisibility(View.VISIBLE);
+		listView.setVisibility(View.GONE);
+		emptyView.setVisibility(View.GONE);
 		new FilePathTask().execute("");//获取文件路径
 		listView.setOnItemClickListener(new OnItemClickListener() {
 
@@ -423,11 +428,12 @@ public class CheckdetailActivity extends Activity{
 		@Override
 		protected String doInBackground(String... params) {
 			// TODO Auto-generated method stub
-			String sql="select filename from dicomtemp@pacsdbserver where examno='"+exam_no+"'";
+			//String sql="select filename from dicomtemp@pacsdbserver where examno='"+exam_no+"'";//语句不一样
+			String sql="select filename from dicomtemp@pacs10 where examno='"+exam_no+"'";
 			ArrayList<DataEntity> dataList=WebServiceHelper.getWebServiceData(sql);
 			for (int i = 0; i < dataList.size(); i++) {
 				//String path=dataList.get(i).get("filename").replace("\\Dcmtemp", "");
-				String path=dataList.get(i).get("filename");
+				String path=dataList.get(i).get("filename").trim();
 				data.add(path);
 			}
 			return null;
@@ -436,11 +442,15 @@ public class CheckdetailActivity extends Activity{
 		@Override
 		protected void onPostExecute(String result) {
 			// TODO Auto-generated method stub
-			mProcessView.setVisibility(View.GONE);
+			mProcessView.setVisibility(View.GONE);	
+			
 			if (data.size()==0) {
-				TextView emptyView=(TextView) CheckdetailActivity.this.findViewById(R.id.empty);
-				listView.setEmptyView(emptyView);
+				DebugUtil.debug("长度"+data.size());
+				emptyView.setVisibility(View.VISIBLE);
+				listView.setVisibility(View.GONE);
 			}else {
+				listView.setVisibility(View.VISIBLE);
+				emptyView.setVisibility(View.GONE);
 				CheckImageAdapter adapter=new CheckImageAdapter(CheckdetailActivity.this, data);
 //				listView.setAdapter(new ArrayAdapter<String>(CheckdetailActivity.this, android.R.layout.simple_expandable_list_item_1,data));
 				listView.setAdapter(adapter);

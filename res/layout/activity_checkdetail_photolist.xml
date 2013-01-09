@@ -2,17 +2,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity" >
+     >
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
-        <ListView
-            android:id="@+id/lvPath"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent" >
-        </ListView>
+
+            <ListView
+                android:id="@+id/lvPath"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="visible" 
+                android:fastScrollEnabled="true"
+                >
+            </ListView>
+
+            <TextView
+                android:id="@+id/my_empty"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:gravity="center"
+                android:minHeight="?android:attr/listPreferredItemHeightSmall"
+                android:paddingLeft="?android:attr/listPreferredItemPaddingLeft"
+                android:paddingRight="?android:attr/listPreferredItemPaddingRight"
+                android:text="没有数据"
+                android:textAppearance="?android:attr/textAppearanceListItemSmall"
+                android:textColor="@color/black" />
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/progressContainer"
@@ -36,17 +56,5 @@
                 android:textAppearance="?android:attr/textAppearanceSmall" />
         </LinearLayout>
     </RelativeLayout>
-
-    <TextView
-        android:id="@+id/empty"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:gravity="center"
-        android:minHeight="?android:attr/listPreferredItemHeightSmall"
-        android:paddingLeft="?android:attr/listPreferredItemPaddingLeft"
-        android:paddingRight="?android:attr/listPreferredItemPaddingRight"
-        android:text="没有数据"
-        android:textAppearance="?android:attr/textAppearanceListItemSmall"
-        android:textColor="@color/black" />
 
 </LinearLayout>

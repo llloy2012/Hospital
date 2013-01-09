@@ -60,32 +60,39 @@ public class CheckImageAdapter extends BaseAdapter{
 			viewHolder.tev1=(TextView) convertView.findViewById(R.id.patient_bedno);
 			viewHolder.imageView=(ImageView) convertView.findViewById(R.id.patient_title_img);
 			viewHolder.progressBar=(ProgressBar) convertView.findViewById(R.id.check_detail_process);
+			viewHolder.imageView.setTag(mList.get(position));
 			convertView.setTag(viewHolder);
 		}else {
 			viewHolder=(ViewHolder) convertView.getTag();
 		}
 		String path=mList.get(position);
+		viewHolder.tev1.setText(path);
 		if (path!=null) {
-			Drawable cachedImage=imageLoader.loadDrawable(path, viewHolder.imageView, new ImageCallback() {
-				
-				@Override
-				public void imageLoaded(Drawable imageDrawable, ImageView imageView,
-						String imageUrl) {
-					// TODO Auto-generated method stub
-					if (imageDrawable!=null) {
-						imageView.setImageDrawable(imageDrawable);
-					}else {
-						imageView.setImageResource(R.drawable.photo_man);
+			if (viewHolder.imageView.getTag().equals(path)) {
+				Drawable cachedImage=imageLoader.loadDrawable(path, viewHolder.imageView, new ImageCallback() {
+					
+					@Override
+					public void imageLoaded(Drawable imageDrawable, ImageView imageView,
+							String imageUrl) {
+						// TODO Auto-generated method stub
+						if (imageDrawable!=null) {
+							imageView.setVisibility(View.VISIBLE);
+							imageView.setImageDrawable(imageDrawable);
+						}else {
+							imageView.setVisibility(View.GONE);
+							imageView.setImageResource(R.drawable.photo_man);
+						}
 					}
+				});
+				
+				if (cachedImage!=null) {
+					viewHolder.imageView.setVisibility(View.VISIBLE);
+					viewHolder.imageView.setImageDrawable(cachedImage);
+				}else {
+					viewHolder.imageView.setVisibility(View.INVISIBLE);
+					viewHolder.imageView.setImageResource(R.drawable.photo_man);
 				}
-			});
-			
-			if (cachedImage!=null) {
-				viewHolder.imageView.setImageDrawable(cachedImage);
-			}else {
-				viewHolder.imageView.setImageResource(R.drawable.photo_man);
-			}
-			
+			}		
 		}
 		return convertView;
 	}

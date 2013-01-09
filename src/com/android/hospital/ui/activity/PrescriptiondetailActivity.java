@@ -15,6 +15,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -29,6 +30,10 @@ import android.widget.TextView;
 public class PrescriptiondetailActivity extends Activity{
 
 	private ListView mListView;
+	
+    private View mProcessView;
+	
+	private TextView mEmptyView;
 	
 	private TextView tev1,tev2,tev3,tev4;
 	
@@ -65,6 +70,8 @@ public class PrescriptiondetailActivity extends Activity{
 	 */
 	private void initView() {
 		mListView=(ListView) findViewById(R.id.prescription_detail_listview);
+		mProcessView=findViewById(R.id.progressContainer);
+		mEmptyView=(TextView) findViewById(R.id.inspection_empty);
 		tev1=(TextView) findViewById(R.id.patient_information_no1);
 		tev2=(TextView) findViewById(R.id.prescription_information_item1);
 		tev3=(TextView) findViewById(R.id.prescription_information_item2);
@@ -74,6 +81,10 @@ public class PrescriptiondetailActivity extends Activity{
 		tev2.setText("处方号："+prescriptionEntity.presc_no+"   申请日期："+prescriptionEntity.presc_date+"   开单医生："+prescriptionEntity.prescribed_by);
 		tev3.setText("处方类型："+prescriptionEntity.presc_type+"   剂数："+prescriptionEntity.repetition+"   总花费："+prescriptionEntity.costs);
 		tev4.setText("状态："+prescriptionEntity.presc_status+"    发药药房："+prescriptionEntity.dept_name);
+		
+		mListView.setVisibility(View.INVISIBLE);
+		mProcessView.setVisibility(View.VISIBLE);
+		mEmptyView.setVisibility(View.INVISIBLE);
 	}
 	
 	/**
@@ -97,9 +108,13 @@ public class PrescriptiondetailActivity extends Activity{
 		@Override
 		protected void onPostExecute(Object result) {
 			// TODO Auto-generated method stub
+			mProcessView.setVisibility(View.GONE);
 			if (arrayList.size()!=0) {
+				mListView.setVisibility(View.VISIBLE);
 				PrescriptionDetailAdapter adapter=new PrescriptionDetailAdapter(PrescriptiondetailActivity.this, arrayList);
 				mListView.setAdapter(adapter);
+			}else {
+				mEmptyView.setVisibility(View.VISIBLE);
 			}
 		}
 	}

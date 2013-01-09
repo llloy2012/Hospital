@@ -20,6 +20,7 @@ import com.android.hospital.util.DebugUtil;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.BitmapFactory.Options;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
@@ -223,7 +224,7 @@ public class WebServiceHelper {
 	* @throws
 	 */
 	public static Drawable getWebServiceImage(String arg0, String sfilename) throws Exception{
-		String URL = "http://192.168.0.3:8888/DCMConvertService/DCMPort?wsdl";
+		String iamgeUrl = "http://192.168.0.3:8888/DCMConvertService/DCMPort?wsdl";
 		String NAMESPACE = "http://webservice.lemax.com/";
 		String METHOD_NAME = "getDcmJpg";
 		sfilename=arg0.substring(arg0.lastIndexOf("\\")+1); 
@@ -232,7 +233,7 @@ public class WebServiceHelper {
 		SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
 				SoapEnvelope.VER11);
 		envelope.setOutputSoapObject(request);
-		HttpTransportSE ht = new HttpTransportSE(URL);
+		HttpTransportSE ht = new HttpTransportSE(iamgeUrl);
 		ht.debug = true;
 		try {
 			ht.call("http://webservice.lemax.com/getDcmJpg", envelope);
@@ -252,7 +253,9 @@ public class WebServiceHelper {
 				output.write(retByte,0,retByte.length);
 				output.flush();
 				output.close();
-                Bitmap bitmap=BitmapFactory.decodeFile(SDPATH + sfilename + ".jpg");
+				Options options=new Options();
+				options.inSampleSize=8;
+                Bitmap bitmap=BitmapFactory.decodeFile(SDPATH + sfilename + ".jpg",options);
                 DebugUtil.debug("测试到这一步");
                 Drawable drawable=new BitmapDrawable(bitmap);
 				return drawable;

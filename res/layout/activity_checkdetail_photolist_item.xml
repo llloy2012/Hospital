@@ -39,8 +39,7 @@
             android:layout_gravity="center"
             android:layout_marginLeft="6dip"
             android:layout_marginRight="6dip"
-            android:src="@drawable/photo_man"
-            android:visibility="visible" />
+            android:visibility="invisible" />
     </RelativeLayout>
 
     <LinearLayout
@@ -51,7 +50,7 @@
         android:layout_marginTop="6dip"
         android:layout_marginBottom="6dip"
         android:layout_weight="1"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         >
 <!-- android:textAppearance="?android:attr/textAppearanceMedium" -->
         <TextView android:id="@+id/patient_name"
@@ -70,8 +69,6 @@
             android:layout_below="@android:id/title"
             android:layout_alignLeft="@android:id/title"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:ellipsize="end"
-            android:maxLines="2" 
             android:text="测试2"
             />
 
