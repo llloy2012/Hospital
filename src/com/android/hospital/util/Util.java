@@ -70,7 +70,7 @@ public class Util {
 		String[] date_of_birthArr=dateStr.split("/");
 		String[] date_of_birthArr2=date_of_birthArr[2].split(" ");
 		StringBuffer sBuffer=new StringBuffer();
-		sBuffer.append(date_of_birthArr2[0]).append("-").append(date_of_birthArr[1]).append("-").append(date_of_birthArr[0]);
+		sBuffer.append(date_of_birthArr2[0]).append("-").append(date_of_birthArr[0]).append("-").append(date_of_birthArr[1]);
 		return sBuffer.toString();
 	}
 	

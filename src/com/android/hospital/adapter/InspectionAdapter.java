@@ -2,6 +2,7 @@ package com.android.hospital.adapter;
 
 import java.util.ArrayList;
 
+import com.android.hospital.HospitalApp;
 import com.android.hospital.entity.DcAdviceEntity;
 import com.android.hospital.entity.InspectionEntity;
 import com.android.hospital.ui.activity.R;
@@ -27,6 +28,7 @@ public class InspectionAdapter extends BaseAdapter{
 	private ArrayList<InspectionEntity> mList;
 	
 	private Context mContext;
+	private HospitalApp app;
 	
 	public InspectionAdapter(Context context,ArrayList<InspectionEntity> entities){
 		this.mList=entities;

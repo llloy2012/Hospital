@@ -279,7 +279,7 @@ public class AddCheckFragment extends BaseFragment implements OnItemSelectedList
 		checkBuffer.append("insert into exam_appoints "
 						+ "(exam_no,patient_id,name,name_phonetic,"
 						+ "sex,date_of_birth,birth_place,identity,charge_type,mailing_address,"
-						+ "zip_code,phone_number,exam_class,exam_sub_class,clin_symp,phys_sign,clin_diag"
+						+ "zip_code,phone_number,exam_class,exam_sub_class,clin_symp,phys_sign,clin_diag,"
 						+ "performed_by,patient_source,facility,req_date_time,req_dept,req_physician,"
 						+ "visit_id,doctor_user) " + "values " + "(");
 		checkBuffer.append("'"+app.getNextval()).append("',");

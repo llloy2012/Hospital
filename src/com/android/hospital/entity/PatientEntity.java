@@ -2,6 +2,8 @@ package com.android.hospital.entity;
 
 import java.util.ArrayList;
 
+import android.util.Log;
+
 import com.android.hospital.util.DebugUtil;
 /**
  * 
