@@ -7,8 +7,10 @@ import com.android.hospital.adapter.PreMiddleDrugAdapter;
 import com.android.hospital.entity.DrugEntity;
 import com.android.hospital.ui.activity.R;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
@@ -54,6 +56,11 @@ public class SeachPrescriptionFragment extends SearchFragment implements OnItemC
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
 		// TODO Auto-generated method stub
+		InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        //Òþ²ØÈí¼üÅÌ
+        imm.hideSoftInputFromWindow(getSearchView().getWindowToken(), 0);
+		getListView().requestFocus();
+		getListView().setFocusable(true);
 		DrugEntity drugEntity=(DrugEntity) parent.getAdapter().getItem(position);
 		AddPrescriptionFragment fm=(AddPrescriptionFragment) getActivity().getFragmentManager().findFragmentByTag("addfm");
 		fm.setListView(drugEntity);

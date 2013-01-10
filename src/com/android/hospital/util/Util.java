@@ -95,10 +95,12 @@ public class Util {
     	   Calendar cal = Calendar.getInstance();
     	   
            SimpleDateFormat formatter =new SimpleDateFormat("yyyy-MM-dd");
-     
+
            String mDateTime = formatter.format(cal.getTime());// 当前时间
      
            java.util.Date today = formatter.parse(mDateTime);
+           
+           DebugUtil.debug("当前生日是--->"+today);
      
            java.text.SimpleDateFormat sdf =new java.text.SimpleDateFormat(
      

@@ -47,6 +47,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -121,7 +122,9 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 	}
 	
 	public void setTitleTev(PatientEntity patientEntity){
+		int age=Util.userBirthdayGetAge(patientEntity.date_of_birth);
 		titleTev.setText("床号："+patientEntity.bed_no+" 姓名："+patientEntity.name+" 性别："+patientEntity.sex
+				       +" 年龄："+String.valueOf(age)
 				       +" 病人ID："+patientEntity.patient_id+" 剩余预交金："+patientEntity.prepayments+" 费别："+patientEntity.charge_type);
 	}
 		
@@ -305,20 +308,22 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 					fragment.setListShown(false);
 				}				
 			}			
-			String tableName="LAB_TEST_ITEMS ,LAB_TEST_MASTER ,DEPT_DICT";
+			String tableName="LAB_TEST_ITEMS ,LAB_TEST_MASTER ,DEPT_DICT,STAFF_DICT";
 			String[] paramArray1=new String[]{"LAB_TEST_ITEMS.ITEM_NO","LAB_TEST_ITEMS.ITEM_NAME","LAB_TEST_MASTER.SPECIMEN","LAB_TEST_ITEMS.ITEM_CODE","LAB_TEST_ITEMS.TEST_NO",
 					                          "DEPT_DICT.DEPT_NAME","LAB_TEST_MASTER.RESULT_STATUS","TO_CHAR(LAB_TEST_MASTER.REQUESTED_DATE_TIME,'yyyy-MM-dd hh24:mi:ss') as REQUESTED_DATE_TIME",
 					                          "LAB_TEST_MASTER.BILLING_INDICATOR","LAB_TEST_MASTER.PRIORITY_INDICATOR","LAB_TEST_MASTER.CHARGE_TYPE","LAB_TEST_MASTER.NOTES_FOR_SPCM",
 					                          "LAB_TEST_MASTER.PERFORMED_BY","LAB_TEST_MASTER.RELEVANT_CLINIC_DIAG","LAB_TEST_MASTER.NAME","LAB_TEST_MASTER.SEX","LAB_TEST_MASTER.AGE",
-					                          "LAB_TEST_MASTER.ORDERING_DEPT","LAB_TEST_MASTER.PATIENT_ID","LAB_TEST_MASTER.ORDERING_PROVIDER "};
+					                          "LAB_TEST_MASTER.ORDERING_DEPT","LAB_TEST_MASTER.PATIENT_ID","STAFF_DICT.NAME as ORDERING_PROVIDER  "};
 			String customWhere="WHERE (LAB_TEST_MASTER.TEST_NO= LAB_TEST_ITEMS.TEST_NO ) and "
 					+"( LAB_TEST_MASTER.PERFORMED_BY = DEPT_DICT.DEPT_CODE ) and "
 					+"( LAB_TEST_MASTER.PATIENT_ID = '"+value.patient_id +"' ) and "
-					+"(LAB_TEST_MASTER.VISIT_ID = '"+value.visit_id+"' )  ";
+					+"(LAB_TEST_MASTER.VISIT_ID = '"+value.visit_id+"' ) and  "
+					+" STAFF_DICT.USER_NAME = LAB_TEST_MASTER.ORDERING_PROVIDER  ";
 					//+"order by LAB_TEST_ITEMS.TEST_NO,LAB_TEST_ITEMS.ITEM_NO  ";
 			String orderby = "order by LAB_TEST_ITEMS.TEST_NO,LAB_TEST_ITEMS.ITEM_NO  ";
 			String sql=ServerDao.getQueryCustom(tableName, paramArray1, customWhere);
 			sql=sql+query+orderby;
+			Log.e("检验语句------->", sql);
 			putAsyncTask(new InspectionTask(fragment, sql).execute());
 		}
 		
@@ -456,11 +461,16 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 		case Menu.FIRST:
 				intent=new Intent();
 				DoctorAdviceFragment fragment=(DoctorAdviceFragment) this.getFragmentManager().findFragmentByTag("dcadvice");
-				DcAdviceAdapter adapter=(DcAdviceAdapter) fragment.getListAdapter();		
-				DcAdviceEntity entity=(DcAdviceEntity) adapter.getItem(adapter.getCount()-1);
-				intent.putExtra("subentity", entity);
-				intent.setClass(this, AddDcAdviceActivity.class);
-				startActivityForResult(intent, 11);	
+				DcAdviceAdapter adapter=(DcAdviceAdapter) fragment.getListAdapter();
+				if (null!=adapter&&adapter.getCount()!=0) {
+					DcAdviceEntity entity=(DcAdviceEntity) adapter.getItem(adapter.getCount()-1);
+					intent.putExtra("subentity", entity);
+					intent.setClass(this, AddDcAdviceActivity.class);
+					startActivityForResult(intent, 11);	
+				}else {
+					Toast.makeText(this, "医嘱内容尚未获取成功!", Toast.LENGTH_SHORT).show();
+				}
+				
 			break;
 		case Menu.FIRST+1:
 
@@ -469,11 +479,9 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 				startActivityForResult(intent, 12);
 			break;
 		case Menu.FIRST+2:
-			
 				intent=new Intent();
 				intent.setClass(this, AddInspectionActivity.class);
 				startActivityForResult(intent, 13);
-				
 			break;
 		case Menu.FIRST+3:
 				intent=new Intent();

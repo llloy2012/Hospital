@@ -10,11 +10,14 @@ import com.android.hospital.ui.activity.R;
 import com.android.hospital.util.DebugUtil;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
@@ -117,6 +120,13 @@ public class SearchAddDcAdviceFragment extends Fragment implements SearchView.On
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
 		// TODO Auto-generated method stub
+        //DebugUtil.debug("hasfocus--->"+mSearchView.hasFocus());
+		InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        //Òþ²ØÈí¼üÅÌ
+        imm.hideSoftInputFromWindow(mSearchView.getWindowToken(), 0);
+
+		mListView.requestFocus();
+		mListView.setFocusable(true);
 		if (isDrugOrNonDrug) {
 			DrugEntity drugEntity=(DrugEntity) mListView.getAdapter().getItem(position);
 			addDcAdviceFm.initDrug(drugEntity);

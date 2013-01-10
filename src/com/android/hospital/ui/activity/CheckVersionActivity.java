@@ -143,6 +143,9 @@ public class CheckVersionActivity extends Activity {
 								public void onClick(DialogInterface dialog,
 										int whichButton) {
 									manager.cancel(NOTIFICATION_ID);
+									Intent intent=new Intent();
+									intent.setClass(CheckVersionActivity.this, LoginActivity.class);
+									startActivity(intent);
 									CheckVersionActivity.this.finish();
 								}
 							}).create();
@@ -204,11 +207,13 @@ public class CheckVersionActivity extends Activity {
 		protected void onPostExecute(Void result) {
 			// TODO Auto-generated method stub
 			if (version_Judgment == false) {
-				Toast.makeText(CheckVersionActivity.this, "目前为最新版本！",
-						Toast.LENGTH_SHORT).show();
+				/*Toast.makeText(CheckVersionActivity.this, "目前为最新版本！",
+						Toast.LENGTH_SHORT).show();*/
+				Intent intent=new Intent();
+				intent.setClass(CheckVersionActivity.this, LoginActivity.class);
+				startActivity(intent);
 				finish();
 			} else {
-
 				showDialog(DIALOG_SIMPLE);
 			}
 			super.onPostExecute(result);

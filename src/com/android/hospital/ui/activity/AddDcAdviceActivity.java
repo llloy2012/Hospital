@@ -101,7 +101,7 @@ public class AddDcAdviceActivity extends Activity implements OnClickListener{
                 })
                 .create().show();
 			}else {
-				Toast.makeText(AddDcAdviceActivity.this, "医嘱不能为空!", Toast.LENGTH_SHORT).show();
+				Toast.makeText(AddDcAdviceActivity.this, "医嘱或频次，途径不能为空!", Toast.LENGTH_SHORT).show();
 			}
 			
 			break;

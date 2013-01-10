@@ -14,7 +14,7 @@
         android:name="com.android.hospital.HospitalApp"
          >
         <activity
-            android:name=".StartActivity"
+            android:name=".CheckVersionActivity"
             android:label="@string/title_item_list" 
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
             android:screenOrientation="landscape"
@@ -35,7 +35,7 @@
         <activity android:name=".AddInspectionActivity" android:theme="@style/HospitalTheme" android:label="@string/add_inspection"  android:screenOrientation="landscape"/>
         <activity android:name=".AddPrescriptionActivity" android:theme="@style/HospitalTheme" android:label="@string/add_prescription"  android:screenOrientation="landscape"/>
         <activity android:name=".CheckdetailActivity" android:theme="@style/HospitalTheme" android:screenOrientation="landscape"/>
-        <activity android:name=".CheckVersionActivity" android:theme="@style/HospitalTheme" android:screenOrientation="landscape"/>
+        <activity android:name=".StartActivity" android:theme="@style/HospitalTheme" android:screenOrientation="landscape"/>
         <activity android:name=".GroupDcAdviceActivity" android:theme="@style/HospitalTheme" android:label="@string/group_dcadvice" android:screenOrientation="landscape" />
         <service android:enabled="true" android:name="com.android.hospital.service.MyService" />
         <!-- #####################JUnit测试需要的权限标签 #####################-->

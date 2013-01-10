@@ -438,6 +438,18 @@ public class AddDcAdviceFragment extends Fragment implements OnClickListener,OnI
 		if (mDcAdViceTev.getText().toString().equals("")) {
 			return false;
 		}
+		if (mDrugBut.isChecked()) {
+			if (mLongTimeBut.isChecked()) {
+				if (mFreqSpinner.getSelectedItemPosition()==0||mWaySpinner.getSelectedItemPosition()==0) {
+					return false;
+				}
+			}
+			if (mShortTimeBut.isChecked()) {
+				if (mWaySpinner.getSelectedItemPosition()==0) {
+					return false;
+				}
+			}
+		}
 		return true;
 	}
 

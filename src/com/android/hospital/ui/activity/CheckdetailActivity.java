@@ -428,8 +428,8 @@ public class CheckdetailActivity extends Activity{
 		@Override
 		protected String doInBackground(String... params) {
 			// TODO Auto-generated method stub
-			//String sql="select filename from dicomtemp@pacsdbserver where examno='"+exam_no+"'";//语句不一样
-			String sql="select filename from dicomtemp@pacs10 where examno='"+exam_no+"'";
+			String sql="select filename from dicomtemp@pacsdbserver where examno='"+exam_no+"'";//语句不一样
+			//String sql="select filename from dicomtemp@pacs10 where examno='"+exam_no+"'";
 			ArrayList<DataEntity> dataList=WebServiceHelper.getWebServiceData(sql);
 			for (int i = 0; i < dataList.size(); i++) {
 				//String path=dataList.get(i).get("filename").replace("\\Dcmtemp", "");

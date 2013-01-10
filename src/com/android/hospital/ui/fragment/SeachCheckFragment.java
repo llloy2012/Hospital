@@ -7,10 +7,12 @@ import com.android.hospital.adapter.CheckItemAdapter;
 import com.android.hospital.ui.activity.R;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
@@ -40,6 +42,11 @@ public class SeachCheckFragment extends SearchFragment implements OnItemClickLis
 	public void onItemClick(AdapterView<?> parent, View view, int position,
 			long id) {
 		// TODO Auto-generated method stub
+		InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        //Òþ²ØÈí¼üÅÌ
+        imm.hideSoftInputFromWindow(getSearchView().getWindowToken(), 0);
+		getListView().requestFocus();
+		getListView().setFocusable(true);
 		Map<String, String> map=(Map<String, String>) parent.getAdapter().getItem(position);
 		fm.setListView(map);
 	}

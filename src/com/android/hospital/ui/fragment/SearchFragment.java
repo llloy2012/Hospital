@@ -10,11 +10,13 @@ import com.android.hospital.ui.activity.R;
 import com.android.hospital.util.DebugUtil;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
@@ -30,7 +32,7 @@ import android.widget.SearchView;
 * @date 2012-12-14 ÉÏÎç11:41:57 
 *
  */
-public abstract class SearchFragment extends Fragment implements SearchView.OnQueryTextListener{
+public abstract class SearchFragment extends Fragment implements SearchView.OnQueryTextListener,OnItemClickListener{
 
 	private ListView mListView;
 	
@@ -82,6 +84,20 @@ public abstract class SearchFragment extends Fragment implements SearchView.OnQu
 	
 	public HospitalApp getApp(){
 		return app;
+	}
+	
+	public SearchView getSearchView(){
+		return mSearchView;
+	}
+	
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int position,
+			long id) {
+		InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        //Òþ²ØÈí¼üÅÌ
+        imm.hideSoftInputFromWindow(mSearchView.getWindowToken(), 0);
+		mListView.requestFocus();
+		mListView.setFocusable(true);
 	}
 	
 	public abstract void show(BaseAdapter adapter);
