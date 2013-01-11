@@ -122,9 +122,8 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 	}
 	
 	public void setTitleTev(PatientEntity patientEntity){
-		int age=Util.userBirthdayGetAge(patientEntity.date_of_birth);
 		titleTev.setText("床号："+patientEntity.bed_no+" 姓名："+patientEntity.name+" 性别："+patientEntity.sex
-				       +" 年龄："+String.valueOf(age)
+				       +" 年龄："+String.valueOf(Util.userBirthdayGetAge(patientEntity.date_of_birth))
 				       +" 病人ID："+patientEntity.patient_id+" 剩余预交金："+patientEntity.prepayments+" 费别："+patientEntity.charge_type);
 	}
 		
@@ -461,16 +460,11 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 		case Menu.FIRST:
 				intent=new Intent();
 				DoctorAdviceFragment fragment=(DoctorAdviceFragment) this.getFragmentManager().findFragmentByTag("dcadvice");
-				DcAdviceAdapter adapter=(DcAdviceAdapter) fragment.getListAdapter();
-				if (null!=adapter&&adapter.getCount()!=0) {
-					DcAdviceEntity entity=(DcAdviceEntity) adapter.getItem(adapter.getCount()-1);
-					intent.putExtra("subentity", entity);
-					intent.setClass(this, AddDcAdviceActivity.class);
-					startActivityForResult(intent, 11);	
-				}else {
-					Toast.makeText(this, "医嘱内容尚未获取成功!", Toast.LENGTH_SHORT).show();
-				}
-				
+				DcAdviceAdapter adapter=(DcAdviceAdapter) fragment.getListAdapter();		
+				DcAdviceEntity entity=(DcAdviceEntity) adapter.getItem(adapter.getCount()-1);
+				intent.putExtra("subentity", entity);
+				intent.setClass(this, AddDcAdviceActivity.class);
+				startActivityForResult(intent, 11);	
 			break;
 		case Menu.FIRST+1:
 
@@ -479,9 +473,11 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 				startActivityForResult(intent, 12);
 			break;
 		case Menu.FIRST+2:
+			
 				intent=new Intent();
 				intent.setClass(this, AddInspectionActivity.class);
 				startActivityForResult(intent, 13);
+				
 			break;
 		case Menu.FIRST+3:
 				intent=new Intent();
@@ -492,19 +488,19 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
             showGroupDc();
 			break;
 		case 11:
-			String update = "update orders  set stop_doctor= '田晓', stop_date_time= to_date('2013-01-07 15:25:12','yyyy-mm-dd hh24:mi:ss'), order_status='6',billing_attr='0',drug_billing_attr='0'  where patient_id  = '1000063045' and visit_id = '1' and order_no = '23' and order_sub_no = '1'";
-			String updateTwo=update.toUpperCase();
-			if (WebServiceHelper.insertWebServiceData(updateTwo)) {
-				Toast.makeText(this, "更新成功!", Toast.LENGTH_SHORT).show();
-			}else {
-				Toast.makeText(this, "更新失败!", Toast.LENGTH_SHORT).show();
-			}
+			DoctorAdviceFragment fragmentall=(DoctorAdviceFragment) this.getFragmentManager().findFragmentByTag("dcadvice");
+			DcAdviceAdapter adapterall=(DcAdviceAdapter) fragmentall.getListAdapter();
+			adapterall.setAllList();
 			break;
 		case 12:
-			Toast.makeText(this, "功能尚未添加!", Toast.LENGTH_SHORT).show();
+			DoctorAdviceFragment fragmentlong=(DoctorAdviceFragment) this.getFragmentManager().findFragmentByTag("dcadvice");
+			DcAdviceAdapter adapterlong=(DcAdviceAdapter) fragmentlong.getListAdapter();
+			adapterlong.setLongList();
 			break;
 		case 13:
-			Toast.makeText(this, "功能尚未添加!", Toast.LENGTH_SHORT).show();
+			DoctorAdviceFragment fragmentshort=(DoctorAdviceFragment) this.getFragmentManager().findFragmentByTag("dcadvice");
+			DcAdviceAdapter adaptershort=(DcAdviceAdapter) fragmentshort.getListAdapter();
+			adaptershort.setShortList();
 			break;
 		case 14:
 			

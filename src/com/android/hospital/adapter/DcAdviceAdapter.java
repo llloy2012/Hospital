@@ -28,11 +28,55 @@ public class DcAdviceAdapter extends BaseAdapter{
 	
 	private Context mContext;
 	
+	private ArrayList<DcAdviceEntity> allList;
+	private ArrayList<DcAdviceEntity> longList;
+	private ArrayList<DcAdviceEntity> shortList;
+
+	
 	public DcAdviceAdapter(Context context,ArrayList<DcAdviceEntity> entities){
 		this.mList=entities;
 		this.mContext=context;
+		getAllList();
+		getLongList();
+		getShortList();
 	}
-	
+	/**
+	 * getShortList() 获得临时医嘱
+	 */
+	private void getShortList() {
+		// TODO Auto-generated method stub
+		shortList=new ArrayList<DcAdviceEntity>();
+		for (int i = 0; i < mList.size(); i++) {
+			if("0".equals(mList.get(i).repeat_indicator)){
+				shortList.add(mList.get(i));
+			}
+		}
+		
+	}
+   /**
+    * getLongList() 获得长期医嘱
+    * @return
+    */
+	private ArrayList<DcAdviceEntity> getLongList() {
+		// TODO Auto-generated method stub
+		longList=new ArrayList<DcAdviceEntity>();
+		for (int i = 0; i < mList.size(); i++) {
+			if ("1".equals(mList.get(i).repeat_indicator)) {		
+				longList.add(mList.get(i));
+			}
+		}
+		return longList;
+	}
+   /**
+    * getAllList()获得所有医嘱
+    * @return
+    */
+	private ArrayList<DcAdviceEntity> getAllList() {
+		// TODO Auto-generated method stub
+        allList=mList;
+		return allList;
+	}
+
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
@@ -74,7 +118,23 @@ public class DcAdviceAdapter extends BaseAdapter{
 	public ArrayList<DcAdviceEntity> getList(){
 		return mList;
 	}
-
+    //设置长期
+	public void setLongList(){
+		
+		mList=longList;
+		notifyDataSetChanged();
+	}
+	//设置临时
+	public void setShortList(){
+		mList=shortList;
+		notifyDataSetChanged();
+	}
+	//设置全部
+	public void setAllList(){
+		mList=allList;
+		notifyDataSetChanged();
+	}
+	
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		// TODO Auto-generated method stub
