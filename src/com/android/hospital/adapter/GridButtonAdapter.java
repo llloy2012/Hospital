@@ -3,15 +3,20 @@ package com.android.hospital.adapter;
 import java.util.ArrayList;
 
 import com.android.hospital.HospitalApp;
+import com.android.hospital.constant.AppConstant;
 import com.android.hospital.entity.DataEntity;
 import com.android.hospital.entity.SignsLifeEntity;
+import com.android.hospital.temperature.AverageTemperatureChart;
+import com.android.hospital.temperature.IDemoChart;
 import com.android.hospital.ui.activity.R;
 import com.android.hospital.util.DebugUtil;
 import com.android.hospital.webservice.WebServiceHelper;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.view.LayoutInflater;
@@ -41,7 +46,7 @@ public class GridButtonAdapter extends BaseAdapter{
 	private View detaillayout;
 	
 	
-	private String[] textArr = { "腋下体温", "血压", "呼吸", "脉搏", "大便次数", "体重",
+	private String[] textArr = { "体温图", "腋下体温", "血压", "呼吸", "脉搏", "大便次数", "体重",
 			"血糖", "心率", "尿量", "降温", "痰量", "入院", "转入", "入量", "引流量",
 			"死亡", "分娩", "呼吸", "请假", "摄入液量","总量","呕吐量",
 			"出院","手术","口入量"};
@@ -84,7 +89,11 @@ public class GridButtonAdapter extends BaseAdapter{
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				new SignDetailTask(item).execute();
+				if (item.equals("体温图")) {
+					new TemperatureTask().execute(item);
+				}else {
+					new SignDetailTask(item).execute();
+				}
 			}
 		});				
 		return convertView;
@@ -163,6 +172,56 @@ public class GridButtonAdapter extends BaseAdapter{
 			}else {
 				Toast.makeText(mContext, "没有数据", Toast.LENGTH_SHORT).show();
 			}
+		}
+	}
+	
+	/**
+	 * 
+	* @ClassName: TemperatureTask 
+	* @Description: TODO(获取体温图的相关信息) 
+	* @author wanghailong 81813780@qq.com 
+	* @date 2013-1-15 上午11:06:31 
+	*
+	 */
+	private class TemperatureTask extends AsyncTask<String, Void, String>{
+
+		private HospitalApp app;
+		
+		private String[] temperatureTimeArr=null;//体温时间
+		
+		private String[] temperatureArr=null;//温度
+		
+		@Override
+		protected String doInBackground(String... params) {
+			// TODO Auto-generated method stub
+			app=(HospitalApp)mContext.getApplicationContext();
+			AppConstant.patientEntity=app.getPatientEntity();
+			String sql="select TO_CHAR(time_point,'yyyy-MM-dd hh24:mi') as time_point, vital_signs_cvalues, units" +
+					" from vital_signs_rec" +
+					" where patient_id = '"+app.getPatientEntity().patient_id+"'" +
+					" and visit_id = '"+app.getPatientEntity().visit_id+"'" +
+					" and vital_signs = '腋下体温'";
+			ArrayList<DataEntity> dataList=WebServiceHelper.getWebServiceData(sql);
+			temperatureArr=new String[dataList.size()];
+			temperatureTimeArr=new String[dataList.size()];
+			for (int i = 0; i < dataList.size(); i++) {
+				temperatureArr[i]=dataList.get(i).get("vital_signs_cvalues");
+				temperatureTimeArr[i]=dataList.get(i).get("time_point");
+				DebugUtil.debug("温度--->"+temperatureArr[i]);
+				DebugUtil.debug("时间--->"+temperatureTimeArr[i]);
+			}
+			
+			AppConstant.temperatureArr=temperatureArr;
+			AppConstant.temperatureTimeArr=temperatureTimeArr;
+			return null;
+		}
+		
+		@Override
+		protected void onPostExecute(String result) {
+			// TODO Auto-generated method stub
+			IDemoChart mChart=new AverageTemperatureChart();
+			Intent intent=mChart.execute(mContext);
+			mContext.startActivity(intent);
 		}
 	}
 }

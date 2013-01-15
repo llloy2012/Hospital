@@ -1,9 +1,11 @@
 package com.android.hospital.util;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+
 
 /**
  * 
@@ -208,8 +210,22 @@ public class Util {
 	   } catch (Exception e) {
 		// TODO: handle exception
 	   }
-       
-       return 0;
- 
+       return 0; 
     }
+    
+    /**
+     * 
+    * @Title: converToDate 
+    * @Description: TODO(格式化体温图时间格式) 
+    * @param @param date
+    * @param @return
+    * @param @throws Exception    设定文件 
+    * @return Date    返回类型 
+    * @throws
+     */
+    public static Date converToDate(String date) throws Exception{
+    	DateFormat df=new SimpleDateFormat("yyyy-MM-dd HH:mm");
+    	return df.parse(date);
+    }
+    
 }

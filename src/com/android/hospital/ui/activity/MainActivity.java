@@ -21,6 +21,7 @@ import com.android.hospital.asyntask.InspectionTask;
 import com.android.hospital.asyntask.PrescriptionTask;
 import com.android.hospital.constant.AppConstant;
 import com.android.hospital.db.ServerDao;
+import com.android.hospital.entity.DataEntity;
 import com.android.hospital.entity.DcAdviceEntity;
 import com.android.hospital.entity.PatientEntity;
 import com.android.hospital.ui.fragment.CheckFragment;
@@ -503,8 +504,7 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 			adaptershort.setShortList();
 			break;
 		case 14:
-			
-				showDatePickerDialog();		
+			showDatePickerDialog();		
 			break;
 		default:
 			break;

@@ -37,6 +37,9 @@
         <activity android:name=".CheckdetailActivity" android:theme="@style/HospitalTheme" android:screenOrientation="landscape"/>
         <activity android:name=".StartActivity" android:theme="@style/HospitalTheme" android:screenOrientation="landscape"/>
         <activity android:name=".GroupDcAdviceActivity" android:theme="@style/HospitalTheme" android:label="@string/group_dcadvice" android:screenOrientation="landscape" />
+        <activity android:name="org.achartengine.chartdemo.demo.chart.XYChartBuilder"/>
+		<activity android:name="org.achartengine.chartdemo.demo.chart.PieChartBuilder"/>
+        <activity android:name="org.achartengine.GraphicalActivity" />
         <service android:enabled="true" android:name="com.android.hospital.service.MyService" />
         <!-- #####################JUnit测试需要的权限标签 #####################-->
 		<uses-library android:name="android.test.runner" />
