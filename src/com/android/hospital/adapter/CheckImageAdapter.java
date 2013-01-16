@@ -5,6 +5,7 @@ import java.util.List;
 import com.android.hospital.asyntask.AsyncImageLoader;
 import com.android.hospital.asyntask.AsyncImageLoader.ImageCallback;
 import com.android.hospital.ui.activity.R;
+import com.android.hospital.util.DebugUtil;
 import com.android.hospital.util.ImageUtil;
 
 import android.content.Context;
@@ -67,33 +68,30 @@ public class CheckImageAdapter extends BaseAdapter{
 		}
 		String path=mList.get(position);
 		viewHolder.tev1.setText(path);
-		if (path!=null) {
-			if (viewHolder.imageView.getTag().equals(path)) {
-				Drawable cachedImage=imageLoader.loadDrawable(path, viewHolder.imageView, new ImageCallback() {
-					
-					@Override
-					public void imageLoaded(Drawable imageDrawable, ImageView imageView,
-							String imageUrl) {
-						// TODO Auto-generated method stub
-						if (imageDrawable!=null) {
-							imageView.setVisibility(View.VISIBLE);
-							imageView.setImageDrawable(imageDrawable);
-						}else {
-							imageView.setVisibility(View.GONE);
-							imageView.setImageResource(R.drawable.photo_man);
-						}
-					}
-				});
-				
-				if (cachedImage!=null) {
-					viewHolder.imageView.setVisibility(View.VISIBLE);
-					viewHolder.imageView.setImageDrawable(cachedImage);
+		DebugUtil.debug("tag±ê¼Ç--->"+viewHolder.imageView.getTag());
+		Drawable cachedImage=imageLoader.loadDrawable(path, viewHolder.imageView, new ImageCallback() {
+			
+			@Override
+			public void imageLoaded(Drawable imageDrawable, ImageView imageView,
+					String imageUrl) {
+				// TODO Auto-generated method stub
+				if (imageDrawable!=null) {
+					imageView.setVisibility(View.VISIBLE);
+					imageView.setImageDrawable(imageDrawable);
 				}else {
-					viewHolder.imageView.setVisibility(View.INVISIBLE);
-					viewHolder.imageView.setImageResource(R.drawable.photo_man);
+					imageView.setVisibility(View.INVISIBLE);
+					imageView.setImageResource(R.drawable.photo_man);
 				}
-			}		
-		}
+			}
+		});
+		
+		if (cachedImage!=null) {
+			viewHolder.imageView.setVisibility(View.VISIBLE);
+			viewHolder.imageView.setImageDrawable(cachedImage);
+		}else {
+			viewHolder.imageView.setVisibility(View.INVISIBLE);
+			viewHolder.imageView.setImageResource(R.drawable.photo_man);
+		}	
 		return convertView;
 	}
 

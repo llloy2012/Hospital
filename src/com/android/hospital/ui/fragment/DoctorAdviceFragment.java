@@ -143,7 +143,7 @@ public class DoctorAdviceFragment extends ListFragment {
 	                         " AND ORDER_NO = '"+list_update.get(i).order_no+"'"+
 	                         " AND ORDER_SUB_NO = '"+list_update.get(i).order_sub_no+"'";
 						Log.e("¸üÐÂÓï¾ä-->", sql);
-						WebServiceHelper.insertWebServiceData(sql);
+						WebServiceHelper.updateWebServiceData(sql);
 					} 
 				 }
 			 }//else1

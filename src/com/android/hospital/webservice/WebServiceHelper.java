@@ -26,6 +26,7 @@ import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.os.Environment;
 import android.os.PowerManager;
+import android.os.StrictMode;
 import android.os.PowerManager.WakeLock;
 import android.util.Log;
 /**
@@ -42,7 +43,8 @@ public class WebServiceHelper {
 	
 	private static final String NAMESPACE = "http://service.com";
 	
-	private static final String SERVERURL="http://192.168.0.40:8888/WebServiceServer/services/GeneralOpSQL";
+	private static final String SERVERURL="http://192.168.0.10:8888/WebServiceServer/services/GeneralOpSQL";
+	//private static final String SERVERURL="http://192.168.20.108:8080/WebServiceServer/services/GeneralOpSQL";
 	
 	private static WakeLock wl;
 	
@@ -189,6 +191,7 @@ public class WebServiceHelper {
      */
 
     public static boolean updateWebServiceData(String sql){
+    	netWebservice();
        	SoapObject request = new SoapObject(NAMESPACE, "executeByDefaultDBSql");
        	request.addProperty("in0", sql);
        	SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
@@ -198,6 +201,7 @@ public class WebServiceHelper {
        	HttpTransportSE ht = new HttpTransportSE(SERVERURL);
        	ht.debug = true;
        	try {
+       		DebugUtil.debug("执行到这里");
    			ht.call("http://service.com/executeByDefaultDBSql", envelope);
    			if (envelope.getResponse()!=null) {
    				//SoapObject object = (SoapObject) envelope.getResponse();
@@ -207,9 +211,11 @@ public class WebServiceHelper {
    					return true;
    				}
    			}else {
+   				DebugUtil.debug("执行到else");
    				return false;
    			}
    		} catch (Exception e) {
+   			DebugUtil.debug("异常为-->"+e);
    		}
        	return false;
        }
@@ -306,5 +312,21 @@ public class WebServiceHelper {
 			}
 		}
 		return true;
-	}	
+	}
+	
+	//将这个方法放在调用webservice之前，就O了。。。
+		public static void netWebservice(){
+			StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+			.detectDiskReads()
+			.detectDiskWrites()
+			.detectNetwork()
+			.penaltyLog() 
+			.build());
+	        StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
+			.detectLeakedSqlLiteObjects()
+			.detectLeakedSqlLiteObjects()
+			.penaltyLog()
+			.penaltyDeath()
+			.build());
+		}
 }

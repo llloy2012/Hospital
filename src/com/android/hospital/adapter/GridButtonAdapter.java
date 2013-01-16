@@ -8,9 +8,11 @@ import com.android.hospital.entity.DataEntity;
 import com.android.hospital.entity.SignsLifeEntity;
 import com.android.hospital.temperature.AverageTemperatureChart;
 import com.android.hospital.temperature.IDemoChart;
+import com.android.hospital.ui.activity.AddCheckActivity;
 import com.android.hospital.ui.activity.R;
 import com.android.hospital.util.DebugUtil;
 import com.android.hospital.webservice.WebServiceHelper;
+import com.android.hospital.widgets.MyProssDialog;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -191,6 +193,15 @@ public class GridButtonAdapter extends BaseAdapter{
 		
 		private String[] temperatureArr=null;//温度
 		
+		private MyProssDialog mDialog;
+		
+		@Override
+		protected void onPreExecute() {
+			// TODO Auto-generated method stub
+			super.onPreExecute();
+	        mDialog=new MyProssDialog(mContext, "提交", "正在提交请求，请稍候...");
+		}
+		
 		@Override
 		protected String doInBackground(String... params) {
 			// TODO Auto-generated method stub
@@ -219,6 +230,7 @@ public class GridButtonAdapter extends BaseAdapter{
 		@Override
 		protected void onPostExecute(String result) {
 			// TODO Auto-generated method stub
+			mDialog.cancel();
 			IDemoChart mChart=new AverageTemperatureChart();
 			Intent intent=mChart.execute(mContext);
 			mContext.startActivity(intent);
