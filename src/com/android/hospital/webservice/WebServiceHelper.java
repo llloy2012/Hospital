@@ -314,7 +314,7 @@ public class WebServiceHelper {
 		return true;
 	}
 	
-	//将这个方法放在调用webservice之前，就O了。。。
+	//将这个方法放在调用webservice之前，就O了。。。（update语句执行时出现的问题，与版本有关）
 		public static void netWebservice(){
 			StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
 			.detectDiskReads()

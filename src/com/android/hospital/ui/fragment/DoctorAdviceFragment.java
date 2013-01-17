@@ -56,6 +56,8 @@ public class DoctorAdviceFragment extends ListFragment {
 
 	private int position=0;//点击模板id
 
+	private MainActivity mActivity;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -64,7 +66,7 @@ public class DoctorAdviceFragment extends ListFragment {
 		//ArrayList<DcAdviceEntity> arrayList=new DcAdviceEntity("").list;
 //		DcAdviceAdapter adapter=new DcAdviceAdapter(getActivity(),arrayList);
 //		setListAdapter(adapter);
-		
+		mActivity=(MainActivity) getActivity();
 	}
 	
 	@Override
@@ -143,7 +145,13 @@ public class DoctorAdviceFragment extends ListFragment {
 	                         " AND ORDER_NO = '"+list_update.get(i).order_no+"'"+
 	                         " AND ORDER_SUB_NO = '"+list_update.get(i).order_sub_no+"'";
 						Log.e("更新语句-->", sql);
-						WebServiceHelper.updateWebServiceData(sql);
+						if (WebServiceHelper.updateWebServiceData(sql)) {
+							mActivity.putDcAdviceTask(app.getPatientEntity(), "");
+							Toast.makeText(getActivity(), "更新成功!", Toast.LENGTH_SHORT).show(); 
+						}else {
+							Toast.makeText(getActivity(), "更新失败!", Toast.LENGTH_SHORT).show(); 
+						}
+						
 					} 
 				 }
 			 }//else1

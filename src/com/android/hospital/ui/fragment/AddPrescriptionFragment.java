@@ -141,6 +141,7 @@ public class AddPrescriptionFragment extends BaseFragment implements OnClickList
 	}
 
 	public void setListView(DrugEntity entity){
+		
 		if (mAdapter.getCount()==1) {
 			drugFlag=mClassSp.getSelectedItemPosition();//
 		}
@@ -229,6 +230,10 @@ public class AddPrescriptionFragment extends BaseFragment implements OnClickList
 		case 0:
 			fm.show(null);
 			mHideLayout.setVisibility(View.VISIBLE);
+			if(mAdapter!=null){
+				mAdapter.clear();
+			}
+			mDrugHouseTev.setText("");
 			break;
 		case 1:
 			DebugUtil.debug("positon-case--1");
@@ -236,6 +241,10 @@ public class AddPrescriptionFragment extends BaseFragment implements OnClickList
 				fm.showWestDrug(mWestDrugList);
 			}
 			mHideLayout.setVisibility(View.GONE);
+			if(mAdapter!=null){
+				mAdapter.clear();
+			}
+			mDrugHouseTev.setText("");
 			break;
 		default:
 			break;
@@ -406,7 +415,7 @@ public class AddPrescriptionFragment extends BaseFragment implements OnClickList
 		prescriptionBuffer.append("'"+usage).append("',");
 		prescriptionBuffer.append("'"+binding_presc_title).append("',");
 		prescriptionBuffer.append("'"+discharge_taking_indicator).append("',");
-		prescriptionBuffer.append("'"+"doctor_user").append("',");//主治医生代码
+		prescriptionBuffer.append("'"+app.getPatientEntity().user_name).append("',");//主治医生代码
 		prescriptionBuffer.append("'"+decoction).append("',");
 		prescriptionBuffer.append("'"+"").append("',");
 		prescriptionBuffer.append("'"+app.getPatientEntity().diagnosis).append("')");
@@ -482,7 +491,7 @@ public class AddPrescriptionFragment extends BaseFragment implements OnClickList
 			for (int i = 0; i < size; i++) {
 				DrugEntity itemEntity=(DrugEntity) mAdapter.getItem(i);
 				StringBuffer buffer=new StringBuffer();
-				buffer.append(itemEntity.dosage_each).append("/").append(itemEntity.package_units);//总量/单位
+				buffer.append(itemEntity.quantity).append("/").append(itemEntity.package_units);//总量/单位
 				itemEntity.freq_detail=buffer.toString();
 				if (itemEntity.quantity==null) {
 					itemEntity.quantity="";

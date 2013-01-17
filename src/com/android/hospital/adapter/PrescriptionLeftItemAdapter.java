@@ -75,8 +75,11 @@ public class PrescriptionLeftItemAdapter extends BaseAdapter {
 	}
 
 	public void clear(){
-		mList.clear();
-		notifyDataSetChanged();
+		if(mList!=null){
+			mList.clear();
+			notifyDataSetChanged();
+		}
+		
 	}
 	
 	public void addItem(DrugEntity entity,int defaultFlag){

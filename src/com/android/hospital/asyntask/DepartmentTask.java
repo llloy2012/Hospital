@@ -2,6 +2,7 @@ package com.android.hospital.asyntask;
 
 import java.util.ArrayList;
 
+import com.android.hospital.HospitalApp;
 import com.android.hospital.adapter.PatientAdapter;
 import com.android.hospital.db.ServerDao;
 import com.android.hospital.entity.DataEntity;
@@ -14,6 +15,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -32,12 +34,14 @@ public class DepartmentTask extends BaseAsyncTask implements OnItemSelectedListe
 	private Activity mActivity;
 	
 	private String sql;
-	
+	private HospitalApp app;
 	private ArrayList<String> codeArrayList;//部门代码，通过部门代码获取病人列表
+	private ArrayList<String> nameArrayList;//部门名称
 
 	public DepartmentTask(Activity activity,String sql){
 		this.mActivity=activity;
 		this.sql=sql;
+		app=(HospitalApp) mActivity.getApplication();
 	}
 	
 	@Override
@@ -47,12 +51,16 @@ public class DepartmentTask extends BaseAsyncTask implements OnItemSelectedListe
 		ArrayList<DataEntity> dataList=WebServiceHelper.getWebServiceData(sql);
 		ArrayList<String> arrayList=new ArrayList<String>();
 		codeArrayList=new ArrayList<String>();
+		nameArrayList=new ArrayList<String>();
 		for (int i = 0; i < dataList.size(); i++) {
 			String item=dataList.get(i).get("group_name");
 			String code=dataList.get(i).get("group_code");
 			arrayList.add(item);
 			codeArrayList.add(code);
+			nameArrayList.add(item);
 		}
+		app.setDepartcodeList(codeArrayList);
+		app.setDepartnameList(nameArrayList);
 		return arrayList;
 	}
 
@@ -84,20 +92,22 @@ public class DepartmentTask extends BaseAsyncTask implements OnItemSelectedListe
 			}		
 		}
 		String code=codeArrayList.get(position);
-		String tableName="PATS_IN_HOSPITAL, PAT_MASTER_INDEX, MR_ON_LINE";
-		String[] paramArray1=new String[]{"PATS_IN_HOSPITAL.DEPT_CODE","PATS_IN_HOSPITAL.BED_NO","PATS_IN_HOSPITAL.DIAGNOSIS",
-				                          "PATS_IN_HOSPITAL.DOCTOR_IN_CHARGE","PATS_IN_HOSPITAL.PATIENT_ID","PATS_IN_HOSPITAL.PREPAYMENTS",
-				                          "PAT_MASTER_INDEX.NAME","PAT_MASTER_INDEX.SEX","PAT_MASTER_INDEX.NAME_PHONETIC","PAT_MASTER_INDEX.DATE_OF_BIRTH",
-				                          "PAT_MASTER_INDEX.BIRTH_PLACE","PAT_MASTER_INDEX.IDENTITY","PAT_MASTER_INDEX.MAILING_ADDRESS","PAT_MASTER_INDEX.ZIP_CODE",
-				                          "PAT_MASTER_INDEX.PHONE_NUMBER_HOME","PAT_MASTER_INDEX.CHARGE_TYPE",
-				                          "PATS_IN_HOSPITAL.VISIT_ID"};
-		String customWhere="where PATS_IN_HOSPITAL.PATIENT_ID = PAT_MASTER_INDEX.PATIENT_ID " 
-				                          +"and PATS_IN_HOSPITAL.PATIENT_ID = MR_ON_LINE.PATIENT_ID "
-				                          +"and PATS_IN_HOSPITAL.VISIT_ID = MR_ON_LINE.VISIT_ID "
-				                          +"and MR_ON_LINE.STATUS = '0' "
-				                          +"and PATS_IN_HOSPITAL.dept_code = '"+code+"' "
-				                          +"order by PATS_IN_HOSPITAL.BED_NO";
+		String tableName="pats_in_hospital, pat_master_index, mr_on_line,staff_dict";
+		String[] paramArray1=new String[]{"pats_in_hospital.dept_code","pats_in_hospital.bed_no","pats_in_hospital.diagnosis",
+				                          "pats_in_hospital.doctor_in_charge","staff_dict.user_name","pats_in_hospital.patient_id","pats_in_hospital.prepayments",
+				                          "pat_master_index.name","pat_master_index.sex","pat_master_index.name_phonetic","pat_master_index.date_of_birth",
+				                          "pat_master_index.birth_place","pat_master_index.identity","pat_master_index.mailing_address","pat_master_index.zip_code",
+				                          "pat_master_index.phone_number_home","pat_master_index.charge_type",
+				                          "pats_in_hospital.visit_id"};
+		String customWhere="where pats_in_hospital.patient_id = pat_master_index.patient_id " 
+				                          +"and pats_in_hospital.patient_id = mr_on_line.patient_id "
+				                          +"and pats_in_hospital.visit_id = mr_on_line.visit_id "
+				                          +"and pats_in_hospital.doctor_in_charge=staff_dict.name "
+				                          +"and mr_on_line.status = '0' "
+				                          +"and pats_in_hospital.dept_code = '"+code+"' "
+				                          +"order by pats_in_hospital.bed_no";
 		String sql=ServerDao.getQueryCustom(tableName, paramArray1, customWhere);
+		Log.e("病人信息--->", sql);
 		new PatientTask(mActivity, sql).execute();
 	}
 

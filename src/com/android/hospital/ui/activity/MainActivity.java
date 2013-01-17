@@ -1,6 +1,5 @@
 package com.android.hospital.ui.activity;
 
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
@@ -71,19 +70,12 @@ import android.widget.Toast;
 *
  */
 public class MainActivity extends Activity implements AsyncTaskCallback<PatientEntity>{	
-	
 	private LeftListFragment leftFm;
-	
 	private Spinner mSpinner;
-	
 	private TextView titleTev;
-	
 	private ActionBar actionBar;
-	
 	private List<AsyncTask> asyncTasks=null;
-	
 	private PatientEntity patientEntity;
-	
 	private HospitalApp app;
 	
 	@Override
@@ -91,9 +83,7 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
 		app=(HospitalApp) getApplication();
-		
 		actionBar=getActionBar();
 		actionBar.setHomeButtonEnabled(true);//设置可点击
 		actionBar.setLogo(R.drawable.logo_new);
@@ -103,8 +93,7 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 			leftFm=new LeftListFragment();		
 			ft.add(R.id.main_left_panel, leftFm ,"leftfm");
 		}
-		ft.commit();
-		
+		ft.commit();	
 		asyncTasks=new ArrayList<AsyncTask>();
 		mSpinner=(Spinner) findViewById(R.id.main_left_department_spinner);
 		titleTev=(TextView) findViewById(R.id.main_patient_info_tev);
@@ -112,8 +101,6 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 		//setTitleTev();
 		addTabFragment();
 	}
-	
-    
 	public void setSpinner(){
 		String sql=ServerDao.getQuery("staff_group_dict", 
 				                       new String[]{"group_name","group_code"}, 
@@ -121,13 +108,11 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 				                       new String[]{"病区医生"});
 		new DepartmentTask(this, sql).execute();
 	}
-	
 	public void setTitleTev(PatientEntity patientEntity){
 		titleTev.setText("床号："+patientEntity.bed_no+" 姓名："+patientEntity.name+" 性别："+patientEntity.sex
 				       +" 年龄："+String.valueOf(Util.userBirthdayGetAge(patientEntity.date_of_birth))
 				       +" 病人ID："+patientEntity.patient_id+" 剩余预交金："+patientEntity.prepayments+" 费别："+patientEntity.charge_type);
-	}
-		
+	}	
 	public void addTabFragment(){
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		actionBar.addTab(actionBar.newTab()
@@ -151,28 +136,21 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 			     .setTabListener(new TabListener<SignsLifeFragment>(
 	                        this, "signslife", SignsLifeFragment.class)));
 	}
-	
-	
 	public static class TabListener<T extends Fragment> implements ActionBar.TabListener {
         private final Activity mActivity;
         private final String mTag;
         private final Class<T> mClass;
         private final Bundle mArgs;
         private Fragment mFragment;
-
         public TabListener(Activity activity, String tag, Class<T> clz) {
             this(activity, tag, clz, null);
         }
-
         public TabListener(Activity activity, String tag, Class<T> clz, Bundle args) {
             mActivity = activity;
             mTag = tag;
             mClass = clz;
             mArgs = args;
-
-            // Check to see if we already have a fragment for this tab, probably
-            // from a previously saved state.  If so, deactivate it, because our
-            // initial state is that a tab isn't shown.
+        
             mFragment = mActivity.getFragmentManager().findFragmentByTag(mTag);
             mFragment = Fragment.instantiate(mActivity, mClass.getName(), mArgs);
         	FragmentTransaction ft=mActivity.getFragmentManager().beginTransaction();
@@ -221,14 +199,11 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 		putPrescriptionTask(value,"");
 	}
 
-
 	@Override
 	public void getList(ArrayList<PatientEntity> values) {
 		// TODO Auto-generated method stub
 		
 	}
-	
-	
 	/**
 	 * 
 	* @Title: putDcAdviceTask 
@@ -263,7 +238,6 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 		}
 		
 	}
-	
 	/**
 	 * 
 	* @Title: putCheckTask 
@@ -325,11 +299,8 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 			sql=sql+query+orderby;
 			Log.e("检验语句------->", sql);
 			putAsyncTask(new InspectionTask(fragment, sql).execute());
-		}
-		
+		}	
 	}
-	
-	
 	/**
 	 * 
 	* @Title: putPrescriptionTask 
@@ -360,7 +331,6 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 			putAsyncTask(new PrescriptionTask(fragment,sql).execute());
 		}
 	}
-	
 	/**
 	 * 
 	* @Title: putAsyncTask 
@@ -374,7 +344,6 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 		asyncTasks.add(paramAsyncTask);
 		return paramAsyncTask;
 	}
-	
 	
 	@Override
 	protected void onDestroy() {
@@ -399,7 +368,6 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 			}
 		}
 		asyncTasks.clear();
-		
 		//另外一种方式
 		/*Iterator localIterator=this.asyncTasks.iterator();
 		if (!localIterator.hasNext()) {
@@ -448,6 +416,8 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 		menu.addSubMenu(1, Menu.FIRST+1, 1, "新增检查").setIcon(android.R.drawable.ic_menu_add);
 		menu.addSubMenu(1, Menu.FIRST+2, 1, "新增检验").setIcon(android.R.drawable.ic_menu_add);
 		menu.addSubMenu(1, Menu.FIRST+3, 1, "新增处方").setIcon(android.R.drawable.ic_menu_add);
+		menu.addSubMenu(1, Menu.FIRST+5, 1, "手术查询").setIcon(android.R.drawable.ic_menu_add);
+		menu.addSubMenu(1, Menu.FIRST+6, 1, "手术预约").setIcon(android.R.drawable.ic_menu_add);
 		menu.addSubMenu(1, 14, 1, "按时间查询");
 		return true;
 	}
@@ -487,6 +457,14 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 			break;
 		case Menu.FIRST+4:
             showGroupDc();
+			break;
+		case Menu.FIRST+5:
+			    intent=new Intent();
+				intent.setClass(this, OperationActivity.class);
+				startActivity(intent);
+			break;
+		case Menu.FIRST+6:
+			Toast.makeText(MainActivity.this, "功能尚未添加!", Toast.LENGTH_SHORT).show();
 			break;
 		case 11:
 			DoctorAdviceFragment fragmentall=(DoctorAdviceFragment) this.getFragmentManager().findFragmentByTag("dcadvice");
@@ -574,7 +552,6 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 		}
 		return arr;
 	}
-	
 	/*private void addCustomView() {
 	// TODO Auto-generated method stub
 	View mCustomView = getLayoutInflater().inflate(
@@ -761,6 +738,9 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 		case 14:
 			putPrescriptionTask(app.getPatientEntity(),"");
 			putDcAdviceTask(app.getPatientEntity(),"");
+			break;
+		case 16:
+			//putDcAdviceTask(app.getPatientEntity(),"");
 			break;
 		default:
 			break;

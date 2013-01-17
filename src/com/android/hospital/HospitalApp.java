@@ -53,7 +53,8 @@ public class HospitalApp extends Application{
 	private String nextval="";//触发器
 	
 	private ArrayList<GroupOrderEntity> groupOrderList;//套餐医嘱集合
-	
+	private ArrayList<String> departcodeList;//科室代码(手术用）
+	private ArrayList<String> departnameList;//科室名称（手术用）
 	@Override
 	public void onCreate() {
 		// TODO Auto-generated method stub
@@ -194,7 +195,20 @@ public class HospitalApp extends Application{
 	public void setGroupOrderList(ArrayList<GroupOrderEntity> groupOrderList) {
 		this.groupOrderList = groupOrderList;
 	}
+	public ArrayList<String> getDepartcodeList() {
+		return departcodeList;
+	}
 
+	public void setDepartcodeList(ArrayList<String> departcodeList) {
+		this.departcodeList = departcodeList;
+	}
+	
+	public ArrayList<String> getDepartnameList(){
+		return departnameList;
+	}
+	public void setDepartnameList(ArrayList<String> departnameList){
+		this.departnameList=departnameList;
+	}
 	
 
 }

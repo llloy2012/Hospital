@@ -7,5 +7,7 @@
     <string name="add_check">新增检查</string>   
     <string name="add_inspection">新增检验</string>   
     <string name="add_prescription">新增处方</string>   
-    <string name="group_dcadvice">套餐医嘱</string>   
+    <string name="group_dcadvice">套餐医嘱</string>  
+    <string name="operation_query">手术查询</string> 
+    <string name="add_operation">手术预约</string>  
 </resources>

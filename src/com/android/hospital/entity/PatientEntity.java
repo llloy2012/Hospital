@@ -22,6 +22,7 @@ public class PatientEntity {
 	public String diagnosis;//病人诊断（C）
 	
 	public String doctor_in_charge;//主治医生（C）
+	public String user_name;//主治医生的登陆账号
 	
 	public String patient_id;//病人ID
 	
@@ -70,6 +71,7 @@ public class PatientEntity {
 			entity.bed_no=arrayList.get(i).get("bed_no").trim();
 			entity.diagnosis=arrayList.get(i).get("diagnosis").trim();
 			entity.doctor_in_charge=arrayList.get(i).get("doctor_in_charge").trim();
+			entity.user_name=arrayList.get(i).get("user_name").trim();
 			entity.patient_id=arrayList.get(i).get("patient_id").trim();
 			entity.visit_id=arrayList.get(i).get("visit_id").trim();
 			entity.prepayments=arrayList.get(i).get("prepayments").trim();

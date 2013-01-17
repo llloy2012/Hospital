@@ -42,7 +42,7 @@ public class DrugEntity {
 	
 	public String total_dose_per;//总量
 	
-	public String freq_detail;//
+	public String freq_detail;//医生说明
 	
 	public String quantity;//
 	
