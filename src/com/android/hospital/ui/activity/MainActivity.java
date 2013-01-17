@@ -25,6 +25,7 @@ import com.android.hospital.entity.DcAdviceEntity;
 import com.android.hospital.entity.PatientEntity;
 import com.android.hospital.ui.fragment.CheckFragment;
 import com.android.hospital.ui.fragment.DoctorAdviceFragment;
+import com.android.hospital.ui.fragment.EvaluationFragment;
 import com.android.hospital.ui.fragment.InspectionFragment;
 import com.android.hospital.ui.fragment.LeftListFragment;
 import com.android.hospital.ui.fragment.PrescriptionFragment;
@@ -116,8 +117,8 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 	public void addTabFragment(){
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		actionBar.addTab(actionBar.newTab()
-				     .setText("医嘱")
-				     .setTabListener(new TabListener<DoctorAdviceFragment>(
+				  .setText("医嘱")
+				  .setTabListener(new TabListener<DoctorAdviceFragment>(
 		                        this, "dcadvice", DoctorAdviceFragment.class)));
 		actionBar.addTab(actionBar.newTab()
 			     .setText("检查")
@@ -135,6 +136,10 @@ public class MainActivity extends Activity implements AsyncTaskCallback<PatientE
 			     .setText("生命体征")
 			     .setTabListener(new TabListener<SignsLifeFragment>(
 	                        this, "signslife", SignsLifeFragment.class)));
+		actionBar.addTab(actionBar.newTab()
+			     .setText("住院评估")
+			     .setTabListener(new TabListener<EvaluationFragment>(
+	                        this, "evaluation", EvaluationFragment.class)));
 	}
 	public static class TabListener<T extends Fragment> implements ActionBar.TabListener {
         private final Activity mActivity;

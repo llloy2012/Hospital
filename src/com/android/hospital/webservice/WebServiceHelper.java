@@ -43,7 +43,7 @@ public class WebServiceHelper {
 	
 	private static final String NAMESPACE = "http://service.com";
 	
-	private static final String SERVERURL="http://192.168.0.10:8888/WebServiceServer/services/GeneralOpSQL";
+	private static final String SERVERURL="http://192.168.0.40:8888/WebServiceServer/services/GeneralOpSQL";
 	//private static final String SERVERURL="http://192.168.20.108:8080/WebServiceServer/services/GeneralOpSQL";
 	
 	private static WakeLock wl;
